@@ -1,0 +1,33 @@
+# Windows image file caches
+Thumbs.db
+ehthumbs.db
+
+# Folder config file
+Desktop.ini
+
+# Recycle Bin used on file shares
+$RECYCLE.BIN/
+logo.h
+*.autosave
+
+
+#############
+## Python
+#############
+
+*.py[co]
+
+# Packages
+*.egg
+*.egg-info
+dist/
+build/
+eggs/
+parts/
+var/
+sdist/
+develop-eggs/
+.installed.cfg
+
+# Installer logs
+pip-log.txt
