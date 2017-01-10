@@ -10,6 +10,10 @@ https://danielwray.github.io/ads_development/
 
 https://github.com/danielwray/ads_development/wiki
 
+## Google Documents
+
+https://docs.google.com/document/d/1tjSpFJewTZVQFwJljhn7mJGTTV4MQwPLqLD-KZDr6ms/view
+
 ## Directory Overview
 
 ### asset
