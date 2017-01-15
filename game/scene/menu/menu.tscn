@@ -82,6 +82,7 @@ modulate = Color( 0.964844, 0.94223, 0.94223, 0.267765 )
 transform/pos = Vector2( 725.74, 306.903 )
 transform/scale = Vector2( 7.57826, 7.57826 )
 animation = "special"
+frame = 1
 
 [connection signal="pressed" from="menu_container/start" to="menu_container" method="_on_start_pressed"]
 
