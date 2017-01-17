@@ -2,8 +2,9 @@ extends Node
 
 # global game constants
 var scene_files = {
-	"menu": "res://scene/menu/menu.tscn",
+	"main_menu": "res://scene/menu/menu.tscn",
 	"high_score": "res://scene/high_score/high_score.tscn",
+	"credit": "res://scene/credit/credit.tscn",
 	"level_001": "res://scene/level/level_001/level_001.tscn"
 }
 
@@ -30,7 +31,7 @@ func _ready():
 func _fixed_process(delta):
 	# put looping global functions here
 	if Input.is_action_pressed("menu"):
-		set_scene(scene_files.menu)
+		set_scene(scene_files.main_menu)
 
 # set functions
 

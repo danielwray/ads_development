@@ -11,6 +11,10 @@ func _on_highscore_pressed():
 	# load init scene
 	load_scene("high_score")
 
+func _on_credit_pressed():
+	# load credit scene
+	load_scene("credit")
+
 func _on_exit_pressed():
 	# exit game upon exit pressed
 	get_tree().quit()
