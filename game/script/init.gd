@@ -1,23 +1,23 @@
 extends Node
 
 # global game constants
-var scene_files = {
+const scene_files = {
+	"guitar_dude": "res://scene/character/player/guitar_dude.tscn",
+	"generic_metal_guy": "res://scene/character/enemy/generic_metal_guy.tscn",
 	"main_menu": "res://scene/menu/menu.tscn",
 	"high_score": "res://scene/high_score/high_score.tscn",
 	"credit": "res://scene/credit/credit.tscn",
 	"level_001": "res://scene/level/level_001/level_001.tscn"
 }
 
-var character_files = {
-	"guitar_player": "res://scene/character/guitardude.tscn"
-}
-
 # global game variables
+var screen_dimension = Vector2()
 var game_status = {}
 var game_config = {}
-
-# local game init variables
 var current_scene = null
+var difficulty_level = 3
+var default_player = "guitar_dude"
+var enemy_character_list = ["generic_metal_guy"]
 
 func _ready():
 	# on load set current scene to last scene available
@@ -46,6 +46,9 @@ func set_scene(scene):
 	get_tree().get_root().add_child(current_scene)
 
 # get functions
+
+func get_game_window_dimension():
+	return OS.get_window_size()
 
 func get_game_status():
 	return game_status

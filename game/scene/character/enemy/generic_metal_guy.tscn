@@ -4,28 +4,28 @@
 [ext_resource path="res://sprite/character/enemy/generic_metal_dude/generic_metal_guy_idle1.png" type="Texture" id=2]
 [ext_resource path="res://sprite/character/enemy/generic_metal_dude/generic_metal_guy_idle2.png" type="Texture" id=3]
 [ext_resource path="res://sprite/character/enemy/generic_metal_dude/generic_metal_guy_idle3.png" type="Texture" id=4]
-[ext_resource path="res://sprite/character/enemy/generic_metal_dude/generic_metal_guy_punch0.png" type="Texture" id=5]
-[ext_resource path="res://sprite/character/enemy/generic_metal_dude/generic_metal_guy_punch1.png" type="Texture" id=6]
-[ext_resource path="res://sprite/character/enemy/generic_metal_dude/generic_metal_guy_punch2.png" type="Texture" id=7]
-[ext_resource path="res://sprite/character/enemy/generic_metal_dude/generic_metal_guy_punch3.png" type="Texture" id=8]
-[ext_resource path="res://sprite/character/enemy/generic_metal_dude/generic_metal_guy_hit0.png" type="Texture" id=9]
-[ext_resource path="res://sprite/character/enemy/generic_metal_dude/generic_metal_guy_hit1.png" type="Texture" id=10]
-[ext_resource path="res://sprite/character/enemy/generic_metal_dude/generic_metal_guy_hit2.png" type="Texture" id=11]
-[ext_resource path="res://sprite/character/enemy/generic_metal_dude/generic_metal_guy_hit3.png" type="Texture" id=12]
-[ext_resource path="res://sprite/character/enemy/generic_metal_dude/generic_metal_guy_walk0.png" type="Texture" id=13]
-[ext_resource path="res://sprite/character/enemy/generic_metal_dude/generic_metal_guy_walk1.png" type="Texture" id=14]
-[ext_resource path="res://sprite/character/enemy/generic_metal_dude/generic_metal_guy_walk2.png" type="Texture" id=15]
-[ext_resource path="res://sprite/character/enemy/generic_metal_dude/generic_metal_guy_walk3.png" type="Texture" id=16]
+[ext_resource path="res://sprite/character/enemy/generic_metal_dude/generic_metal_guy_hit0.png" type="Texture" id=5]
+[ext_resource path="res://sprite/character/enemy/generic_metal_dude/generic_metal_guy_hit1.png" type="Texture" id=6]
+[ext_resource path="res://sprite/character/enemy/generic_metal_dude/generic_metal_guy_hit2.png" type="Texture" id=7]
+[ext_resource path="res://sprite/character/enemy/generic_metal_dude/generic_metal_guy_hit3.png" type="Texture" id=8]
+[ext_resource path="res://sprite/character/enemy/generic_metal_dude/generic_metal_guy_walk0.png" type="Texture" id=9]
+[ext_resource path="res://sprite/character/enemy/generic_metal_dude/generic_metal_guy_walk1.png" type="Texture" id=10]
+[ext_resource path="res://sprite/character/enemy/generic_metal_dude/generic_metal_guy_walk2.png" type="Texture" id=11]
+[ext_resource path="res://sprite/character/enemy/generic_metal_dude/generic_metal_guy_walk3.png" type="Texture" id=12]
+[ext_resource path="res://sprite/character/enemy/generic_metal_dude/generic_metal_guy_punch0.png" type="Texture" id=13]
+[ext_resource path="res://sprite/character/enemy/generic_metal_dude/generic_metal_guy_punch1.png" type="Texture" id=14]
+[ext_resource path="res://sprite/character/enemy/generic_metal_dude/generic_metal_guy_punch2.png" type="Texture" id=15]
+[ext_resource path="res://sprite/character/enemy/generic_metal_dude/generic_metal_guy_punch3.png" type="Texture" id=16]
 
 [sub_resource type="SpriteFrames" id=1]
 
 resource/name = "generic_metal_guy"
-animations = [ { "frames":[ ExtResource( 1 ), ExtResource( 2 ), ExtResource( 3 ), ExtResource( 4 ) ], "loop":true, "name":"idle", "speed":2.0 }, { "frames":[ ExtResource( 5 ), ExtResource( 6 ), ExtResource( 7 ), ExtResource( 8 ) ], "loop":false, "name":"punch", "speed":2.0 }, { "frames":[ ExtResource( 9 ), ExtResource( 10 ), ExtResource( 11 ), ExtResource( 12 ) ], "loop":true, "name":"hit", "speed":4.0 }, { "frames":[ ExtResource( 13 ), ExtResource( 14 ), ExtResource( 15 ), ExtResource( 16 ) ], "loop":true, "name":"walk", "speed":3.0 } ]
+animations = [ { "frames":[ ExtResource( 1 ), ExtResource( 2 ), ExtResource( 3 ), ExtResource( 4 ) ], "loop":true, "name":"idle", "speed":2.0 }, { "frames":[ ExtResource( 5 ), ExtResource( 6 ), ExtResource( 7 ), ExtResource( 8 ) ], "loop":true, "name":"hit", "speed":4.01 }, { "frames":[ ExtResource( 9 ), ExtResource( 10 ), ExtResource( 11 ), ExtResource( 12 ) ], "loop":true, "name":"walk", "speed":3.0 }, { "frames":[ ExtResource( 13 ), ExtResource( 14 ), ExtResource( 15 ), ExtResource( 16 ) ], "loop":false, "name":"punch", "speed":2.0 } ]
 
 [node name="generic_metal_guy" type="AnimatedSprite"]
 
 frames = SubResource( 1 )
-animation = "hit"
+animation = "idle"
 playing = true
 flip_h = true
 

@@ -1,6 +1,10 @@
-[gd_scene format=1]
+[gd_scene load_steps=2 format=1]
 
-[node name="node" type="Node"]
+[ext_resource path="res://scene/level/level_001/level_001.gd" type="Script" id=1]
+
+[node name="main" type="Node"]
+
+script/script = ExtResource( 1 )
 
 [node name="debug_label" type="Label" parent="."]
 
