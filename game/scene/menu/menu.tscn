@@ -7,6 +7,7 @@
 
 [node name="menu_container" type="VBoxContainer" parent="."]
 
+editor/display_folded = true
 focus/ignore_mouse = false
 focus/stop_mouse = false
 size_flags/horizontal = 2
