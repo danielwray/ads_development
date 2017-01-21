@@ -10,6 +10,7 @@ var guitar_dude_z_depth
 var guitar_dude_speed = 3
 var player_is_attacking
 var player_is_moving
+var player_is_dead
 # player variables
 var guitar_dude_name
 var guitar_dude_health
@@ -78,9 +79,12 @@ func _input(event):
 		set_flip_h(false)
 	elif player_is_moving:
 		cycle_animation("walk")
+	elif player_is_dead:
+		set_animation("dead")
+		get_node("samples").play("guitar_dude_dead", true)
 	else:
 		cycle_animation("idle")
-
+		
 func cycle_animation(animation):
 	# play character animation cycles in a loop
 	set_animation(animation)
