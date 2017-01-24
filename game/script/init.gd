@@ -2,6 +2,7 @@ extends Node
 
 # global game constants
 const scene_files = {
+	"characters": "res://tileset/character/character_tileset.tscn",
 	"guitar_dude": "res://scene/character/player/guitar_dude.tscn",
 	"generic_metal_guy": "res://scene/character/enemy/generic_metal_guy.tscn",
 	"main_menu": "res://scene/menu/menu.tscn",
@@ -15,7 +16,7 @@ var screen_dimension = Vector2()
 var game_status = {}
 var game_config = {}
 var current_scene = null
-var difficulty_level = 3
+var difficulty_level = 1
 var default_player = "guitar_dude"
 var enemy_character_list = ["generic_metal_guy"]
 
@@ -38,6 +39,7 @@ func _fixed_process(delta):
 func set_scene(scene):
 	# free current scene
 	current_scene.queue_free()
+	current_scene.remove_and_skip()
 	# load the new scene passed in via the scene parameter
 	var new_scene = ResourceLoader.load(scene)
 	# update current_scene variable

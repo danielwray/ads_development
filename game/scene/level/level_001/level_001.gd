@@ -3,14 +3,26 @@ extends Node
 # constants
 
 # variables
-var enemy_min_count = round(init.difficulty_level / 2)
-var enemy_max_count = round(init.difficulty_level * 2)
+# state machine resources
+var state_machine_source
+var state_machine
+# difficulty
+var enemy_min_count = 0
+var enemy_max_count = 1
+# timers
+var spawn_timer = 0
 
 func _ready():
 	# Called every time the node is added to the scene.
 	# Initialization here
+	set_fixed_process(true)
 	load_characters()
 	load_world()
+
+func _fixed_process(delta):
+	var test = get_node("state_machine")
+	test.update_character_list()
+	test.state_machine()
 
 func load_characters():
 	# find character scene paths
@@ -25,12 +37,12 @@ func load_characters():
 	# this needs refactoring
 	# set up to spawn enemies in boundary of defined areas (shapes)
 	# create list of enemies upon spawning to reference at a later point
-	for enemy in range(enemy_min_count, enemy_max_count):
+	for enemy in range(0, 1):
 		var enemy_node = enemy_object.instance()
-		enemy_node.set_pos(Vector2(rand_range(900, 1300), rand_range(100, 400)))
+		enemy_node.set_pos(Vector2(rand_range(1024, 2048), rand_range(100, 400)))
 		var enemy_instance = get_node(".").add_child(enemy_node)
-		
-		
+
+
 
 func load_world():
 	# find world scene paths
