@@ -33,8 +33,8 @@ func get_character_instance_stats():
 	pass
 
 func get_character_state(character):
-	var chnode = character.get_name()
-	var test1 = str("../", chnode)
+	var character_node = character.get_name()
+	var test1 = str("../", character_node)
 	var test = get_node(test1)
 
 func set_character_state(state):

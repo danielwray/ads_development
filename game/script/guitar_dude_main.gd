@@ -19,8 +19,9 @@ export var is_moving = false
 export var is_dead = false
 # character status
 # export to editor (see value sliders on the right)
-export var health = 100
+export var health = 200
 export var stamina = 100
+export var damage = 10
 # resources
 var sprite
 var audio
@@ -117,8 +118,8 @@ func _fixed_process(delta):
 		is_dead = true
 		play_audio_sample("dead")
 		play_sprite_animation("dead")
-		# quick hack to stop loop, not sure if this should be done????
-		set_fixed_process(false)
+	
+	
 
 func _unhandled_input(event):
 	if (event.is_action_pressed("player_one_punch") and not event.is_echo()):
@@ -170,6 +171,5 @@ func set_health(damage):
 	health -= damage
 
 func get_health():
-	print(health)
 	return health
 	
