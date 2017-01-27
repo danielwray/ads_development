@@ -116,15 +116,14 @@ func _fixed_process(delta):
 	if health < 1:
 		set_state("dead")
 		is_dead = true
-		play_audio_sample("dead")
+		play_audio_sample("guitar_dude_dead")
 		play_sprite_animation("dead")
 	
-	
-
 func _unhandled_input(event):
 	if (event.is_action_pressed("player_one_punch") and not event.is_echo()):
 		attack("punch")
 		set_state("attacking")
+		play_audio_sample("punchmiss1")
 	if (event.is_action_pressed("player_one_special") and not event.is_echo()):
 		special("special")
 		set_state("special")
