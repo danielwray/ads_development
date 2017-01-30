@@ -1,4 +1,4 @@
-extends "state_machine.gd"
+extends KinematicBody2D
 
 #NOTE refactor to include accessible state machine for enemies / world interaction
 #
@@ -14,6 +14,7 @@ var slide_limit = 2
 # character state
 var character_state = "idle"
 export var is_attacking = false
+var is_colliding_and_is_attacking = false
 export var is_hit = false
 export var is_moving = false
 export var is_dead = false
@@ -105,7 +106,7 @@ func _fixed_process(delta):
 
 	if (is_colliding() and is_attacking):
 		# get enemy node and position
-		pass
+		is_colliding_and_is_attacking = true
 
 	#
 	# IDLE
@@ -115,15 +116,20 @@ func _fixed_process(delta):
 
 	if health < 1:
 		set_state("dead")
-		is_dead = true
-		play_audio_sample("guitar_dude_dead")
-		play_sprite_animation("dead")
-	
+		if not is_dead:
+			is_dead = true
+			play_audio_sample("guitar_dude_dead")
+			play_sprite_animation("dead")
+			set_fixed_process(false)
+		
 func _unhandled_input(event):
 	if (event.is_action_pressed("player_one_punch") and not event.is_echo()):
 		attack("punch")
 		set_state("attacking")
-		play_audio_sample("punchmiss1")
+		if is_colliding_and_is_attacking:
+			play_audio_sample("punch1")
+		else:
+			play_audio_sample("punchmiss1")
 	if (event.is_action_pressed("player_one_special") and not event.is_echo()):
 		special("special")
 		set_state("special")
