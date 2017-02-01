@@ -127,9 +127,9 @@ func _unhandled_input(event):
 		attack("punch")
 		set_state("attacking")
 		if is_colliding_and_is_attacking:
-			play_audio_sample("punch1")
+			play_audio_sample("punch_1")
 		else:
-			play_audio_sample("punchmiss1")
+			play_audio_sample("punch_miss_1")
 	if (event.is_action_pressed("player_one_special") and not event.is_echo()):
 		special("special")
 		set_state("special")
