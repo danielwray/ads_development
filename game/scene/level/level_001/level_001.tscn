@@ -1,41 +1,9 @@
-[gd_scene load_steps=3 format=1]
+[gd_scene load_steps=2 format=1]
 
 [ext_resource path="res://scene/level/level_001/level_001.gd" type="Script" id=1]
-[ext_resource path="res://tileset/character/character_tileset.tscn" type="PackedScene" id=2]
 
 [node name="main" type="Node"]
 
 script/script = ExtResource( 1 )
-
-[node name="health" type="Label" parent="."]
-
-focus/ignore_mouse = true
-focus/stop_mouse = true
-size_flags/horizontal = 2
-size_flags/vertical = 0
-margin/left = 0.0
-margin/top = 0.0
-margin/right = 61.0
-margin/bottom = 14.0
-text = "Health:"
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
-
-[node name="health_value" type="Label" parent="health"]
-
-focus/ignore_mouse = true
-focus/stop_mouse = true
-size_flags/horizontal = 2
-size_flags/vertical = 0
-margin/left = 45.0
-margin/top = 0.0
-margin/right = 85.0
-margin/bottom = 14.0
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
-
-[node name="state_machine" parent="." instance=ExtResource( 2 )]
 
 

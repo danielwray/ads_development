@@ -20,6 +20,7 @@ var game_config = {}
 var difficulty_level = 1
 # game status
 var current_scene = null
+var state_machine
 # game defaults
 var default_player = "guitar_dude"
 var enemy_character_list = ["generic_metal_guy"]
@@ -30,7 +31,6 @@ func _ready():
 	# set global values
 	# enable fixed process to true
 	set_fixed_process(true)
-	print(read_json("res://config.json"))
 
 # loops
 
