@@ -37,6 +37,7 @@ func _fixed_process(delta):
 	
 	# if not at guitar_dude's position then move towards it
 	if not (guitar_dude_pos == get_pos()):
+		set_state("moving")
 		# this won't work for multiple enemies, so not sure what to do here... urgh
 		get_current_pos = get_pos()
 		#move_local_y(get_current_pos.x)
@@ -52,11 +53,16 @@ func _fixed_process(delta):
 		var length_to_guitar_dude_x = delta_x / length
 		var length_to_guitar_dude_y = delta_y / length
 		# move enemy towards guitar_dude
-		move(Vector2(length_to_guitar_dude_x * 0.5, length_to_guitar_dude_y * 0.5))
+		print(length)
 		if is_moving:
-			play_sprite_animation("walk")
-			is_moving = false
-		set_state("moving")
+			if length < 512:
+				move(Vector2(length_to_guitar_dude_x * 0.5, length_to_guitar_dude_y * 0.5))
+				play_sprite_animation("walk")
+			else:
+				is_moving = false
+				can_be_hit = true
+				play_sprite_animation("idle")
+		
 
 	# if instance is colliding and collision is with guitar_dude and guitar_dude is attacking
 	if is_colliding() and get_collider().get_name() == "guitar_dude" and guitar_dude_state == "attacking":
@@ -69,7 +75,7 @@ func _fixed_process(delta):
 	# else if guitar_dude is doing special then take off damage all instances of enemy
 	elif guitar_dude_state == "special":
 		play_sprite_animation("hit")
-		health -= 1
+		health -= 0.1
 		set_state("hit")
 		is_moving = false
 	# else enemy can attack guitar_dude
