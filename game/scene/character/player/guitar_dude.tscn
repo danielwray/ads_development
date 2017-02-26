@@ -49,6 +49,7 @@ health = 100
 
 frames = SubResource( 2 )
 animation = "idle"
+frame = 1
 playing = true
 
 [node name="guitar_dude_collision" type="CollisionShape2D" parent="."]
