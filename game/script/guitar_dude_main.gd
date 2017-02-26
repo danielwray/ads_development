@@ -308,7 +308,7 @@ class Dead:
 		# TODO - Bertie: Audio code goes here
 		# See 'samplePlayer2D' class for available methods
 		#################################################################################################
-		pass
+		guitar_dude_collision.play("dead")
 
 	func exit():
 		pass

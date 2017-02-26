@@ -5,11 +5,11 @@
 [ext_resource path="res://sprite/character/player/guitar_dude/idle_1.png" type="Texture" id=3]
 [ext_resource path="res://sprite/character/player/guitar_dude/special_0.png" type="Texture" id=4]
 [ext_resource path="res://sprite/character/player/guitar_dude/special_1.png" type="Texture" id=5]
-[ext_resource path="res://sprite/character/player/guitar_dude/dead_0.png" type="Texture" id=6]
-[ext_resource path="res://sprite/character/player/guitar_dude/dead_1.png" type="Texture" id=7]
-[ext_resource path="res://sprite/character/player/guitar_dude/dead_2.png" type="Texture" id=8]
-[ext_resource path="res://sprite/character/player/guitar_dude/hit_0.png" type="Texture" id=9]
-[ext_resource path="res://sprite/character/player/guitar_dude/hit_1.png" type="Texture" id=10]
+[ext_resource path="res://sprite/character/player/guitar_dude/hit_0.png" type="Texture" id=6]
+[ext_resource path="res://sprite/character/player/guitar_dude/hit_1.png" type="Texture" id=7]
+[ext_resource path="res://sprite/character/player/guitar_dude/dead_0.png" type="Texture" id=8]
+[ext_resource path="res://sprite/character/player/guitar_dude/dead_1.png" type="Texture" id=9]
+[ext_resource path="res://sprite/character/player/guitar_dude/dead_2.png" type="Texture" id=10]
 [ext_resource path="res://sprite/character/player/guitar_dude/walk_0.png" type="Texture" id=11]
 [ext_resource path="res://sprite/character/player/guitar_dude/walk_1.png" type="Texture" id=12]
 [ext_resource path="res://sprite/character/player/guitar_dude/walk_2.png" type="Texture" id=13]
@@ -26,7 +26,7 @@ extents = Vector2( 10, 10 )
 [sub_resource type="SpriteFrames" id=2]
 
 resource/name = "guitar_dude_sprite_library"
-animations = [ { "frames":[ ExtResource( 2 ), ExtResource( 3 ) ], "loop":true, "name":"idle", "speed":3.0 }, { "frames":[ ExtResource( 4 ), ExtResource( 5 ) ], "loop":true, "name":"special", "speed":2.0 }, { "frames":[ ExtResource( 6 ), ExtResource( 7 ), ExtResource( 8 ) ], "loop":false, "name":"dead", "speed":3.0 }, { "frames":[ ExtResource( 9 ), ExtResource( 10 ), ExtResource( 2 ) ], "loop":false, "name":"hit", "speed":2.0 }, { "frames":[ ExtResource( 11 ), ExtResource( 12 ), ExtResource( 13 ), ExtResource( 14 ) ], "loop":true, "name":"walk", "speed":3.0 }, { "frames":[ ExtResource( 15 ), ExtResource( 16 ) ], "loop":false, "name":"punch", "speed":2.0 } ]
+animations = [ { "frames":[ ExtResource( 2 ), ExtResource( 3 ) ], "loop":true, "name":"idle", "speed":3.0 }, { "frames":[ ExtResource( 4 ), ExtResource( 5 ) ], "loop":true, "name":"special", "speed":2.0 }, { "frames":[ ExtResource( 6 ), ExtResource( 7 ), ExtResource( 2 ) ], "loop":false, "name":"hit", "speed":2.0 }, { "frames":[ ExtResource( 8 ), ExtResource( 9 ), ExtResource( 10 ) ], "loop":false, "name":"dead", "speed":3.0 }, { "frames":[ ExtResource( 11 ), ExtResource( 12 ), ExtResource( 13 ), ExtResource( 14 ) ], "loop":true, "name":"walk", "speed":3.0 }, { "frames":[ ExtResource( 15 ), ExtResource( 16 ) ], "loop":false, "name":"punch", "speed":2.0 } ]
 
 [sub_resource type="SampleLibrary" id=3]
 
@@ -49,7 +49,6 @@ health = 100
 
 frames = SubResource( 2 )
 animation = "idle"
-frame = 1
 playing = true
 
 [node name="guitar_dude_collision" type="CollisionShape2D" parent="."]

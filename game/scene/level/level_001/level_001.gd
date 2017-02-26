@@ -28,6 +28,8 @@ func _fixed_process(delta):
 func load_characters():
 	var player = ResourceLoader.load("res://scene/character/player/guitar_dude.tscn")
 	add_child(player.instance())
+	var enemies = ResourceLoader.load("res://scene/character/enemy/generic_metal_guy.tscn")
+	add_child(enemies.instance())
 
 func load_world():
 	pass
