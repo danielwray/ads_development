@@ -10,33 +10,51 @@ const STATE_SPECIAL		= "SS"
 const STATE_HIT			= "SH"
 const STATE_DEAD		= "SD"
 
+# variables
+var previous_state = ""
+var current_state  = ""
+var next_state     = ""
+var state_timer    = 0
+var state_timer_limit = 1.0
+
 func _ready():
 	set_fixed_process(true)
 	set_process_unhandled_input(true)
 	set_pos(Vector2(120, 120))
 
 func _fixed_process(delta):
-	print(get_state())
 	state.update(delta)
 
 func _unhandled_input(event):
 	if Input.is_action_pressed("player_one_up"):
+		previous_state = get_state()
 		set_state("SM")
+		current_state = get_state()
 		state.on_move("y", -1, false, false)
 	elif Input.is_action_pressed("player_one_down"):
+		previous_state = get_state()
 		set_state("SM")
+		current_state = get_state()
 		state.on_move("y", 1, false, false)
 	if Input.is_action_pressed("player_one_left"):
+		previous_state = get_state()
 		set_state("SM")
+		current_state = get_state()
 		state.on_move("x", -1, true, false)
 	elif Input.is_action_pressed("player_one_right"):
+		previous_state = get_state()
 		set_state("SM")
+		current_state = get_state()
 		state.on_move("x", 1, false, false)
 	if Input.is_action_pressed("player_one_punch"):
+		previous_state = get_state()
 		set_state("SA")
+		current_state = get_state()
 		state.attack()
 	if Input.is_action_pressed("player_one_special"):
+		previous_state = get_state()
 		set_state("SS")
+		current_state = get_state()
 		state.special()
 
 func set_state(new_state):
@@ -100,6 +118,7 @@ class Moving:
 	var guitar_dude_sprite
 	var guitar_dude_collision
 	var guitar_dude_audio
+	var state_action_timer = 0
 	var slide_count = 0
 	var slide_limit = 10
 	var velocity = Vector2()
@@ -141,6 +160,8 @@ class Attacking:
 	var guitar_dude_sprite
 	var guitar_dude_collision
 	var guitar_dude_audio
+	var state_action_timer = 0
+	var state_action_limit = 0.75
 	
 	func _init(guitar_dude):
 		self.guitar_dude = guitar_dude
@@ -149,15 +170,16 @@ class Attacking:
 		guitar_dude_audio = guitar_dude.get_node("guitar_dude_audio")
 
 	func update(delta):
-		guitar_dude_sprite.play("idle")
+		state_action_timer += 0.1
+		if state_action_timer > state_action_limit:
+			guitar_dude_sprite.stop()
+			guitar_dude.set_state("SI")
 
 	func input(event):
 		pass
 	
 	func attack():
 		guitar_dude_sprite.play("punch")
-		print("pow")
-		#guitar_dude_audio.play("dead")
 
 	func exit():
 		pass
@@ -170,6 +192,8 @@ class Special:
 	var guitar_dude_sprite
 	var guitar_dude_collision
 	var guitar_dude_audio
+	var state_action_timer = 0
+	var state_action_limit = 1.0
 	
 	func _init(guitar_dude):
 		self.guitar_dude = guitar_dude
@@ -178,7 +202,10 @@ class Special:
 		guitar_dude_audio = guitar_dude.get_node("guitar_dude_audio")
 
 	func update(delta):
-		guitar_dude_sprite.play("idle")
+		state_action_timer += 0.1
+		if state_action_timer > state_action_limit:
+			guitar_dude_sprite.stop()
+			guitar_dude.set_state("SI")
 
 	func input(event):
 		pass
@@ -197,6 +224,8 @@ class Hit:
 	var guitar_dude_sprite
 	var guitar_dude_collision
 	var guitar_dude_audio
+	var state_action_timer = 0
+	var state_action_limit = 1.0
 	
 	func _init(guitar_dude):
 		self.guitar_dude = guitar_dude
@@ -205,7 +234,10 @@ class Hit:
 		guitar_dude_audio = guitar_dude.get_node("guitar_dude_audio")
 
 	func update(delta):
-		guitar_dude_sprite.play("idle")
+		state_action_timer += 0.1
+		if state_action_timer > state_action_limit:
+			guitar_dude_sprite.stop()
+			guitar_dude.set_state("SI")
 
 	func input(event):
 		pass
@@ -224,6 +256,8 @@ class Dead:
 	var guitar_dude_sprite
 	var guitar_dude_collision
 	var guitar_dude_audio
+	var state_action_timer = 0
+	var state_action_limit = 1.0
 	
 	func _init(guitar_dude):
 		self.guitar_dude = guitar_dude
@@ -232,7 +266,10 @@ class Dead:
 		guitar_dude_audio = guitar_dude.get_node("guitar_dude_audio")
 
 	func update(delta):
-		guitar_dude_sprite.play("idle")
+		state_action_timer += 0.1
+		if state_action_timer > state_action_limit:
+			guitar_dude_sprite.stop()
+			guitar_dude.set_state("SD")
 
 	func input(event):
 		pass
