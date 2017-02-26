@@ -11,11 +11,15 @@ const STATE_HIT			= "SH"
 const STATE_DEAD		= "SD"
 
 # variables
+# state parameters
 var previous_state = ""
 var current_state  = ""
 var next_state     = ""
 var state_timer    = 0
 var state_timer_limit = 1.0
+# character parameters
+export var health = 100
+
 
 func _ready():
 	set_fixed_process(true)
@@ -59,7 +63,9 @@ func _unhandled_input(event):
 
 func set_state(new_state):
 	state.exit()
-	if new_state == STATE_IDLE:
+	if new_state == STATE_DEAD:
+		state = Dead.new(self)
+	elif new_state == STATE_IDLE:
 		state = Idle.new(self)
 	elif new_state == STATE_MOVING:
 		state = Moving.new(self)
@@ -69,11 +75,11 @@ func set_state(new_state):
 		state = Special.new(self)
 	elif new_state == STATE_HIT:
 		state = Hit.new(self)
-	elif new_state == STATE_DEAD:
-		state = Dead.new(self)
 
 func get_state():
-	if state extends Idle:
+	if state extends Dead:
+		return STATE_DEAD
+	elif state extends Idle:
 		return STATE_IDLE
 	elif state extends Moving:
 		return STATE_MOVING
@@ -83,8 +89,6 @@ func get_state():
 		return STATE_SPECIAL
 	elif state extends Hit:
 		return STATE_HIT
-	elif state extends Dead:
-		return STATE_DEAD
 
 # ------------------------------------------------------------------------------------------------------#
 # STATE: SI
@@ -103,6 +107,10 @@ class Idle:
 
 	func update(delta):
 		guitar_dude_sprite.play("idle")
+		#################################################################################################
+		# TODO - Bertie: Audio code goes here
+		# See 'samplePlayer2D' class for available methods
+		#################################################################################################
 
 	func input(event):
 		pass
@@ -138,6 +146,10 @@ class Moving:
 		pass
 	
 	func on_move(axis, value, flip_h, flip_v):
+		#################################################################################################
+		# TODO - Bertie: Audio code goes here
+		# See 'samplePlayer2D' class for available methods
+		#################################################################################################
 		guitar_dude_sprite.play("walk")
 		if axis == "x":
 			guitar_dude.move_local_x(value)
@@ -179,6 +191,12 @@ class Attacking:
 		pass
 	
 	func attack():
+		# TODO: Include code to check if hit enemy group object and trigger _on_hit function for enemy instance
+		
+		#################################################################################################
+		# TODO - Bertie: Audio code goes here
+		# See 'samplePlayer2D' class for available methods
+		#################################################################################################
 		guitar_dude_sprite.play("punch")
 
 	func exit():
@@ -211,6 +229,12 @@ class Special:
 		pass
 	
 	func special():
+		# TODO: Include code to play special if stamina is > 0
+		
+		#################################################################################################
+		# TODO - Bertie: Audio code goes here
+		# See 'samplePlayer2D' class for available methods
+		#################################################################################################
 		pass
 
 	func exit():
@@ -243,6 +267,12 @@ class Hit:
 		pass
 	
 	func hit():
+		# TODO: Add code to reduce health and triger STATE_DEAD when < 0
+		
+		#################################################################################################
+		# TODO - Bertie: Audio code goes here
+		# See 'samplePlayer2D' class for available methods
+		#################################################################################################
 		pass
 
 	func exit():
@@ -268,13 +298,16 @@ class Dead:
 	func update(delta):
 		state_action_timer += 0.1
 		if state_action_timer > state_action_limit:
-			guitar_dude_sprite.stop()
 			guitar_dude.set_state("SD")
 
 	func input(event):
 		pass
 	
 	func dead():
+		#################################################################################################
+		# TODO - Bertie: Audio code goes here
+		# See 'samplePlayer2D' class for available methods
+		#################################################################################################
 		pass
 
 	func exit():
