@@ -7,15 +7,14 @@
 
 [node name="menu_container" type="VBoxContainer" parent="."]
 
-editor/display_folded = true
 focus/ignore_mouse = false
 focus/stop_mouse = false
 size_flags/horizontal = 2
 size_flags/vertical = 2
 margin/left = 400.0
-margin/top = 250.0
+margin/top = 364.0
 margin/right = 656.0
-margin/bottom = 506.0
+margin/bottom = 597.0
 alignment = 0
 script/script = ExtResource( 1 )
 
@@ -89,8 +88,8 @@ flat = true
 
 [node name="guitardude" parent="." instance=ExtResource( 2 )]
 
-transform/pos = Vector2( 201.64, 382.249 )
-transform/scale = Vector2( 7.57826, 7.57826 )
+transform/pos = Vector2( 530.815, 209.517 )
+transform/scale = Vector2( 4.26126, 4.26126 )
 script/script = null
 
 [connection signal="pressed" from="menu_container/start" to="menu_container" method="_on_start_pressed"]

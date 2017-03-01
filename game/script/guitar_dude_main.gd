@@ -24,47 +24,60 @@ export var health = 100
 func _ready():
 	set_fixed_process(true)
 	set_process_unhandled_input(true)
-	set_pos(Vector2(120, 120))
+	set_pos(Vector2(120, 300))
 
 func _fixed_process(delta):
 	state.update(delta)
+	# if collision is true trigger on hitbox function
+	if is_colliding():
+		_on_Hitbox_body_enter(get_collider())
+
+# body is other collision object - if body is in group player then set self state to SA
+func _on_Hitbox_body_enter( body ):
+	if body.is_colliding() and body.is_in_group("enemy"):
+		set_state("SH")
 
 func _unhandled_input(event):
-	if Input.is_action_pressed("player_one_up"):
-		previous_state = get_state()
-		set_state("SM")
-		current_state = get_state()
-		state.on_move("y", -1, false, false)
-	elif Input.is_action_pressed("player_one_down"):
-		previous_state = get_state()
-		set_state("SM")
-		current_state = get_state()
-		state.on_move("y", 1, false, false)
-	if Input.is_action_pressed("player_one_left"):
-		previous_state = get_state()
-		set_state("SM")
-		current_state = get_state()
-		state.on_move("x", -1, true, false)
-	elif Input.is_action_pressed("player_one_right"):
-		previous_state = get_state()
-		set_state("SM")
-		current_state = get_state()
-		state.on_move("x", 1, false, false)
-	if Input.is_action_pressed("player_one_punch"):
-		previous_state = get_state()
-		set_state("SA")
-		current_state = get_state()
-		state.attack()
-	if Input.is_action_pressed("player_one_special"):
-		previous_state = get_state()
-		set_state("SS")
-		current_state = get_state()
-		state.special()
+	if health > 0:
+		if Input.is_action_pressed("player_one_up"):
+			previous_state = get_state()
+			set_state("SM")
+			current_state = get_state()
+			state.on_move("y", -1, false, false)
+		elif Input.is_action_pressed("player_one_down"):
+			previous_state = get_state()
+			set_state("SM")
+			current_state = get_state()
+			state.on_move("y", 1, false, false)
+		if Input.is_action_pressed("player_one_left"):
+			previous_state = get_state()
+			set_state("SM")
+			current_state = get_state()
+			state.on_move("x", -1, true, false)
+		elif Input.is_action_pressed("player_one_right"):
+			previous_state = get_state()
+			set_state("SM")
+			current_state = get_state()
+			state.on_move("x", 1, false, false)
+		if Input.is_action_pressed("player_one_punch"):
+			previous_state = get_state()
+			set_state("SA")
+			current_state = get_state()
+			state.attack()
+		if Input.is_action_pressed("player_one_special"):
+			previous_state = get_state()
+			set_state("SS")
+			current_state = get_state()
+			state.special()
+	else:
+		set_fixed_process(false)
+		set_process_unhandled_input(false)
 
 func set_state(new_state):
 	state.exit()
 	if new_state == STATE_DEAD:
 		state = Dead.new(self)
+		state.dead()
 	elif new_state == STATE_IDLE:
 		state = Idle.new(self)
 	elif new_state == STATE_MOVING:
@@ -152,11 +165,13 @@ class Moving:
 		#################################################################################################
 		guitar_dude_sprite.play("walk")
 		if axis == "x":
-			guitar_dude.move_local_x(value)
+			#guitar_dude.move_local_x(value)
+			guitar_dude.move(Vector2(value, 0.0))
 			guitar_dude_sprite.set_flip_h(flip_h)
 			slide_count = 0
 		else:
-			guitar_dude.move_local_y(value)
+			#guitar_dude.move_local_y(value)
+			guitar_dude.move(Vector2(0.0, value))
 			guitar_dude_sprite.set_flip_v(flip_v)
 			slide_count = 0
 
@@ -266,9 +281,13 @@ class Hit:
 	func input(event):
 		pass
 	
-	func hit():
+	func hit(damage):
 		# TODO: Add code to reduce health and triger STATE_DEAD when < 0
-		
+		if guitar_dude.health < 0:
+			guitar_dude.set_state("SD")
+		else:
+			guitar_dude.health -= damage
+			guitar_dude_sprite.play("hit")
 		#################################################################################################
 		# TODO - Bertie: Audio code goes here
 		# See 'samplePlayer2D' class for available methods
@@ -308,7 +327,7 @@ class Dead:
 		# TODO - Bertie: Audio code goes here
 		# See 'samplePlayer2D' class for available methods
 		#################################################################################################
-		guitar_dude_collision.play("dead")
+		guitar_dude_sprite.play("dead")
 
 	func exit():
 		pass

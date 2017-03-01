@@ -10,8 +10,12 @@ const STATE_ATTACKING	= "SA"
 const STATE_SPECIAL		= "SS"
 const STATE_HIT			= "SH"
 const STATE_DEAD		= "SD"
+# preload scripts
+const player = preload("guitar_dude_main.gd")
 
 # variables
+# root scene variables
+var root = null
 # movement
 var get_current_pos
 var death_count = 0
@@ -28,14 +32,19 @@ var state_timer    = 0
 var state_timer_limit = 1.0
 # character parameters
 export var health = 100
-export var damage = 1
+
 
 func _ready():
 	set_fixed_process(true)
-	set_pos(Vector2(400, 400))
+	set_pos(Vector2(600, 280))
+	# get root node
+	var _root=get_tree().get_root()
+	root = _root.get_child(_root.get_child_count()-1)
+	get_node("generic_metal_guy_hitbox").connect("body_enter", self, "_on_Hitbox_body_enter")
 
 func _fixed_process(delta):
 	state.update(delta)
+
 
 func set_state(new_state):
 	state.exit()
@@ -44,11 +53,11 @@ func set_state(new_state):
 	elif new_state == STATE_IDLE:
 		state = Idle.new(self)
 	elif new_state == STATE_MOVING:
-		state = Moving.new(self)
+		state = Moving.new(self, get_node("../guitar_dude"))
 	elif new_state == STATE_ATTACKING:
-		state = Attacking.new(self)
+		state = Attacking.new(self, get_node("../guitar_dude"))
 	elif new_state == STATE_HIT:
-		state = Hit.new(self)
+		state = Hit.new(self, get_node("../guitar_dude"))
 
 func get_state():
 	if state extends Dead:
@@ -136,9 +145,20 @@ class Moving:
 			generic_metal_guy_sprite.set_flip_h(false)
 		else:
 			generic_metal_guy_sprite.set_flip_h(true)
+
 		if length < 512:
 			generic_metal_guy.move(Vector2(length_to_player_x * walk_speed, length_to_player_y * walk_speed))
 			generic_metal_guy_sprite.play("walk")
+		else:
+			generic_metal_guy.set_state("SI")
+		# if collision is true trigger on hitbox function
+		if generic_metal_guy.is_colliding():
+			_on_Hitbox_body_enter(generic_metal_guy.get_collider())
+	
+	# body is other collision object - if body is in group player then set self state to SA
+	func _on_Hitbox_body_enter( body ):
+		if body.is_colliding() and body.is_in_group("player"):
+			generic_metal_guy.set_state("SA")
 
 	func exit():
 		pass
@@ -147,13 +167,16 @@ class Moving:
 # STATE: SA
 # ------------------------------------------------------------------------------------------------------#
 class Attacking:
+	var damage = 0.5
 	var generic_metal_guy
 	var generic_metal_guy_sprite
 	var generic_metal_guy_collision
 	var generic_metal_guy_audio
+	var player
 	
-	func _init(generic_metal_guy):
+	func _init(generic_metal_guy, player):
 		self.generic_metal_guy = generic_metal_guy
+		self.player = player
 		generic_metal_guy_sprite = generic_metal_guy.get_node("generic_metal_guy_sprite")
 		generic_metal_guy_collision = generic_metal_guy.get_node("generic_metal_guy_collision")
 		generic_metal_guy_audio = generic_metal_guy.get_node("generic_metal_guy_audio")
@@ -163,7 +186,17 @@ class Attacking:
 		#################################################################################################
 		# TODO - Bertie: Audio code goes here
 		# See 'samplePlayer2D' class for available methods
+		# if get_state of player is hit then collision has been detected and hit function ran against player
+		# elif player is dead set self to idle
+		# else move towards player
 		#################################################################################################
+		if player:
+			if player.get_state() == "SH":
+				player.state.hit(damage)
+			elif player.get_state() == "SD":
+				generic_metal_guy.set_state("SI")
+			else:
+				generic_metal_guy.set_state("SM")
 
 	func exit():
 		pass
@@ -176,9 +209,11 @@ class Hit:
 	var generic_metal_guy_sprite
 	var generic_metal_guy_collision
 	var generic_metal_guy_audio
+	var player
 	
-	func _init(generic_metal_guy):
+	func _init(generic_metal_guy, player):
 		self.generic_metal_guy = generic_metal_guy
+		self.player = player
 		generic_metal_guy_sprite = generic_metal_guy.get_node("generic_metal_guy_sprite")
 		generic_metal_guy_collision = generic_metal_guy.get_node("generic_metal_guy_collision")
 		generic_metal_guy_audio = generic_metal_guy.get_node("generic_metal_guy_audio")
