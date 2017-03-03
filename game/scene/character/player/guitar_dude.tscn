@@ -5,11 +5,11 @@
 [ext_resource path="res://sprite/character/player/guitar_dude/idle_1.png" type="Texture" id=3]
 [ext_resource path="res://sprite/character/player/guitar_dude/special_0.png" type="Texture" id=4]
 [ext_resource path="res://sprite/character/player/guitar_dude/special_1.png" type="Texture" id=5]
-[ext_resource path="res://sprite/character/player/guitar_dude/hit_0.png" type="Texture" id=6]
-[ext_resource path="res://sprite/character/player/guitar_dude/hit_1.png" type="Texture" id=7]
-[ext_resource path="res://sprite/character/player/guitar_dude/dead_0.png" type="Texture" id=8]
-[ext_resource path="res://sprite/character/player/guitar_dude/dead_1.png" type="Texture" id=9]
-[ext_resource path="res://sprite/character/player/guitar_dude/dead_2.png" type="Texture" id=10]
+[ext_resource path="res://sprite/character/player/guitar_dude/dead_0.png" type="Texture" id=6]
+[ext_resource path="res://sprite/character/player/guitar_dude/dead_1.png" type="Texture" id=7]
+[ext_resource path="res://sprite/character/player/guitar_dude/dead_2.png" type="Texture" id=8]
+[ext_resource path="res://sprite/character/player/guitar_dude/hit_0.png" type="Texture" id=9]
+[ext_resource path="res://sprite/character/player/guitar_dude/hit_1.png" type="Texture" id=10]
 [ext_resource path="res://sprite/character/player/guitar_dude/punch_0.png" type="Texture" id=11]
 [ext_resource path="res://sprite/character/player/guitar_dude/punch_1.png" type="Texture" id=12]
 [ext_resource path="res://sprite/character/player/guitar_dude/walk_0.png" type="Texture" id=13]
@@ -25,7 +25,7 @@ height = 2.36406
 
 [sub_resource type="SpriteFrames" id=2]
 
-animations = [ { "frames":[ ExtResource( 2 ), ExtResource( 3 ) ], "loop":true, "name":"idle", "speed":3.0 }, { "frames":[ ExtResource( 4 ), ExtResource( 5 ) ], "loop":true, "name":"special", "speed":2.0 }, { "frames":[ ExtResource( 6 ), ExtResource( 7 ), ExtResource( 2 ) ], "loop":false, "name":"hit", "speed":2.0 }, { "frames":[ ExtResource( 8 ), ExtResource( 9 ), ExtResource( 10 ) ], "loop":false, "name":"dead", "speed":3.0 }, { "frames":[ ExtResource( 11 ), ExtResource( 12 ) ], "loop":false, "name":"punch", "speed":2.0 }, { "frames":[ ExtResource( 13 ), ExtResource( 14 ), ExtResource( 15 ), ExtResource( 16 ) ], "loop":true, "name":"walk", "speed":3.0 } ]
+animations = [ { "frames":[ ExtResource( 2 ), ExtResource( 3 ) ], "loop":true, "name":"idle", "speed":3.0 }, { "frames":[ ExtResource( 4 ), ExtResource( 5 ) ], "loop":true, "name":"special", "speed":2.0 }, { "frames":[ ExtResource( 6 ), ExtResource( 7 ), ExtResource( 8 ) ], "loop":false, "name":"dead", "speed":3.0 }, { "frames":[ ExtResource( 9 ), ExtResource( 10 ), ExtResource( 2 ) ], "loop":false, "name":"hit", "speed":2.0 }, { "frames":[ ExtResource( 11 ), ExtResource( 12 ) ], "loop":false, "name":"punch", "speed":2.0 }, { "frames":[ ExtResource( 13 ), ExtResource( 14 ), ExtResource( 15 ), ExtResource( 16 ) ], "loop":true, "name":"walk", "speed":3.0 } ]
 
 [sub_resource type="SampleLibrary" id=3]
 
@@ -36,23 +36,26 @@ samples/dead = { "db":0.0, "pitch":1.0, "sample":null }
 transform/scale = Vector2( 2, 2 )
 input/pickable = false
 shapes/0/shape = SubResource( 1 )
-shapes/0/transform = Matrix32( 2, 0, 0, 3, 0, 0 )
+shapes/0/transform = Matrix32( 1.25677, 0, 0, 0.868205, -1.08838, 24.7331 )
 shapes/0/trigger = false
 collision/layers = 1
 collision/mask = 1
 collision/margin = 0.08
 script/script = ExtResource( 1 )
 health = 100
+new_state = "SI"
 
 [node name="guitar_dude_sprite" type="AnimatedSprite" parent="." groups=[ "player" ]]
 
+transform/pos = Vector2( 0.145996, 0 )
 frames = SubResource( 2 )
 animation = "idle"
 playing = true
 
 [node name="guitar_dude_collision" type="CollisionShape2D" parent="." groups=[ "player" ]]
 
-transform/scale = Vector2( 2, 3 )
+transform/pos = Vector2( -1.08838, 24.7331 )
+transform/scale = Vector2( 1.25677, 0.868205 )
 shape = SubResource( 1 )
 trigger = false
 _update_shape_index = 0
@@ -73,5 +76,14 @@ default/filter/gain = 1.0
 default/reverb_room = 2
 default/reverb_send = 0.0
 default/chorus_send = 0.0
+
+[node name="guitar_dude_ray_cast_right" type="RayCast2D" parent="."]
+
+transform/pos = Vector2( -0.31448, 13.111 )
+transform/scale = Vector2( 0.631882, 0.37417 )
+enabled = true
+cast_to = Vector2( 50, 0 )
+layer_mask = 1
+type_mask = 15
 
 

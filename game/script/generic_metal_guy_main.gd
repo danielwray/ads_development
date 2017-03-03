@@ -1,5 +1,12 @@
 extends KinematicBody2D
 
+# TODO refactor entire script to abstract from generic_metal_guy
+# - abstract references to exported vars
+# - rename scene to enemies
+# - include sub-groups from main node that contains multiple characters
+# - instance scene and reference enemy character type
+
+
 # TODO : Implement code to check player group and find nearest character
 onready var state = Moving.new(self, get_node("../guitar_dude"))
 
@@ -30,34 +37,50 @@ var current_state  = ""
 var next_state     = ""
 var state_timer    = 0
 var state_timer_limit = 1.0
+var dead_counter = 0
+var dead_counter_limit = 300
 # character parameters
 export var health = 100
 
-
 func _ready():
 	set_fixed_process(true)
-	set_pos(Vector2(600, 280))
+	#set_pos(Vector2(800, 350))
 	# get root node
 	var _root=get_tree().get_root()
 	root = _root.get_child(_root.get_child_count()-1)
-	get_node("generic_metal_guy_hitbox").connect("body_enter", self, "_on_Hitbox_body_enter")
 
 func _fixed_process(delta):
-	state.update(delta)
+	# if collision is true against only player and trigger on hitbox function
+	if health > 0:
+		state.update(delta)
+		if get_node("generic_metal_guy_raycast_right").is_colliding():
+			if get_node("generic_metal_guy_raycast_right").get_collider().is_in_group("player"):
+				trigger_attack_state()
+		else:
+			set_state("SM")
+	else:
+		set_state("SD")
+		dead_counter += 1
+		if dead_counter > dead_counter_limit:
+			queue_free()
 
+# body is other collision object - if body is in group player then set self state to SA
+func trigger_attack_state():
+	set_state("SA")
 
 func set_state(new_state):
 	state.exit()
 	if new_state == STATE_DEAD:
 		state = Dead.new(self)
+		state.dead()
 	elif new_state == STATE_IDLE:
 		state = Idle.new(self)
 	elif new_state == STATE_MOVING:
 		state = Moving.new(self, get_node("../guitar_dude"))
 	elif new_state == STATE_ATTACKING:
-		state = Attacking.new(self, get_node("../guitar_dude"))
+		state = Attacking.new(self)
 	elif new_state == STATE_HIT:
-		state = Hit.new(self, get_node("../guitar_dude"))
+		state = Hit.new(self)
 
 func get_state():
 	if state extends Dead:
@@ -104,6 +127,7 @@ class Moving:
 	var generic_metal_guy_sprite
 	var generic_metal_guy_collision
 	var generic_metal_guy_audio
+	var generic_metal_guy_raycast_right
 	var player
 	
 	func _init(generic_metal_guy, player):
@@ -112,6 +136,7 @@ class Moving:
 		generic_metal_guy_sprite = generic_metal_guy.get_node("generic_metal_guy_sprite")
 		generic_metal_guy_collision = generic_metal_guy.get_node("generic_metal_guy_collision")
 		generic_metal_guy_audio = generic_metal_guy.get_node("generic_metal_guy_audio")
+		generic_metal_guy_raycast_right = generic_metal_guy.get_node("generic_metal_guy_raycast_right")
 
 	func update(delta):
 		on_move(player)
@@ -122,6 +147,7 @@ class Moving:
 		#################################################################################################
 
 	func on_move(player):
+		var window_size = OS.get_window_size()
 		var player_node
 		var player_pos
 		var get_current_pos
@@ -143,22 +169,20 @@ class Moving:
 		length_to_player_y = delta_y / length
 		if (generic_metal_guy.get_angle_to(player_pos) > 0.5):
 			generic_metal_guy_sprite.set_flip_h(false)
+			generic_metal_guy_raycast_right.set_rot(6)
 		else:
 			generic_metal_guy_sprite.set_flip_h(true)
+			generic_metal_guy_raycast_right.set_rot(-160)
 
-		if length < 512:
+		# determine z value of character (0 if above half screen, 1 if below)
+		if generic_metal_guy.get_pos().y < window_size.y / 2:
+			generic_metal_guy.set_z(int(generic_metal_guy.get_pos().y))
+		elif generic_metal_guy.get_pos().y > window_size.y / 2:
+			generic_metal_guy.set_z(int(generic_metal_guy.get_pos().y))
 			generic_metal_guy.move(Vector2(length_to_player_x * walk_speed, length_to_player_y * walk_speed))
 			generic_metal_guy_sprite.play("walk")
 		else:
 			generic_metal_guy.set_state("SI")
-		# if collision is true trigger on hitbox function
-		if generic_metal_guy.is_colliding():
-			_on_Hitbox_body_enter(generic_metal_guy.get_collider())
-	
-	# body is other collision object - if body is in group player then set self state to SA
-	func _on_Hitbox_body_enter( body ):
-		if body.is_colliding() and body.is_in_group("player"):
-			generic_metal_guy.set_state("SA")
 
 	func exit():
 		pass
@@ -172,17 +196,20 @@ class Attacking:
 	var generic_metal_guy_sprite
 	var generic_metal_guy_collision
 	var generic_metal_guy_audio
-	var player
+	var generic_metal_guy_raycast_right
 	
-	func _init(generic_metal_guy, player):
+	func _init(generic_metal_guy):
 		self.generic_metal_guy = generic_metal_guy
-		self.player = player
 		generic_metal_guy_sprite = generic_metal_guy.get_node("generic_metal_guy_sprite")
 		generic_metal_guy_collision = generic_metal_guy.get_node("generic_metal_guy_collision")
 		generic_metal_guy_audio = generic_metal_guy.get_node("generic_metal_guy_audio")
+		generic_metal_guy_raycast_right = generic_metal_guy.get_node("generic_metal_guy_raycast_right")
 
 	func update(delta):
-		generic_metal_guy_sprite.play("punch")
+		attack()
+	
+	
+	func attack():
 		#################################################################################################
 		# TODO - Bertie: Audio code goes here
 		# See 'samplePlayer2D' class for available methods
@@ -190,13 +217,26 @@ class Attacking:
 		# elif player is dead set self to idle
 		# else move towards player
 		#################################################################################################
-		if player:
-			if player.get_state() == "SH":
-				player.state.hit(damage)
-			elif player.get_state() == "SD":
-				generic_metal_guy.set_state("SI")
+		
+		# TODO - fix bug with right / left raycast being null
+		var player_object_id
+		player_object_id = generic_metal_guy_raycast_right.get_collider()
+		var random_determinator = randi()%11+1
+		if random_determinator > 8:
+			if player_object_id.is_in_group("player"):
+				if player_object_id.get_state() == "SD":
+					generic_metal_guy.set_state("SI")
+				else:
+					# we need to set the player state to hit else the hit() function is not available
+					# I don't like this, and don't feel it is the proper way to handle interaction and triggers
+					# but it'll do for now, and we can change it later on.
+					player_object_id.set_state("SH")
+					player_object_id.state.hit(damage)
+					generic_metal_guy_sprite.play("punch")
+					generic_metal_guy.set_state("SM")
 			else:
 				generic_metal_guy.set_state("SM")
+
 
 	func exit():
 		pass
@@ -209,24 +249,30 @@ class Hit:
 	var generic_metal_guy_sprite
 	var generic_metal_guy_collision
 	var generic_metal_guy_audio
-	var player
 	
-	func _init(generic_metal_guy, player):
+	func _init(generic_metal_guy):
 		self.generic_metal_guy = generic_metal_guy
-		self.player = player
 		generic_metal_guy_sprite = generic_metal_guy.get_node("generic_metal_guy_sprite")
 		generic_metal_guy_collision = generic_metal_guy.get_node("generic_metal_guy_collision")
 		generic_metal_guy_audio = generic_metal_guy.get_node("generic_metal_guy_audio")
 
 	func update(delta):
-		generic_metal_guy_sprite.play("hit")
+		generic_metal_guy.set_state("SD")
 		#################################################################################################
 		# TODO - Bertie: Audio code goes here
 		# See 'samplePlayer2D' class for available methods
 		#################################################################################################
 
-	func on_move():
-		pass
+	func hit(damage):
+		#################################################################################################
+		# TODO - Bertie: Audio code goes here
+		# See 'samplePlayer2D' class for available methods
+		#################################################################################################
+		if generic_metal_guy.health < 0:
+			generic_metal_guy.set_state("SD")
+		else:
+			generic_metal_guy.health -= damage
+			generic_metal_guy_sprite.play("hit")
 
 	func exit():
 		pass
@@ -247,106 +293,17 @@ class Dead:
 		generic_metal_guy_audio = generic_metal_guy.get_node("generic_metal_guy_audio")
 
 	func update(delta):
+		generic_metal_guy.set_state("SD")
+
+	func dead():
 		generic_metal_guy_sprite.play("dead")
 		#################################################################################################
 		# TODO - Bertie: Audio code goes here
 		# See 'samplePlayer2D' class for available methods
 		#################################################################################################
 
-	func dead():
-		pass
-
 	func exit():
 		pass
 
-#func _fixed_process(delta):
-#	# get generic_metal_guy node and position
-#	var generic_metal_guy = get_node("../generic_metal_guy")
-#	var generic_metal_guy_pos = generic_metal_guy.get_pos()
-#	var generic_metal_guy_state = generic_metal_guy.get_state()
-#	
-#	# if not at generic_metal_guy's position then move towards it
-#	if not (generic_metal_guy_pos == get_pos()):
-#		set_state("moving")
-#		# this won't work for multiple enemies, so not sure what to do here... urgh
-#		get_current_pos = get_pos()
-#		#move_local_y(get_current_pos.x)
-#		#move_local_x(get_current_pos.y)
-#		var delta_x = generic_metal_guy_pos.x - get_current_pos.x
-#		var delta_y = generic_metal_guy_pos.y - get_current_pos.y
-#		# get angle to player in radians
-#		# use arctanget of dx, dy
-#		# atan2(delta_x, delta_y) * 180 / PI to get degrees, but we are working in radians here
-#		var angle_in_radians = atan2(delta_x, delta_y)
-#		# get normalized length from generic_metal_guy to enemy dude
-#		var length = sqrt(delta_x * delta_x + delta_y * delta_y)
-#		var length_to_generic_metal_guy_x = delta_x / length
-#		var length_to_generic_metal_guy_y = delta_y / length
-#		# move enemy towards generic_metal_guy
-#		print(length)
-#		if is_moving:
-#			if length < 512:
-#				move(Vector2(length_to_generic_metal_guy_x * 0.5, length_to_generic_metal_guy_y * 0.5))
-#				play_sprite_animation("walk")
-#			else:
-#				is_moving = false
-#				can_be_hit = true
-#				play_sprite_animation("idle")
-#		
-#
-#	# if instance is colliding and collision is with generic_metal_guy and generic_metal_guy is attacking
-#	if is_colliding() and get_collider().get_name() == "generic_metal_guy" and generic_metal_guy_state == "attacking":
-#		if can_be_hit:
-#			play_sprite_animation("hit")
-#			health= generic_metal_guy.damage
-#			set_state("hit")
-#			can_be_hit = false
-#			is_moving = false
-#	# else if generic_metal_guy is doing special then take off damage all instances of enemy
-#	elif generic_metal_guy_state == "special":
-#		play_sprite_animation("hit")
-#		health= 0.1
-#		set_state("hit")
-#		is_moving = false
-#	# else enemy can attack generic_metal_guy
-#	elif is_colliding() and get_collider().get_name() == "generic_metal_guy" and generic_metal_guy_state == "SI":
-#		play_sprite_animation("punch")
-#		generic_metal_guy.set_state("SD")
-#		set_state("attacking")
-#		can_be_hit = true
-#		is_moving = false
-#	else:
-#		is_moving = true
-#		can_be_hit = true
-#
-#	# flip if angle positive (left of character)
-#	if (get_angle_to(generic_metal_guy_pos) > 0.5):
-#		sprite.set_flip_h(false)
-#	else:
-#		sprite.set_flip_h(true)
-#
-#	if health < 1:
-#		is_dead = true
-#		play_sprite_animation("dead")
-#		# quick hack to stop loop, not sure if this should be done????
-#		#get_node("generic_generic_metal_guy_collision").remove_and_skip()
-#		set_state("dead")
-#		dead_timer += 1
-#		if dead_timer > 30:
-#			queue_free()
-#			set_fixed_process(false)
-#
- #for loop-enabled animations
-#func play_sprite_animation(animation_name):
-#	sprite.play(animation_name)
-#
-# for attack, reset frame and play attack animation
-#func attack(animation_name):
-#	sprite.set_frame(0)
-#	sprite.play(animation_name)
-#
-#func set_state(state):
-#	character_state = state
-#
-#func get_state():
-#	return character_state
+func get_health():
+	return health
