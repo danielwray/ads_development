@@ -7,8 +7,8 @@ extends Node
 onready var state_machine = preload("res://script/state_machine.gd")
 var state_machine_object
 # difficulty
-var enemy_min_count = 0
-var enemy_max_count = 100
+var enemy_min_count = 16
+var enemy_max_count = 64
 # timers
 var spawn_timer = 0
 # resources
@@ -33,7 +33,7 @@ func load_characters():
 	add_child(player.instance())
 
 	var enemies = ResourceLoader.load("res://scene/character/enemy/generic_metal_guy.tscn")
-	for enemy in range(0, 32):
+	for enemy in range(enemy_min_count, enemy_max_count):
 		enemy = enemies.instance()
 		enemy.set_pos(Vector2(rand_range(600, 20000), rand_range(290, 550)))
 		add_child(enemy)

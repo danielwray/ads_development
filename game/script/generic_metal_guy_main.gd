@@ -31,6 +31,7 @@ var dead_timer = 0
 var sprite
 var audio
 var collision
+var enemy_name_label
 # state parameters
 var previous_state = ""
 var current_state  = ""
@@ -38,9 +39,11 @@ var next_state     = ""
 var state_timer    = 0
 var state_timer_limit = 1.0
 var dead_counter = 0
-var dead_counter_limit = 300
+var dead_counter_limit = 200
 # character parameters
 export var health = 100
+var enemy_name_list = ["Generic Metal Guy"]
+var enemy_health_bar
 
 func _ready():
 	set_fixed_process(true)
@@ -48,17 +51,30 @@ func _ready():
 	# get root node
 	var _root=get_tree().get_root()
 	root = _root.get_child(_root.get_child_count()-1)
+	# set enemy name
+	enemy_name_label = get_node("generic_metal_guy_name")
+	enemy_name_label.set_text(str(enemy_name_list[randi() % enemy_name_list.size()]))
+	# set enemy health bar
+	enemy_health_bar = get_node("generic_metal_guy_health")
+	enemy_health_bar.set_value(health)
 
 func _fixed_process(delta):
-	# if collision is true against only player and trigger on hitbox function
+	# if enemy health is greater than 0 and raycaster is colliding
+	# check if collider object (i.e. player) has method (is_in_group)
+	# if true check the object is in player group and trigger attack
 	if health > 0:
+		enemy_health_bar.set_value(health)
 		state.update(delta)
 		if get_node("generic_metal_guy_raycast_right").is_colliding():
-			if get_node("generic_metal_guy_raycast_right").get_collider().is_in_group("player"):
-				trigger_attack_state()
+			var collider = get_node("generic_metal_guy_raycast_right").get_collider()
+			if collider.has_method("is_in_group"):
+				if get_node("generic_metal_guy_raycast_right").get_collider().is_in_group("player"):
+					trigger_attack_state()
 		else:
 			set_state("SM")
 	else:
+		enemy_health_bar.hide()
+		enemy_name_label.hide()
 		set_state("SD")
 		dead_counter += 1
 		if dead_counter > dead_counter_limit:
@@ -157,7 +173,7 @@ class Moving:
 		var length
 		var length_to_player_x
 		var length_to_player_y
-		var walk_speed = 0.3
+		var walk_speed = 0.5
 		var player_node = player
 		player_pos = player_node.get_pos()
 		get_current_pos = generic_metal_guy.get_pos()
@@ -191,7 +207,7 @@ class Moving:
 # STATE: SA
 # ------------------------------------------------------------------------------------------------------#
 class Attacking:
-	var damage = 0.5
+	var damage = 1
 	var generic_metal_guy
 	var generic_metal_guy_sprite
 	var generic_metal_guy_collision
@@ -223,7 +239,7 @@ class Attacking:
 		player_object_id = generic_metal_guy_raycast_right.get_collider()
 		var random_determinator = randi()%11+1
 		if random_determinator > 8:
-			if player_object_id.is_in_group("player"):
+			if player_object_id.has_method("is_in_group") and player_object_id.is_in_group("player"):
 				if player_object_id.get_state() == "SD":
 					generic_metal_guy.set_state("SI")
 				else:

@@ -27,6 +27,7 @@ func _ready():
 	set_fixed_process(true)
 	set_process_unhandled_input(true)
 	set_pos(Vector2(120, 300))
+	health = 100
 
 func _fixed_process(delta):
 	state.update(delta)
@@ -171,7 +172,7 @@ class Moving:
 		#################################################################################################
 		guitar_dude_sprite.play("walk")
 		if axis == "x":
-			#guitar_dude.move_local_x(value)
+			guitar_dude.set_state("SM")
 			guitar_dude.move(Vector2(value, 0.0))
 			guitar_dude_sprite.set_flip_h(flip_h)
 			if flip_h:
@@ -180,7 +181,7 @@ class Moving:
 				guitar_dude_ray_cast_right.	set_global_rot(6)
 			slide_count = 0
 		else:
-			#guitar_dude.move_local_y(value)
+			guitar_dude.set_state("SM")
 			guitar_dude.move(Vector2(0.0, value))
 			guitar_dude_sprite.set_flip_v(flip_v)
 			# determine z value of character (0 if above half screen, 1 if below)
@@ -198,7 +199,7 @@ class Moving:
 # STATE: SA
 # ------------------------------------------------------------------------------------------------------#
 class Attacking:
-	var damage = 10
+	var damage = 2
 	var guitar_dude
 	var guitar_dude_sprite
 	var guitar_dude_collision
@@ -360,3 +361,6 @@ class Dead:
 
 	func exit():
 		pass
+
+func get_health():
+	return health
