@@ -2,7 +2,20 @@
 
 Development repository for working title ADS
 
+
+![ADS Screenshot](https://s23.postimg.org/u1649wiob/menu.png)
+
+## Github Web Page
+
 https://danielwray.github.io/ads_development/
+
+## Wiki Page
+
+https://github.com/danielwray/ads_development/wiki
+
+## Google Documents
+
+https://docs.google.com/document/d/1tjSpFJewTZVQFwJljhn7mJGTTV4MQwPLqLD-KZDr6ms/view
 
 ## Directory Overview
 

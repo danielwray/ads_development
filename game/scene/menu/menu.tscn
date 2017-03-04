@@ -1,0 +1,103 @@
+[gd_scene load_steps=3 format=1]
+
+[ext_resource path="res://script/main_menu.gd" type="Script" id=1]
+[ext_resource path="res://scene/character/player/guitar_dude.tscn" type="PackedScene" id=2]
+
+[node name="menu" type="Node"]
+
+[node name="menu_container" type="VBoxContainer" parent="."]
+
+focus/ignore_mouse = false
+focus/stop_mouse = false
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 400.0
+margin/top = 364.0
+margin/right = 656.0
+margin/bottom = 597.0
+alignment = 0
+script/script = ExtResource( 1 )
+
+[node name="start" type="Button" parent="menu_container"]
+
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 0.0
+margin/top = 0.0
+margin/right = 256.0
+margin/bottom = 20.0
+toggle_mode = false
+click_on_press = true
+enabled_focus_mode = 0
+shortcut = null
+text = "Start Game"
+flat = true
+
+[node name="highscore" type="Button" parent="menu_container"]
+
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 0.0
+margin/top = 24.0
+margin/right = 256.0
+margin/bottom = 44.0
+toggle_mode = false
+click_on_press = true
+enabled_focus_mode = 0
+shortcut = null
+text = "High Score"
+flat = true
+
+[node name="credit" type="Button" parent="menu_container"]
+
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 0.0
+margin/top = 48.0
+margin/right = 256.0
+margin/bottom = 68.0
+toggle_mode = false
+click_on_press = true
+enabled_focus_mode = 0
+shortcut = null
+text = "Credits"
+flat = true
+
+[node name="exit" type="Button" parent="menu_container"]
+
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 0.0
+margin/top = 72.0
+margin/right = 256.0
+margin/bottom = 92.0
+toggle_mode = false
+click_on_press = true
+enabled_focus_mode = 0
+shortcut = null
+text = "Exit Game"
+flat = true
+
+[node name="guitardude" parent="." instance=ExtResource( 2 )]
+
+transform/pos = Vector2( 530.815, 209.517 )
+transform/scale = Vector2( 4.26126, 4.26126 )
+script/script = null
+
+[connection signal="pressed" from="menu_container/start" to="menu_container" method="_on_start_pressed"]
+
+[connection signal="pressed" from="menu_container/highscore" to="menu_container" method="_on_highscore_pressed"]
+
+[connection signal="pressed" from="menu_container/credit" to="menu_container" method="_on_credit_pressed"]
+
+[connection signal="pressed" from="menu_container/exit" to="menu_container" method="_on_exit_pressed"]
+
+
