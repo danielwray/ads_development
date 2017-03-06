@@ -15,6 +15,10 @@ func _on_credit_pressed():
 	# load credit scene
 	load_scene("credit")
 
+func _on_setting_pressed():
+	# load setting menu scene
+	load_scene("setting")
+
 func _on_exit_pressed():
 	# exit game upon exit pressed
 	get_tree().quit()
@@ -22,3 +26,5 @@ func _on_exit_pressed():
 func load_scene(scene):
 	var scene_file = init.get_scene_files(scene)
 	init.set_scene(scene_file)
+
+

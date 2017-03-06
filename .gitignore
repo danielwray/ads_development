@@ -31,3 +31,8 @@ develop-eggs/
 
 # Installer logs
 pip-log.txt
+
+# tmp files
+*~
+*.swp
+*$

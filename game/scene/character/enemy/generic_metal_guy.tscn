@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=1]
+[gd_scene load_steps=30 format=1]
 
 [ext_resource path="res://script/generic_metal_guy_main.gd" type="Script" id=1]
 [ext_resource path="res://sprite/character/enemy/generic_metal_dude/generic_metal_guy_idle0.png" type="Texture" id=2]
@@ -15,14 +15,17 @@
 [ext_resource path="res://sprite/character/enemy/generic_metal_dude/generic_metal_guy_hit1.png" type="Texture" id=13]
 [ext_resource path="res://sprite/character/enemy/generic_metal_dude/generic_metal_guy_hit2.png" type="Texture" id=14]
 [ext_resource path="res://sprite/character/enemy/generic_metal_dude/generic_metal_guy_hit3.png" type="Texture" id=15]
-[ext_resource path="res://sprite/character/enemy/generic_metal_dude/generic_metal_guy_punch0.png" type="Texture" id=16]
-[ext_resource path="res://sprite/character/enemy/generic_metal_dude/generic_metal_guy_punch1.png" type="Texture" id=17]
-[ext_resource path="res://sprite/character/enemy/generic_metal_dude/generic_metal_guy_punch2.png" type="Texture" id=18]
-[ext_resource path="res://sprite/character/enemy/generic_metal_dude/generic_metal_guy_punch3.png" type="Texture" id=19]
-[ext_resource path="res://sprite/character/enemy/generic_metal_dude/generic_metal_guy_walk0.png" type="Texture" id=20]
-[ext_resource path="res://sprite/character/enemy/generic_metal_dude/generic_metal_guy_walk1.png" type="Texture" id=21]
-[ext_resource path="res://sprite/character/enemy/generic_metal_dude/generic_metal_guy_walk2.png" type="Texture" id=22]
-[ext_resource path="res://sprite/character/enemy/generic_metal_dude/generic_metal_guy_walk3.png" type="Texture" id=23]
+[ext_resource path="res://sprite/character/enemy/generic_metal_dude/generic_metal_guy_walk0.png" type="Texture" id=16]
+[ext_resource path="res://sprite/character/enemy/generic_metal_dude/generic_metal_guy_walk1.png" type="Texture" id=17]
+[ext_resource path="res://sprite/character/enemy/generic_metal_dude/generic_metal_guy_walk2.png" type="Texture" id=18]
+[ext_resource path="res://sprite/character/enemy/generic_metal_dude/generic_metal_guy_walk3.png" type="Texture" id=19]
+[ext_resource path="res://sprite/character/enemy/generic_metal_dude/generic_metal_guy_punch0.png" type="Texture" id=20]
+[ext_resource path="res://sprite/character/enemy/generic_metal_dude/generic_metal_guy_punch1.png" type="Texture" id=21]
+[ext_resource path="res://sprite/character/enemy/generic_metal_dude/generic_metal_guy_punch2.png" type="Texture" id=22]
+[ext_resource path="res://sprite/character/enemy/generic_metal_dude/generic_metal_guy_punch3.png" type="Texture" id=23]
+[ext_resource path="res://sprite/ui/progress_bar/progress_bar_under.png" type="Texture" id=24]
+[ext_resource path="res://sprite/ui/progress_bar/progress_bar_over.png" type="Texture" id=25]
+[ext_resource path="res://sprite/ui/progress_bar/progress_bar_progress.png" type="Texture" id=26]
 
 [sub_resource type="CircleShape2D" id=1]
 
@@ -31,7 +34,7 @@ radius = 10.4998
 
 [sub_resource type="SpriteFrames" id=2]
 
-animations = [ { "frames":[ ExtResource( 2 ), ExtResource( 3 ), ExtResource( 4 ), ExtResource( 5 ) ], "loop":true, "name":"idle", "speed":2.0 }, { "frames":[ ExtResource( 6 ), ExtResource( 7 ), ExtResource( 8 ), ExtResource( 9 ), ExtResource( 10 ), ExtResource( 11 ) ], "loop":false, "name":"dead", "speed":2.0 }, { "frames":[ ExtResource( 12 ), ExtResource( 13 ), ExtResource( 14 ), ExtResource( 15 ), ExtResource( 12 ) ], "loop":false, "name":"hit", "speed":3.0 }, { "frames":[ ExtResource( 16 ), ExtResource( 17 ), ExtResource( 18 ), ExtResource( 19 ) ], "loop":true, "name":"punch", "speed":6.0 }, { "frames":[ ExtResource( 20 ), ExtResource( 21 ), ExtResource( 22 ), ExtResource( 23 ) ], "loop":true, "name":"walk", "speed":3.0 } ]
+animations = [ { "frames":[ ExtResource( 2 ), ExtResource( 3 ), ExtResource( 4 ), ExtResource( 5 ) ], "loop":true, "name":"idle", "speed":2.0 }, { "frames":[ ExtResource( 6 ), ExtResource( 7 ), ExtResource( 8 ), ExtResource( 9 ), ExtResource( 10 ), ExtResource( 11 ) ], "loop":false, "name":"dead", "speed":2.0 }, { "frames":[ ExtResource( 12 ), ExtResource( 13 ), ExtResource( 14 ), ExtResource( 15 ), ExtResource( 12 ) ], "loop":false, "name":"hit", "speed":3.0 }, { "frames":[ ExtResource( 16 ), ExtResource( 17 ), ExtResource( 18 ), ExtResource( 19 ) ], "loop":true, "name":"walk", "speed":3.0 }, { "frames":[ ExtResource( 20 ), ExtResource( 21 ), ExtResource( 22 ), ExtResource( 23 ) ], "loop":true, "name":"punch", "speed":6.0 } ]
 
 [sub_resource type="SampleLibrary" id=3]
 
@@ -41,6 +44,7 @@ resource/name = "generic_metal_guy_audio_library"
 
 transform/pos = Vector2( 0, -1.19403 )
 transform/scale = Vector2( 2, 2 )
+z/z = 1
 input/pickable = false
 shapes/0/shape = SubResource( 1 )
 shapes/0/transform = Matrix32( 0.940928, 0, 0, 0.791739, 0.0882793, 25.1127 )
@@ -55,6 +59,7 @@ health = 50
 
 frames = SubResource( 2 )
 animation = "idle"
+frame = 3
 playing = true
 
 [node name="generic_metal_guy_collision" type="CollisionShape2D" parent="." groups=[ "enemy" ]]
@@ -88,12 +93,67 @@ transform/pos = Vector2( 1.4559, 0.323532 )
 
 [node name="generic_metal_guy_raycast_right" type="RayCast2D" parent="." groups=[ "enemy" ]]
 
-transform/pos = Vector2( 0.413769, 15.4939 )
+transform/pos = Vector2( -0.834792, 14.3601 )
 transform/rot = -20.0
-transform/scale = Vector2( 0.271038, 0.37926 )
+transform/scale = Vector2( 0.395607, 0.37926 )
 enabled = true
 cast_to = Vector2( 50, 0 )
 layer_mask = 1
 type_mask = 15
+
+[node name="generic_metal_guy_name" type="Label" parent="."]
+
+anchor/left = 3
+anchor/top = 3
+anchor/right = 3
+anchor/bottom = 3
+rect/scale = Vector2( 0.5, 0.5 )
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+margin/left = 61.0
+margin/top = 83.0
+margin/right = -53.0
+margin/bottom = 69.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+text = "generic metal guy"
+align = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="generic_metal_guy_health" type="TextureProgress" parent="."]
+
+rect/scale = Vector2( 0.25, 0.25 )
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = -16.0
+margin/top = -38.0
+margin/right = 112.0
+margin/bottom = 2.0
+range/min = 0.0
+range/max = 50.0
+range/step = 1.0
+range/page = 0.0
+range/value = 1.0
+range/exp_edit = false
+range/rounded = false
+texture/under = ExtResource( 24 )
+texture/over = ExtResource( 25 )
+texture/progress = ExtResource( 26 )
+radial_fill/fill_degrees = 360.0
+radial_fill/center_offset = Vector2( 0, 0 )
+
+[node name="generic_metal_guy_area" type="Area2D" parent="."]
+
+input/pickable = true
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
 
 

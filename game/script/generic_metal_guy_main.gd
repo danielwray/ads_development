@@ -6,9 +6,10 @@ extends KinematicBody2D
 # - include sub-groups from main node that contains multiple characters
 # - instance scene and reference enemy character type
 
-
+# get player object (first) from player group - will tackle multiplayer later
+onready var player = get_tree().get_nodes_in_group("player")[0]
 # TODO : Implement code to check player group and find nearest character
-onready var state = Moving.new(self, get_node("../guitar_dude"))
+onready var state = Moving.new(self, player)
 
 # constants
 const STATE_IDLE		= "SI"
@@ -17,8 +18,6 @@ const STATE_ATTACKING	= "SA"
 const STATE_SPECIAL		= "SS"
 const STATE_HIT			= "SH"
 const STATE_DEAD		= "SD"
-# preload scripts
-const player = preload("guitar_dude_main.gd")
 
 # variables
 # root scene variables
@@ -31,6 +30,7 @@ var dead_timer = 0
 var sprite
 var audio
 var collision
+var enemy_name_label
 # state parameters
 var previous_state = ""
 var current_state  = ""
@@ -38,9 +38,25 @@ var next_state     = ""
 var state_timer    = 0
 var state_timer_limit = 1.0
 var dead_counter = 0
-var dead_counter_limit = 300
+var dead_counter_limit = 200
 # character parameters
 export var health = 100
+
+# TODO: replace with dictionary containing name, level, damage, and health
+#
+var enemy_name_list = [
+"Anthrax", "Accept", "AC/DC",
+"Aerosmith", "Alice Cooper",
+"Black Sabbath", "Boss", "Budgie",
+"Cactus", "Cream", "Crimson Glory",
+"Def Leppard", "Deep Purple", "Dokken",
+"Europe", "Exodus", "Ether the Frog",
+"Fist", "Faith No More", "Fallout",
+"Geordie", "Grave Digger", "Great White",
+"Slayer", "Blind Guardian", "Kiss", "Metalica",
+"Manowar"]
+
+var enemy_health_bar
 
 func _ready():
 	set_fixed_process(true)
@@ -48,21 +64,38 @@ func _ready():
 	# get root node
 	var _root=get_tree().get_root()
 	root = _root.get_child(_root.get_child_count()-1)
+	# set enemy name
+	enemy_name_label = get_node("generic_metal_guy_name")
+	enemy_name_label.set_text(str(enemy_name_list[randi() % enemy_name_list.size()]) + " Fan")
+	# set enemy health bar
+	enemy_health_bar = get_node("generic_metal_guy_health")
+	enemy_health_bar.set_value(health)
+	# set collision direction (vector) - this allows enemy to pass through each other, prior to this they would block each other
+	set_one_way_collision_direction(Vector2(-1,0))
 
 func _fixed_process(delta):
-	# if collision is true against only player and trigger on hitbox function
+	var collider
+	# if enemy health is greater than 0 and raycaster is colliding
+	# check if collider object (i.e. player) has method (is_in_group)
+	# if true check the object is in player group and trigger attack
 	if health > 0:
+		enemy_health_bar.set_value(health)
 		state.update(delta)
 		if get_node("generic_metal_guy_raycast_right").is_colliding():
-			if get_node("generic_metal_guy_raycast_right").get_collider().is_in_group("player"):
-				trigger_attack_state()
+			collider = get_node("generic_metal_guy_raycast_right").get_collider()
+			# collider.has_method("is_in_group")
+			if collider ==  get_tree().get_nodes_in_group("player")[0]:
+				if get_node("generic_metal_guy_raycast_right").get_collider().is_in_group("player"):
+					trigger_attack_state()
 		else:
 			set_state("SM")
 	else:
+		enemy_health_bar.hide()
+		enemy_name_label.hide()
 		set_state("SD")
 		dead_counter += 1
 		if dead_counter > dead_counter_limit:
-			queue_free()
+			delete()
 
 # body is other collision object - if body is in group player then set self state to SA
 func trigger_attack_state():
@@ -76,7 +109,7 @@ func set_state(new_state):
 	elif new_state == STATE_IDLE:
 		state = Idle.new(self)
 	elif new_state == STATE_MOVING:
-		state = Moving.new(self, get_node("../guitar_dude"))
+		state = Moving.new(self, player)
 	elif new_state == STATE_ATTACKING:
 		state = Attacking.new(self)
 	elif new_state == STATE_HIT:
@@ -157,7 +190,7 @@ class Moving:
 		var length
 		var length_to_player_x
 		var length_to_player_y
-		var walk_speed = 0.3
+		var walk_speed = 1.5
 		var player_node = player
 		player_pos = player_node.get_pos()
 		get_current_pos = generic_metal_guy.get_pos()
@@ -191,7 +224,7 @@ class Moving:
 # STATE: SA
 # ------------------------------------------------------------------------------------------------------#
 class Attacking:
-	var damage = 0.5
+	var damage = 1
 	var generic_metal_guy
 	var generic_metal_guy_sprite
 	var generic_metal_guy_collision
@@ -223,7 +256,7 @@ class Attacking:
 		player_object_id = generic_metal_guy_raycast_right.get_collider()
 		var random_determinator = randi()%11+1
 		if random_determinator > 8:
-			if player_object_id.is_in_group("player"):
+			if player_object_id.has_method("is_in_group") and player_object_id.is_in_group("player"):
 				if player_object_id.get_state() == "SD":
 					generic_metal_guy.set_state("SI")
 				else:
@@ -307,3 +340,7 @@ class Dead:
 
 func get_health():
 	return health
+
+func delete():
+	remove_from_group("enemy")
+	queue_free()
