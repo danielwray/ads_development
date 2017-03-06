@@ -41,6 +41,9 @@ var dead_counter = 0
 var dead_counter_limit = 200
 # character parameters
 export var health = 100
+
+# TODO: replace with dictionary containing name, level, damage, and health
+#
 var enemy_name_list = [
 "Anthrax", "Accept", "AC/DC",
 "Aerosmith", "Alice Cooper",
@@ -49,7 +52,9 @@ var enemy_name_list = [
 "Def Leppard", "Deep Purple", "Dokken",
 "Europe", "Exodus", "Ether the Frog",
 "Fist", "Faith No More", "Fallout",
-"Geordie", "Grave Digger", "Great White"]
+"Geordie", "Grave Digger", "Great White",
+"Slayer", "Blind Guardian", "Kiss", "Metalica",
+"Manowar"]
 
 var enemy_health_bar
 

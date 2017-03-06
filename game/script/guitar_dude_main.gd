@@ -226,7 +226,7 @@ class Attacking:
 	var guitar_dude_ray_cast_right
 	var guitar_dude_ray_cast_left
 	var state_action_timer = 0
-	var state_action_limit = 0.75
+	var state_action_limit = 0.25
 	var damage
 	
 	func _init(guitar_dude):
@@ -285,7 +285,7 @@ class Special:
 	var guitar_dude_fx_left
 	var state_action_timer = 0
 	var state_action_limit = 2.0
-	var stamina = 1
+	var stamina = 5
 	var damage
 	
 	func _init(guitar_dude):
