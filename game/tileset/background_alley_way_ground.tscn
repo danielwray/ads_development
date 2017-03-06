@@ -1,13 +1,16 @@
-[gd_scene load_steps=9 format=1]
+[gd_scene load_steps=12 format=1]
 
 [ext_resource path="res://sprite/world/platform_street_base_angle.png" type="Texture" id=1]
 [ext_resource path="res://sprite/world/platform_street_base_angle_default.png" type="Texture" id=2]
 [ext_resource path="res://sprite/world/platform_street_base_angle_wet.png" type="Texture" id=3]
 [ext_resource path="res://sprite/world/platform_street_drain_angle_default.png" type="Texture" id=4]
-[ext_resource path="res://sprite/world/platform_street_drain_angle_wet.png" type="Texture" id=5]
-[ext_resource path="res://sprite/world/platform_street_curb_angle_default.png" type="Texture" id=6]
-[ext_resource path="res://sprite/world/platform_street_curb_angle_flipped.png" type="Texture" id=7]
-[ext_resource path="res://sprite/world/platform_street_curb_angle_wet.png" type="Texture" id=8]
+[ext_resource path="res://sprite/world/platform_street_base_angle_yellow_lines.png" type="Texture" id=5]
+[ext_resource path="res://sprite/world/platform_street_base_angle_yellow_lines_end.png" type="Texture" id=6]
+[ext_resource path="res://sprite/world/platform_street_base_angle_yellow_lines_end_flipped.png" type="Texture" id=7]
+[ext_resource path="res://sprite/world/platform_street_drain_angle_wet.png" type="Texture" id=8]
+[ext_resource path="res://sprite/world/platform_street_curb_angle_default.png" type="Texture" id=9]
+[ext_resource path="res://sprite/world/platform_street_curb_angle_flipped_wet.png" type="Texture" id=10]
+[ext_resource path="res://sprite/world/platform_street_curb_angle_wet.png" type="Texture" id=11]
 
 [node name="scene" type="Node"]
 
@@ -27,20 +30,32 @@ texture = ExtResource( 3 )
 
 texture = ExtResource( 4 )
 
-[node name="street_drain_wet_rgb" type="Sprite" parent="."]
+[node name="street_default_yellow_lines" type="Sprite" parent="."]
 
 texture = ExtResource( 5 )
 
-[node name="street_curb_default_rgb" type="Sprite" parent="."]
+[node name="street_default_yellow_lines_end" type="Sprite" parent="."]
 
 texture = ExtResource( 6 )
 
-[node name="street_curb_flipped_rgb" type="Sprite" parent="."]
+[node name="street_default_yellow_lines_end_flipped" type="Sprite" parent="."]
 
 texture = ExtResource( 7 )
 
-[node name="street_curb_wet_rgb" type="Sprite" parent="."]
+[node name="street_drain_wet_rgb" type="Sprite" parent="."]
 
 texture = ExtResource( 8 )
+
+[node name="street_curb_default_rgb" type="Sprite" parent="."]
+
+texture = ExtResource( 9 )
+
+[node name="street_curb_flipped_rgb" type="Sprite" parent="."]
+
+texture = ExtResource( 10 )
+
+[node name="street_curb_wet_rgb" type="Sprite" parent="."]
+
+texture = ExtResource( 11 )
 
 

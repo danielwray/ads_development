@@ -44,6 +44,7 @@ resource/name = "generic_metal_guy_audio_library"
 
 transform/pos = Vector2( 0, -1.19403 )
 transform/scale = Vector2( 2, 2 )
+z/z = 1
 input/pickable = false
 shapes/0/shape = SubResource( 1 )
 shapes/0/transform = Matrix32( 0.940928, 0, 0, 0.791739, 0.0882793, 25.1127 )
@@ -58,7 +59,7 @@ health = 50
 
 frames = SubResource( 2 )
 animation = "idle"
-frame = 2
+frame = 3
 playing = true
 
 [node name="generic_metal_guy_collision" type="CollisionShape2D" parent="." groups=[ "enemy" ]]
@@ -92,9 +93,9 @@ transform/pos = Vector2( 1.4559, 0.323532 )
 
 [node name="generic_metal_guy_raycast_right" type="RayCast2D" parent="." groups=[ "enemy" ]]
 
-transform/pos = Vector2( 1.77817, 15.9905 )
+transform/pos = Vector2( -0.834792, 14.3601 )
 transform/rot = -20.0
-transform/scale = Vector2( 0.316412, 0.37926 )
+transform/scale = Vector2( 0.395607, 0.37926 )
 enabled = true
 cast_to = Vector2( 50, 0 )
 layer_mask = 1
@@ -146,5 +147,13 @@ texture/over = ExtResource( 25 )
 texture/progress = ExtResource( 26 )
 radial_fill/fill_degrees = 360.0
 radial_fill/center_offset = Vector2( 0, 0 )
+
+[node name="generic_metal_guy_area" type="Area2D" parent="."]
+
+input/pickable = true
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
 
 

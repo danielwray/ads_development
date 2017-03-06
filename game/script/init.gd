@@ -8,6 +8,7 @@ const scene_files = {
 	"main_menu": "res://scene/menu/menu.tscn",
 	"high_score": "res://scene/high_score/high_score.tscn",
 	"credit": "res://scene/credit/credit.tscn",
+	"setting": "res://scene/menu/setting_menu/setting_menu.tscn",
 	"level_001": "res://scene/level/level_001/level_001.tscn"
 }
 
@@ -31,6 +32,7 @@ func _ready():
 	# set global values
 	# enable fixed process to true
 	set_fixed_process(true)
+	randomize()
 
 # loops
 
@@ -68,6 +70,12 @@ func get_scene_files(scene):
 	if scene in scene_files.keys():
 		return scene_files[scene]
 
+func set_difficulty(level):
+	difficulty_level = level
+
+func get_difficulty():
+	return difficulty_level
+
 # utility functions
 
 func read_json(file_path):
@@ -78,3 +86,6 @@ func read_json(file_path):
 	file_object.close()
 	print(content)
 	return content
+
+func get_screen_size():
+	return OS.get_window_size()

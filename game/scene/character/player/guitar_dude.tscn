@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=1]
+[gd_scene load_steps=26 format=1]
 
 [ext_resource path="res://script/guitar_dude_main.gd" type="Script" id=1]
 [ext_resource path="res://sprite/character/player/guitar_dude/idle_0.png" type="Texture" id=2]
@@ -16,6 +16,10 @@
 [ext_resource path="res://sprite/character/player/guitar_dude/walk_3.png" type="Texture" id=14]
 [ext_resource path="res://sprite/character/player/guitar_dude/punch_0.png" type="Texture" id=15]
 [ext_resource path="res://sprite/character/player/guitar_dude/punch_1.png" type="Texture" id=16]
+[ext_resource path="res://sprite/fx/lighting/fx_lighting_000.png" type="Texture" id=17]
+[ext_resource path="res://sprite/fx/lighting/fx_lighting_001.png" type="Texture" id=18]
+[ext_resource path="res://sprite/fx/lighting/fx_lighting_002.png" type="Texture" id=19]
+[ext_resource path="res://sprite/fx/lighting/fx_lighting_003.png" type="Texture" id=20]
 
 [sub_resource type="CapsuleShape2D" id=1]
 
@@ -31,9 +35,19 @@ animations = [ { "frames":[ ExtResource( 2 ), ExtResource( 3 ) ], "loop":true, "
 
 samples/dead = { "db":0.0, "pitch":1.0, "sample":null }
 
+[sub_resource type="CircleShape2D" id=4]
+
+custom_solver_bias = 0.0
+radius = 26.537
+
+[sub_resource type="SpriteFrames" id=5]
+
+animations = [ { "frames":[ ExtResource( 17 ), ExtResource( 18 ), ExtResource( 19 ), ExtResource( 20 ) ], "loop":true, "name":"lighting", "speed":2.0 } ]
+
 [node name="guitar_dude" type="KinematicBody2D" groups=[ "player" ]]
 
 transform/scale = Vector2( 2, 2 )
+z/z = 1
 input/pickable = false
 shapes/0/shape = SubResource( 1 )
 shapes/0/transform = Matrix32( 1.25677, 0, 0, 0.868205, -1.08838, 24.7331 )
@@ -43,6 +57,8 @@ collision/mask = 1
 collision/margin = 0.08
 script/script = ExtResource( 1 )
 health = 100
+damage = 10
+special = 100
 new_state = "SI"
 
 [node name="guitar_dude_sprite" type="AnimatedSprite" parent="."]
@@ -50,7 +66,6 @@ new_state = "SI"
 transform/pos = Vector2( 0.145996, 0 )
 frames = SubResource( 2 )
 animation = "idle"
-frame = 1
 playing = true
 
 [node name="guitar_dude_collision" type="CollisionShape2D" parent="."]
@@ -81,10 +96,59 @@ default/chorus_send = 0.0
 [node name="guitar_dude_ray_cast_right" type="RayCast2D" parent="."]
 
 transform/pos = Vector2( -0.31448, 13.111 )
+transform/rot = -20.0
 transform/scale = Vector2( 0.631882, 0.37417 )
 enabled = true
 cast_to = Vector2( 50, 0 )
 layer_mask = 1
 type_mask = 15
+
+[node name="guitar_dude_special_area" type="Area2D" parent="."]
+
+editor/display_folded = true
+transform/scale = Vector2( 5, 2 )
+input/pickable = true
+shapes/0/shape = SubResource( 4 )
+shapes/0/transform = Matrix32( 1, 0, 0, 0.5, 32, 0 )
+shapes/0/trigger = false
+shapes/1/shape = SubResource( 4 )
+shapes/1/transform = Matrix32( 1, 0, 0, 0.5, -32, 0 )
+shapes/1/trigger = false
+space_override = 1
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+
+[node name="guitar_dude_special_area_right" type="CollisionShape2D" parent="guitar_dude_special_area"]
+
+transform/pos = Vector2( 32, 0 )
+transform/scale = Vector2( 1, 0.5 )
+shape = SubResource( 4 )
+trigger = false
+_update_shape_index = 0
+
+[node name="guitar_dude_special_area_left" type="CollisionShape2D" parent="guitar_dude_special_area"]
+
+transform/pos = Vector2( -32, 0 )
+transform/scale = Vector2( 1, 0.5 )
+shape = SubResource( 4 )
+trigger = false
+_update_shape_index = 1
+
+[node name="guitar_dude_fx_right" type="AnimatedSprite" parent="."]
+
+visibility/visible = false
+transform/pos = Vector2( 80, 0 )
+frames = SubResource( 5 )
+animation = "lighting"
+
+[node name="guitar_dude_fx_left" type="AnimatedSprite" parent="."]
+
+visibility/visible = false
+transform/pos = Vector2( -80, 0 )
+transform/rot = 180.0
+frames = SubResource( 5 )
+animation = "lighting"
 
 
