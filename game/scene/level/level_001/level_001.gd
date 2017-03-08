@@ -1,7 +1,6 @@
 extends Node
 
 # constants
-
 # variables
 # state machine resources
 # difficulty

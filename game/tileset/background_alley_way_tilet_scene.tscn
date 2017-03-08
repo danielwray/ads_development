@@ -1,15 +1,8 @@
-[gd_scene load_steps=18 format=1]
+[gd_scene load_steps=11 format=1]
 
-[ext_resource path="res://sprite/world/building_001.png" type="Texture" id=1]
-[ext_resource path="res://sprite/world/building_002.png" type="Texture" id=2]
-[ext_resource path="res://sprite/world/building_005.png" type="Texture" id=3]
-[ext_resource path="res://sprite/world/building_006.png" type="Texture" id=4]
-[ext_resource path="res://sprite/world/wall_001.png" type="Texture" id=5]
-[ext_resource path="res://sprite/world/wall_002.png" type="Texture" id=6]
-[ext_resource path="res://sprite/world/building_003.png" type="Texture" id=7]
-[ext_resource path="res://sprite/world/building_004.png" type="Texture" id=8]
-[ext_resource path="res://sprite/world/building_007.png" type="Texture" id=9]
-[ext_resource path="res://sprite/world/van_1.png" type="Texture" id=10]
+[ext_resource path="res://sprite/world/background/b_001.png" type="Texture" id=1]
+[ext_resource path="res://sprite/world/background/b_002.png" type="Texture" id=2]
+[ext_resource path="res://sprite/world/background/b_side_001.png" type="Texture" id=3]
 
 [sub_resource type="RectangleShape2D" id=1]
 
@@ -126,6 +119,7 @@ _update_shape_index = 0
 [node name="sb4" type="StaticBody2D" parent="."]
 
 editor/display_folded = true
+visibility/visible = false
 input/pickable = false
 shapes/0/shape = SubResource( 1 )
 shapes/0/transform = Matrix32( 13, 0, 0, 13, 0, 0 )
@@ -139,7 +133,7 @@ bounce = 0.0
 
 [node name="s4" type="Sprite" parent="sb4"]
 
-texture = ExtResource( 4 )
+texture = ExtResource( 3 )
 
 [node name="c4" type="CollisionShape2D" parent="sb4"]
 
@@ -151,6 +145,7 @@ _update_shape_index = 0
 [node name="sb5" type="StaticBody2D" parent="."]
 
 editor/display_folded = true
+visibility/visible = false
 input/pickable = false
 shapes/0/shape = SubResource( 1 )
 shapes/0/transform = Matrix32( 13, 0, 0, 13, 0, 0 )
@@ -164,8 +159,6 @@ bounce = 0.0
 
 [node name="s5" type="Sprite" parent="sb5"]
 
-texture = ExtResource( 5 )
-
 [node name="c5" type="CollisionShape2D" parent="sb5"]
 
 transform/scale = Vector2( 13, 13 )
@@ -176,6 +169,7 @@ _update_shape_index = 0
 [node name="sb6" type="StaticBody2D" parent="."]
 
 editor/display_folded = true
+visibility/visible = false
 input/pickable = false
 shapes/0/shape = SubResource( 1 )
 shapes/0/transform = Matrix32( 13, 0, 0, 13, 0, 0 )
@@ -189,8 +183,6 @@ bounce = 0.0
 
 [node name="s6" type="Sprite" parent="sb6"]
 
-texture = ExtResource( 6 )
-
 [node name="c6" type="CollisionShape2D" parent="sb6"]
 
 transform/scale = Vector2( 13, 13 )
@@ -201,6 +193,7 @@ _update_shape_index = 0
 [node name="sb7" type="StaticBody2D" parent="."]
 
 editor/display_folded = true
+visibility/visible = false
 input/pickable = false
 shapes/0/shape = SubResource( 2 )
 shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
@@ -214,8 +207,6 @@ bounce = 0.0
 
 [node name="s7" type="Sprite" parent="sb7"]
 
-texture = ExtResource( 7 )
-
 [node name="s7 2" type="CollisionPolygon2D" parent="sb7"]
 
 build_mode = 0
@@ -226,6 +217,7 @@ trigger = false
 [node name="sb8" type="StaticBody2D" parent="."]
 
 editor/display_folded = true
+visibility/visible = false
 input/pickable = false
 shapes/0/shape = SubResource( 2 )
 shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
@@ -239,8 +231,6 @@ bounce = 0.0
 
 [node name="s8" type="Sprite" parent="sb8"]
 
-texture = ExtResource( 8 )
-
 [node name="c8" type="CollisionPolygon2D" parent="sb8"]
 
 build_mode = 0
@@ -251,6 +241,7 @@ trigger = false
 [node name="sb9" type="StaticBody2D" parent="."]
 
 editor/display_folded = true
+visibility/visible = false
 input/pickable = false
 shapes/0/shape = SubResource( 2 )
 shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
@@ -264,8 +255,6 @@ bounce = 0.0
 
 [node name="s9" type="Sprite" parent="sb9"]
 
-texture = ExtResource( 9 )
-
 [node name="c9" type="CollisionPolygon2D" parent="sb9"]
 
 build_mode = 0
@@ -276,6 +265,7 @@ trigger = false
 [node name="sb10" type="StaticBody2D" parent="."]
 
 editor/display_folded = true
+visibility/visible = false
 input/pickable = false
 shapes/0/shape = SubResource( 3 )
 shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
@@ -300,8 +290,6 @@ friction = 1.0
 bounce = 0.0
 
 [node name="s10" type="Sprite" parent="sb10"]
-
-texture = ExtResource( 10 )
 
 [node name="c10" type="CollisionPolygon2D" parent="sb10"]
 

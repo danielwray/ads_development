@@ -78,7 +78,7 @@ func _fixed_process(delta):
 	# if enemy health is greater than 0 and raycaster is colliding
 	# check if collider object (i.e. player) has method (is_in_group)
 	# if true check the object is in player group and trigger attack
-	if health > 0:
+	if get_health() > 0:
 		enemy_health_bar.set_value(health)
 		state.update(delta)
 		if get_node("generic_metal_guy_raycast_right").is_colliding():
@@ -282,6 +282,8 @@ class Hit:
 	var generic_metal_guy_sprite
 	var generic_metal_guy_collision
 	var generic_metal_guy_audio
+	var state_action_timer = 0
+	var state_action_limit = 0.5
 	
 	func _init(generic_metal_guy):
 		self.generic_metal_guy = generic_metal_guy
@@ -290,7 +292,7 @@ class Hit:
 		generic_metal_guy_audio = generic_metal_guy.get_node("generic_metal_guy_audio")
 
 	func update(delta):
-		generic_metal_guy.set_state("SD")
+		generic_metal_guy.set_state("SM")
 		#################################################################################################
 		# TODO - Bertie: Audio code goes here
 		# See 'samplePlayer2D' class for available methods
@@ -301,11 +303,15 @@ class Hit:
 		# TODO - Bertie: Audio code goes here
 		# See 'samplePlayer2D' class for available methods
 		#################################################################################################
-		if generic_metal_guy.health < 0:
+		if generic_metal_guy.get_health() < 0:
 			generic_metal_guy.set_state("SD")
 		else:
 			generic_metal_guy.health -= damage
 			generic_metal_guy_sprite.play("hit")
+			if state_action_timer > state_action_limit:
+				generic_metal_guy_sprite.play("hit")
+				state_action_timer = 0
+			state_action_timer += 0.1
 
 	func exit():
 		pass

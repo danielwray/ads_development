@@ -1,4 +1,7 @@
 {
   "default_player": "guitar_dude",
-  "enemy_list": [""]
+  "enemy_list": [""],
+  "enemy_names": [
+    "Anthrax", "AC/DC", "Abba",
+    "Black Sabbath", "Blondie", "Queen"]
 }

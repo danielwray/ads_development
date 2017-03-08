@@ -30,6 +30,7 @@ func _ready():
 	set_state(new_state)
 	set_fixed_process(true)
 	set_process_unhandled_key_input(true)
+	set_process_input(true)
 	set_pos(Vector2(120, 300))
 	health = 100
 
@@ -59,7 +60,7 @@ func trigger_movement():
 		set_state("SM")
 		current_state = get_state()
 		state.on_move("y", -2, false, false)
-	elif Input.is_action_pressed("player_one_down"):
+	if Input.is_action_pressed("player_one_down"):
 		previous_state = get_state()
 		set_state("SM")
 		current_state = get_state()
@@ -69,19 +70,14 @@ func trigger_movement():
 		set_state("SM")
 		current_state = get_state()
 		state.on_move("x", -2, true, false)
-	elif Input.is_action_pressed("player_one_right"):
+	if Input.is_action_pressed("player_one_right"):
 		previous_state = get_state()
 		set_state("SM")
 		current_state = get_state()
 		state.on_move("x", 2, false, false)
 
-# body is other collision object - if body is in group player then set self state to SA
-func _on_Hitbox_body_enter( body ):
-	if body.is_colliding() and body.is_in_group("enemy") and not get_state() == "SA":
-		set_state("SH")
-
-
-func _unhandled_key_input(event):
+func _input(event):
+	print(event)
 	if Input.is_action_pressed("player_one_punch") and not is_moving and not get_state() == "SD":
 		previous_state = get_state()
 		set_state("SA")
@@ -92,6 +88,14 @@ func _unhandled_key_input(event):
 		set_state("SS")
 		current_state = get_state()
 		state.special()
+
+# body is other collision object - if body is in group player then set self state to SA
+func _on_Hitbox_body_enter( body ):
+	if body.is_colliding() and body.is_in_group("enemy") and not get_state() == "SA":
+		set_state("SH")
+
+func _unhandled_key_input(event):
+	pass
 
 func set_state(new_state):
 	state.exit()
