@@ -38,10 +38,10 @@ func _fixed_process(delta):
 		state.update(delta)
 		trigger_collision()
 		trigger_movement()
-		if move_cool_down_timer > 1:
+		if move_cool_down_timer > 2:
 			is_moving = false
 			move_cool_down_timer = 0
-		move_cool_down_timer += 0.95
+		move_cool_down_timer += 0.1
 	else:
 		set_fixed_process(false)
 		set_process_unhandled_input(false)
@@ -53,27 +53,30 @@ func trigger_collision():
 		get_collider().get_instance_ID()
 
 func trigger_movement():
-	is_moving = true
 	if Input.is_action_pressed("player_one_up"):
 		previous_state = get_state()
 		set_state("SM")
 		current_state = get_state()
 		state.on_move("y", -2, false, false)
+		is_moving = true
 	if Input.is_action_pressed("player_one_down"):
 		previous_state = get_state()
 		set_state("SM")
 		current_state = get_state()
 		state.on_move("y", 2, false, false)
+		is_moving = true
 	if Input.is_action_pressed("player_one_left"):
 		previous_state = get_state()
 		set_state("SM")
 		current_state = get_state()
 		state.on_move("x", -2, true, false)
+		is_moving = true
 	if Input.is_action_pressed("player_one_right"):
 		previous_state = get_state()
 		set_state("SM")
 		current_state = get_state()
 		state.on_move("x", 2, false, false)
+		is_moving = true
 
 func _input(event):
 	print(event)
@@ -82,6 +85,7 @@ func _input(event):
 		set_state("SA")
 		current_state = get_state()
 		state.attack()
+		is_moving = true
 	elif Input.is_action_pressed("player_one_special") and not is_moving and not get_state() == "SD":
 		previous_state = get_state()
 		set_state("SS")
@@ -229,7 +233,7 @@ class Attacking:
 	var guitar_dude_ray_cast_right
 	var guitar_dude_ray_cast_left
 	var state_action_timer = 0
-	var state_action_limit = 0.25
+	var state_action_limit = 2
 	var damage
 	
 	func _init(guitar_dude):
@@ -241,7 +245,7 @@ class Attacking:
 		damage = guitar_dude.get_damage()
 
 	func update(delta):
-		state_action_timer += 0.1
+		state_action_timer += 1
 		if state_action_timer > state_action_limit:
 			guitar_dude_sprite.stop()
 			guitar_dude.set_state("SI")
@@ -320,7 +324,7 @@ class Special:
 		# TODO: Include code to play special if stamina is > 0
 		if guitar_dude.get_special() > 0:
 			for enemy_object in guitar_dude_special_area.get_overlapping_bodies():
-				if enemy_object.is_in_group("enemy"):
+				if enemy_object.is_in_group("enemy") and not enemy_object.get_state() == "SD":
 					enemy_object.set_state("SH")
 					enemy_object.state.hit(damage)
 					guitar_dude_fx_right.play("lighting")

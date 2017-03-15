@@ -2,6 +2,7 @@ extends VBoxContainer
 
 func _ready():
 	set_process(true)
+	set_process_unhandled_input(true)
 
 func _on_start_pressed():
 	# load init scene

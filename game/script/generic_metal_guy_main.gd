@@ -286,7 +286,7 @@ class Hit:
 	var generic_metal_guy_collision
 	var generic_metal_guy_audio
 	var state_action_timer = 0
-	var state_action_limit = 0.5
+	var state_action_limit = 1.0
 	
 	func _init(generic_metal_guy):
 		self.generic_metal_guy = generic_metal_guy
@@ -295,11 +295,10 @@ class Hit:
 		generic_metal_guy_audio = generic_metal_guy.get_node("generic_metal_guy_audio")
 
 	func update(delta):
-		generic_metal_guy.set_state("SM")
-		#################################################################################################
-		# TODO - Bertie: Audio code goes here
-		# See 'samplePlayer2D' class for available methods
-		#################################################################################################
+		state_action_timer += 0.1
+		if state_action_timer > state_action_limit:
+			generic_metal_guy.stop()
+			generic_metal_guy.set_state("SM")
 
 	func hit(damage):
 		#################################################################################################
@@ -311,10 +310,6 @@ class Hit:
 		else:
 			generic_metal_guy.health -= damage
 			generic_metal_guy_sprite.play("hit")
-			if state_action_timer > state_action_limit:
-				generic_metal_guy_sprite.play("hit")
-				state_action_timer = 0
-			state_action_timer += 0.1
 
 	func exit():
 		pass
