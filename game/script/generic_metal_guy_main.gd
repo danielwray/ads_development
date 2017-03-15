@@ -32,32 +32,41 @@ var sprite
 var audio
 var collision
 var enemy_name_label
+var enemy_health_bar
 # state parameters
 var previous_state = ""
 var current_state  = ""
 var next_state     = ""
+var state_action_timer = 0
+var state_action_timer_limit = 1.0
 var state_timer    = 0
 var state_timer_limit = 1.0
 var dead_counter = 0
 var dead_counter_limit = 200
+
 # character parameters
-export var health = 100
+var health = 100 * init.difficulty_level
+var damage = 1 * init.difficulty_level
+var speed = 1 * init.difficulty_level
 
-# TODO: replace with dictionary containing name, level, damage, and health
-#
-var enemy_name_list = [
-"Anthrax", "Accept", "AC/DC",
-"Aerosmith", "Alice Cooper",
-"Black Sabbath", "Boss", "Budgie",
-"Cactus", "Cream", "Crimson Glory",
-"Def Leppard", "Deep Purple", "Dokken",
-"Europe", "Exodus", "Ether the Frog",
-"Fist", "Faith No More", "Fallout",
-"Geordie", "Grave Digger", "Great White",
-"Slayer", "Blind Guardian", "Kiss", "Metalica",
-"Manowar"]
-
-var enemy_health_bar
+# refactor to be in an external json file
+# {"band name": ["health", "damage", "speed"]}
+var enemy_name_dict = {
+	"Metallica": [health, 0.5, 1.0],
+	"Kiss": [health, 0.2, 2.0],
+	"Manowar": [health, 1.65, 2.0],
+	"Slayer": [health, 1.4, 1.0],
+	"Rage Against the Machine": [health, 0.5, 1.0],
+	"Queen": [health, 2.75, 0.5],
+	"Abba": [health, 1.2, 1.0],
+	"Anthrax": [health, 1.8, 2.5],
+	"Frank Zappa": [health, 1.1, 1.0],
+	"Queens of the Stone Age": [health, 0.2, 1.0],
+	"Wintersun": [health, 1.1, 1.0],
+	"Some band 1": [health, 0.5, 1.0],
+	"Some band 2": [health, 1.5, 1.0],
+	"Hipster Bastard": [health, 2.1, 1.0]
+}
 
 func _ready():
 	set_fixed_process(true)
@@ -65,9 +74,14 @@ func _ready():
 	# get root node
 	var _root=get_tree().get_root()
 	root = _root.get_child(_root.get_child_count()-1)
+	# set enemy stats
+	var enemy_stats = enemy_name_dict.keys()[randi() % enemy_name_dict.size()]
+	health = enemy_name_dict[enemy_stats][0]
+	damage = enemy_name_dict[enemy_stats][1]
+	speed = enemy_name_dict[enemy_stats][2]
 	# set enemy name
 	enemy_name_label = get_node("generic_metal_guy_name")
-	enemy_name_label.set_text(str(enemy_name_list[randi() % enemy_name_list.size()]) + " Fan")
+	enemy_name_label.set_text(str(enemy_name_dict.keys()[randi() % enemy_name_dict.size()]) + " Fan")
 	# set enemy health bar
 	enemy_health_bar = get_node("generic_metal_guy_health")
 	enemy_health_bar.set_value(health)
@@ -81,15 +95,21 @@ func _fixed_process(delta):
 	# if true check the object is in player group and trigger attack
 	if get_health() > 0:
 		enemy_health_bar.set_value(health)
-		state.update(delta)
-		if get_node("generic_metal_guy_raycast_right").is_colliding():
-			collider = get_node("generic_metal_guy_raycast_right").get_collider()
-			# collider.has_method("is_in_group")
-			if collider ==  get_tree().get_nodes_in_group("player")[0]:
-				if get_node("generic_metal_guy_raycast_right").get_collider().is_in_group("player"):
-					trigger_attack_state()
+		if not get_state() == "SH":
+			state.update(delta)
+			if get_node("generic_metal_guy_raycast_right").is_colliding():
+				collider = get_node("generic_metal_guy_raycast_right").get_collider()
+				# collider.has_method("is_in_group")
+				if collider ==  get_tree().get_nodes_in_group("player")[0]:
+					if get_node("generic_metal_guy_raycast_right").get_collider().is_in_group("player"):
+						trigger_attack_state()
+			else:
+				set_state("SM")
 		else:
-			set_state("SM")
+			if state_timer > state_timer_limit:
+				set_state("SM")
+				state_timer = 0
+			state_timer += 0.1
 	else:
 		enemy_health_bar.hide()
 		enemy_name_label.hide()
@@ -191,7 +211,7 @@ class Moving:
 		var length
 		var length_to_player_x
 		var length_to_player_y
-		var walk_speed = 1.5
+		var walk_speed = generic_metal_guy.get_speed()
 		var player_node = player
 		player_pos = player_node.get_pos()
 		get_current_pos = generic_metal_guy.get_pos()
@@ -225,7 +245,6 @@ class Moving:
 # STATE: SA
 # ------------------------------------------------------------------------------------------------------#
 class Attacking:
-	var damage = 1
 	var generic_metal_guy
 	var generic_metal_guy_sprite
 	var generic_metal_guy_collision
@@ -265,7 +284,7 @@ class Attacking:
 					# I don't like this, and don't feel it is the proper way to handle interaction and triggers
 					# but it'll do for now, and we can change it later on.
 					player_object_id.set_state("SH")
-					player_object_id.state.hit(damage)
+					player_object_id.state.hit(generic_metal_guy.get_damage())
 					generic_metal_guy_sprite.play("punch")
 					if not generic_metal_guy_audio.is_active():
 						generic_metal_guy_audio.play("enemy_punch_1")
@@ -295,10 +314,7 @@ class Hit:
 		generic_metal_guy_audio = generic_metal_guy.get_node("generic_metal_guy_audio")
 
 	func update(delta):
-		state_action_timer += 0.1
-		if state_action_timer > state_action_limit:
-			generic_metal_guy.stop()
-			generic_metal_guy.set_state("SM")
+		pass
 
 	func hit(damage):
 		#################################################################################################
@@ -308,8 +324,19 @@ class Hit:
 		if generic_metal_guy.get_health() < 0:
 			generic_metal_guy.set_state("SD")
 		else:
-			generic_metal_guy.health -= damage
 			generic_metal_guy_sprite.play("hit")
+			generic_metal_guy.health -= damage
+
+	func hit_special(damage):
+		#################################################################################################
+		# TODO - Bertie: Audio code goes here
+		# See 'samplePlayer2D' class for available methods
+		#################################################################################################
+		if generic_metal_guy.get_health() < 0:
+			generic_metal_guy.set_state("SD")
+		else:
+			generic_metal_guy_sprite.play("hit_special")
+			generic_metal_guy.health -= damage
 
 	func exit():
 		pass
@@ -350,6 +377,12 @@ class Dead:
 
 func get_health():
 	return health
+
+func get_damage():
+	return damage
+
+func get_speed():
+	return speed
 
 func delete():
 	remove_from_group("enemy")

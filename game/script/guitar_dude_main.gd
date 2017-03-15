@@ -148,9 +148,9 @@ class Idle:
 	func update(delta):
 		guitar_dude_sprite.play("idle")
 		if guitar_dude.get_health() < 100:
-			guitar_dude.set_health(0.05, "add")
+			guitar_dude.set_health(0.005, "add")
 		if guitar_dude.get_special() < 100:
-			guitar_dude.set_special(0.01, "add")
+			guitar_dude.set_special(0.001, "add")
 		#################################################################################################
 		# TODO - Bertie: Audio code goes here
 		# See 'samplePlayer2D' class for available methods
@@ -293,7 +293,7 @@ class Special:
 	var guitar_dude_fx_right
 	var guitar_dude_fx_left
 	var state_action_timer = 0
-	var state_action_limit = 2.0
+	var state_action_limit = 5.0
 	var stamina = 5
 	var damage
 	
@@ -326,7 +326,7 @@ class Special:
 			for enemy_object in guitar_dude_special_area.get_overlapping_bodies():
 				if enemy_object.is_in_group("enemy") and not enemy_object.get_state() == "SD":
 					enemy_object.set_state("SH")
-					enemy_object.state.hit(damage)
+					enemy_object.state.hit_special(damage)
 					guitar_dude_fx_right.play("lighting")
 					guitar_dude_fx_left.play("lighting")
 					guitar_dude_sprite.play("special")
