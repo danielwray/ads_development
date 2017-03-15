@@ -20,8 +20,8 @@ var is_moving = false
 var move_cool_down_timer = 0
 # character parameters
 export var health    = 100
-export var damage    = 10
-export var special   = 100
+export var damage    = 1
+export var special   = 5
 export var new_state = "SI"
 # util variables
 var window_size
@@ -32,7 +32,6 @@ func _ready():
 	set_process_unhandled_key_input(true)
 	set_process_input(true)
 	set_pos(Vector2(120, 300))
-	health = 100
 
 func _fixed_process(delta):
 	if not get_state() == "SD":
