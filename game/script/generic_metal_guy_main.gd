@@ -26,6 +26,7 @@ var root = null
 var get_current_pos
 var death_count = 0
 var dead_timer = 0
+var is_dead = false
 # resources
 var sprite
 var audio
@@ -266,6 +267,8 @@ class Attacking:
 					player_object_id.set_state("SH")
 					player_object_id.state.hit(damage)
 					generic_metal_guy_sprite.play("punch")
+					if not generic_metal_guy_audio.is_active():
+						generic_metal_guy_audio.play("enemy_punch_1")
 					generic_metal_guy.set_state("SM")
 			else:
 				generic_metal_guy.set_state("SM")
@@ -324,6 +327,8 @@ class Dead:
 	var generic_metal_guy_sprite
 	var generic_metal_guy_collision
 	var generic_metal_guy_audio
+	var status
+
 	
 	func _init(generic_metal_guy):
 		self.generic_metal_guy = generic_metal_guy
@@ -336,6 +341,10 @@ class Dead:
 
 	func dead():
 		generic_metal_guy_sprite.play("dead")
+		if not generic_metal_guy_audio.is_active() and generic_metal_guy.is_dead == false:
+			generic_metal_guy_audio.play("enemy_dead_1")
+			generic_metal_guy.is_dead = true
+			
 		#################################################################################################
 		# TODO - Bertie: Audio code goes here
 		# See 'samplePlayer2D' class for available methods

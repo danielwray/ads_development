@@ -266,10 +266,12 @@ class Attacking:
 						enemy_object.set_state("SH")
 						enemy_object.state.hit(damage)
 						guitar_dude_sprite.play("punch")
+						guitar_dude_audio.play("punch_1")
 						if guitar_dude.get_special() < 100:
 							guitar_dude.set_special(1, "add")
 		else:
 			guitar_dude_sprite.play("punch")
+			guitar_dude_audio.play("punch_miss_1")
 
 
 	func exit():
@@ -404,6 +406,7 @@ class Dead:
 		# See 'samplePlayer2D' class for available methods
 		#################################################################################################
 		guitar_dude_sprite.play("dead")
+		guitar_dude_audio.play("guitar_dude_dead")
 
 	func exit():
 		pass
