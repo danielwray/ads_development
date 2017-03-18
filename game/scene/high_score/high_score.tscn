@@ -11,10 +11,10 @@ focus/ignore_mouse = false
 focus/stop_mouse = false
 size_flags/horizontal = 2
 size_flags/vertical = 2
-margin/left = 256.0
-margin/top = 100.0
-margin/right = 768.0
-margin/bottom = 612.0
+margin/left = 250.0
+margin/top = 50.0
+margin/right = 762.0
+margin/bottom = 562.0
 alignment = 0
 script/script = ExtResource( 1 )
 

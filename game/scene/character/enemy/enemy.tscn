@@ -17,14 +17,14 @@
 [ext_resource path="res://sprite/character/enemy/generic_metal_dude/generic_metal_guy_hit_special1.png" type="Texture" id=15]
 [ext_resource path="res://sprite/character/enemy/generic_metal_dude/generic_metal_guy_hit_special2 .png" type="Texture" id=16]
 [ext_resource path="res://sprite/character/enemy/generic_metal_dude/generic_metal_guy_hit_special3.png" type="Texture" id=17]
-[ext_resource path="res://sprite/character/enemy/generic_metal_dude/generic_metal_guy_punch0.png" type="Texture" id=18]
-[ext_resource path="res://sprite/character/enemy/generic_metal_dude/generic_metal_guy_punch1.png" type="Texture" id=19]
-[ext_resource path="res://sprite/character/enemy/generic_metal_dude/generic_metal_guy_punch2.png" type="Texture" id=20]
-[ext_resource path="res://sprite/character/enemy/generic_metal_dude/generic_metal_guy_punch3.png" type="Texture" id=21]
-[ext_resource path="res://sprite/character/enemy/generic_metal_dude/generic_metal_guy_walk0.png" type="Texture" id=22]
-[ext_resource path="res://sprite/character/enemy/generic_metal_dude/generic_metal_guy_walk1.png" type="Texture" id=23]
-[ext_resource path="res://sprite/character/enemy/generic_metal_dude/generic_metal_guy_walk2.png" type="Texture" id=24]
-[ext_resource path="res://sprite/character/enemy/generic_metal_dude/generic_metal_guy_walk3.png" type="Texture" id=25]
+[ext_resource path="res://sprite/character/enemy/generic_metal_dude/generic_metal_guy_walk0.png" type="Texture" id=18]
+[ext_resource path="res://sprite/character/enemy/generic_metal_dude/generic_metal_guy_walk1.png" type="Texture" id=19]
+[ext_resource path="res://sprite/character/enemy/generic_metal_dude/generic_metal_guy_walk2.png" type="Texture" id=20]
+[ext_resource path="res://sprite/character/enemy/generic_metal_dude/generic_metal_guy_walk3.png" type="Texture" id=21]
+[ext_resource path="res://sprite/character/enemy/generic_metal_dude/generic_metal_guy_punch0.png" type="Texture" id=22]
+[ext_resource path="res://sprite/character/enemy/generic_metal_dude/generic_metal_guy_punch1.png" type="Texture" id=23]
+[ext_resource path="res://sprite/character/enemy/generic_metal_dude/generic_metal_guy_punch2.png" type="Texture" id=24]
+[ext_resource path="res://sprite/character/enemy/generic_metal_dude/generic_metal_guy_punch3.png" type="Texture" id=25]
 [ext_resource path="res://audio/character/enemy/generic_enemy/enemy_dead_1.smp" type="Sample" id=26]
 [ext_resource path="res://audio/character/punch/enemy_punch_1.smp" type="Sample" id=27]
 [ext_resource path="res://ui/font/8-bit-font-tiny.fnt" type="BitmapFont" id=28]
@@ -39,14 +39,14 @@ radius = 10.4998
 
 [sub_resource type="SpriteFrames" id=2]
 
-animations = [ { "frames":[ ExtResource( 2 ), ExtResource( 3 ), ExtResource( 4 ), ExtResource( 5 ) ], "loop":true, "name":"idle", "speed":2.0 }, { "frames":[ ExtResource( 6 ), ExtResource( 7 ), ExtResource( 8 ), ExtResource( 9 ), ExtResource( 10 ), ExtResource( 11 ) ], "loop":false, "name":"dead", "speed":7.0 }, { "frames":[ ExtResource( 12 ), ExtResource( 13 ) ], "loop":false, "name":"hit", "speed":7.0 }, { "frames":[ ExtResource( 14 ), ExtResource( 15 ), ExtResource( 16 ), ExtResource( 17 ) ], "loop":false, "name":"hit_special", "speed":3.0 }, { "frames":[ ExtResource( 18 ), ExtResource( 19 ), ExtResource( 20 ), ExtResource( 21 ) ], "loop":true, "name":"punch", "speed":6.0 }, { "frames":[ ExtResource( 22 ), ExtResource( 23 ), ExtResource( 24 ), ExtResource( 25 ) ], "loop":true, "name":"walk", "speed":3.0 } ]
+animations = [ { "frames":[ ExtResource( 2 ), ExtResource( 3 ), ExtResource( 4 ), ExtResource( 5 ) ], "loop":true, "name":"idle", "speed":2.0 }, { "frames":[ ExtResource( 6 ), ExtResource( 7 ), ExtResource( 8 ), ExtResource( 9 ), ExtResource( 10 ), ExtResource( 11 ) ], "loop":false, "name":"dead", "speed":7.0 }, { "frames":[ ExtResource( 12 ), ExtResource( 13 ) ], "loop":false, "name":"hit", "speed":7.0 }, { "frames":[ ExtResource( 14 ), ExtResource( 15 ), ExtResource( 16 ), ExtResource( 17 ) ], "loop":false, "name":"hit_special", "speed":3.0 }, { "frames":[ ExtResource( 18 ), ExtResource( 19 ), ExtResource( 20 ), ExtResource( 21 ) ], "loop":true, "name":"walk", "speed":3.0 }, { "frames":[ ExtResource( 22 ), ExtResource( 23 ), ExtResource( 24 ), ExtResource( 25 ) ], "loop":true, "name":"punch", "speed":6.0 } ]
 
 [sub_resource type="SampleLibrary" id=3]
 
 samples/enemy_dead_1 = { "db":0.0, "pitch":1.0, "sample":ExtResource( 26 ) }
 samples/enemy_punch_1 = { "db":0.0, "pitch":1.0, "sample":ExtResource( 27 ) }
 
-[node name="generic_metal_guy" type="KinematicBody2D" groups=[ "enemy" ]]
+[node name="enemy" type="KinematicBody2D" groups=[ "enemy" ]]
 
 editor/display_folded = true
 transform/pos = Vector2( 0, -1.19403 )
@@ -67,6 +67,7 @@ frames = SubResource( 2 )
 animation = "hit_special"
 frame = 3
 playing = true
+modulate = Color( 0.933594, 0.925616, 0.805954, 1 )
 
 [node name="collision" type="CollisionShape2D" parent="." groups=[ "enemy" ]]
 

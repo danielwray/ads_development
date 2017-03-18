@@ -42,7 +42,7 @@ margin/top = -100.0
 margin/right = 1271.0
 margin/bottom = 744.0
 custom_fonts/font = ExtResource( 1 )
-text = "Super Cul-de-Sac Turber Fighter Championship™ \nLimited Platinum Edition II: Remastered directors cut © 2017\n\nAndy Anderson\nStuart Campbell\nDaniel Wray\n\nCopyright © 2017 ADS Development\nSCSTFC II™ is a trademark of ADS Development, the SCSTFC II™ name, \nlogo, and all works of art contained within are belong to us.\n\nBuilt with the Godot engine, Open-Source technologies, \nnostalgia, and love. Hot, sweaty, sticky love.\n\nPlease send bugs, or suggestions >> /dev/null"
+text = "Super Cul-de-Sac Turber Fighter Championship™ \nLimited Platinum Edition II: Remastered directors cut © 2017\n\nAndy Anderson\nStuart Campbell\nDaniel Wray\n\nCopyright © 2017 ADS Development\nSCSTFC II™ is a trademark of ADS Development, the SCSTFC II™ name, \nlogo, and all works of art contained within are belong to us.\n\nBuilt with the Godot engine, Open-Source technologies, \nnostalgia, and love. Hot, sweaty, sticky love.\n\nPlease send bug reports to /dev/null"
 align = 1
 valign = 1
 percent_visible = 1.0
@@ -70,7 +70,7 @@ transform/scale = Vector2( 2.5, 2.5 )
 z/z = -1
 frames = SubResource( 2 )
 animation = "default"
-frame = 1
+frame = 2
 playing = true
 
 

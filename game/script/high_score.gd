@@ -14,7 +14,7 @@ func set_highest_score(scores):
 	if scores.size() > 0:
 		var highest_score = high_score_sort(scores)
 		if highest_score:
-			high_score_list.set_text("Guitar Dude " + str(highest_score))
+			high_score_list.set_text("AAA " + str(highest_score) + str(init.get_difficulty()))
 	else:
 		high_score_list.set_text("No high score")
 
