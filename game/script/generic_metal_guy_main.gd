@@ -45,9 +45,9 @@ var dead_counter = 0
 var dead_counter_limit = 200
 
 # character parameters
-var health = 100 * init.difficulty_level
-var damage = 1 * init.difficulty_level
-var speed = 1 * init.difficulty_level
+var health = 25 * init.get_difficulty()
+var damage = 0.5 * init.get_difficulty()
+var speed = 0.5 * init.get_difficulty()
 
 # refactor to be in an external json file
 # {"band name": ["health", "damage", "speed"]}
@@ -233,6 +233,8 @@ class Moving:
 			generic_metal_guy.set_z(int(generic_metal_guy.get_pos().y))
 		elif generic_metal_guy.get_pos().y > window_size.y / 2:
 			generic_metal_guy.set_z(int(generic_metal_guy.get_pos().y))
+		
+		if length_to_player_x or length_to_player_y > 0:
 			generic_metal_guy.move(Vector2(length_to_player_x * walk_speed, length_to_player_y * walk_speed))
 			generic_metal_guy_sprite.play("walk")
 		else:

@@ -11,9 +11,10 @@ func _ready():
 	set_fixed_process(true)
 
 func _fixed_process(delta):
+	pass
 	if not is_playing():
 		timer += 1
-		if timer >= 10:
+		if timer >= 15:
 			load_scene("main_menu")
 	else:
 		timer = 0

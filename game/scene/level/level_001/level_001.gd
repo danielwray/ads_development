@@ -4,11 +4,12 @@ extends Node
 # variables
 # state machine resources
 # difficulty
-var difficulty = 4
-var enemy_min_count = 8 * difficulty
-var enemy_max_count = 12 * difficulty
+var difficulty
+var enemy_min_count
+var enemy_max_count
 # timers
 var spawn_timer = 0
+var spawn_limit
 # resources
 var camera
 var player
@@ -18,11 +19,16 @@ func _ready():
 	# Called every time the node is added to the scene.
 	# Initialization here
 	set_fixed_process(true)
+	difficulty = init.get_difficulty()
+	enemy_min_count = difficulty * rand_range(2, 4)
+	enemy_max_count = difficulty * rand_range(5, 20)
+	
 	load_characters()
 	load_world()
 
 func _fixed_process(delta):
-	if spawn_timer > 100:
+	spawn_limit = difficulty * rand_range(50, 200) / 2
+	if spawn_timer > spawn_limit:
 		spawn_enemy()
 		spawn_timer = 0
 	spawn_timer += 0.25

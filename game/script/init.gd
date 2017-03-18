@@ -8,7 +8,7 @@ const scene_files = {
 	"main_menu": "res://scene/menu/menu.tscn",
 	"high_score": "res://scene/high_score/high_score.tscn",
 	"credit": "res://scene/credit/credit.tscn",
-	"setting": "res://scene/menu/setting_menu/setting_menu.tscn",
+	"setting": "res://scene/menu/setting_menu.tscn",
 	"level_001": "res://scene/level/level_001/level_001.tscn"
 }
 
@@ -22,6 +22,7 @@ var difficulty_level = 1
 # game status
 var current_scene = null
 var state_machine
+var high_score = []
 # game defaults
 var default_player = "guitar_dude"
 var enemy_character_list = ["generic_metal_guy"]
@@ -55,6 +56,9 @@ func set_scene(scene):
 	# add scene to root
 	get_tree().get_root().add_child(current_scene)
 
+func set_player_high_score(score):
+	high_score.append(int(score))
+
 # get functions
 
 func get_game_window_dimension():
@@ -75,6 +79,9 @@ func set_difficulty(level):
 
 func get_difficulty():
 	return difficulty_level
+
+func get_player_high_score():
+	return high_score
 
 # utility functions
 

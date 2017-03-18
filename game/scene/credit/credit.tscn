@@ -1,6 +1,11 @@
-[gd_scene load_steps=3 format=1]
+[gd_scene load_steps=9 format=1]
 
-[ext_resource path="res://script/credit.gd" type="Script" id=1]
+[ext_resource path="res://ui/font/8-bit-font.fnt" type="BitmapFont" id=1]
+[ext_resource path="res://script/credit.gd" type="Script" id=2]
+[ext_resource path="res://icon.png" type="Texture" id=3]
+[ext_resource path="res://icon2.png" type="Texture" id=4]
+[ext_resource path="res://icon5.png" type="Texture" id=5]
+[ext_resource path="res://icon6.png" type="Texture" id=6]
 
 [sub_resource type="Animation" id=1]
 
@@ -9,36 +14,35 @@ length = 15.0
 loop = false
 step = 0.1
 tracks/0/type = "value"
-tracks/0/path = NodePath("credits:rect/pos")
+tracks/0/path = NodePath("credits:visibility/opacity")
 tracks/0/interp = 1
 tracks/0/imported = false
-tracks/0/keys = { "times":FloatArray( 0, 10 ), "transitions":FloatArray( 1, 1 ), "update":0, "values":[ Vector2( -90, 600 ), Vector2( -90, 128 ) ] }
+tracks/0/keys = { "times":FloatArray( 3, 5, 12, 13 ), "transitions":FloatArray( 1, 1, 1, 1 ), "update":0, "values":[ 0.0, 1.0, 1.0, 0.0 ] }
 tracks/1/type = "value"
-tracks/1/path = NodePath("credits:custom_colors/font_color")
+tracks/1/path = NodePath("credit_animation_player/scstfcII_logo:visibility/opacity")
 tracks/1/interp = 1
 tracks/1/imported = false
-tracks/1/keys = { "times":FloatArray( 0, 10, 14, 15 ), "transitions":FloatArray( 1, 1, 1, 1 ), "update":0, "values":[ Color( 0, 0, 0, 1 ), Color( 0.913518, 0.960938, 0.0938416, 1 ), Color( 0.976562, 0.141382, 0.0305176, 1 ), Color( 0, 0, 0, 1 ) ] }
-tracks/2/type = "value"
-tracks/2/path = NodePath("credits:custom_colors/font_color_shadow")
-tracks/2/interp = 1
-tracks/2/imported = false
-tracks/2/keys = { "times":FloatArray( 0, 10, 14, 15 ), "transitions":FloatArray( 1, 1, 1, 1 ), "update":0, "values":[ Color( 0, 0, 0, 1 ), Color( 0.0507812, 0.0507812, 0.0507812, 1 ), Color( 0, 0, 0, 1 ), Color( 0, 0, 0, 1 ) ] }
+tracks/1/keys = { "times":FloatArray( 0, 3, 13, 14.1, 15 ), "transitions":FloatArray( 1, 1, 1, 1, 1 ), "update":0, "values":[ 1.0, 0.0, 0.0, 1.0, 0.0 ] }
+
+[sub_resource type="SpriteFrames" id=2]
+
+animations = [ { "frames":[ ExtResource( 3 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource( 6 ) ], "loop":true, "name":"default", "speed":2.0 } ]
 
 [node name="Node" type="Node"]
 
 [node name="credits" type="Label" parent="."]
 
+visibility/opacity = 0.0
 focus/ignore_mouse = true
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 0
-margin/left = -90.0
-margin/top = 600.0
-margin/right = 1090.0
-margin/bottom = 954.0
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
-text = " ____   _____     ______     ______   ______   ______        __     __    \n/\\  ___\\   /\\  ___\\   /\\  ___\\   /\\__  _\\ /\\  ___\\ /\\  ___\\      /\\ \\   /\\ \\   \n\\ \\___  \\  \\ \\ \\____  \\ \\___  \\  \\/_/\\ \\/ \\ \\  __\\ \\ \\ \\____     \\ \\ \\  \\ \\ \\  \n \\/\\_____\\  \\ \\_____\\  \\/\\_____\\    \\ \\_\\  \\ \\_\\    \\ \\_____\\     \\ \\_\\  \\ \\_\\ \n  \\/_____/   \\/_____/   \\/_____/     \\/_/   \\/_/     \\/_____/      \\/_/   \\/_/ \n                                                                                     \nSuper Cul-de-Sac Turber Fighter Championship™ Limited Platinum Edition II: Remastered directors cut © 2017\n\n::Game Artists & Developers::\nAndy Anderson\nStuart Campbell\nDaniel Wray\n\n::Development & Technical Guidance::\nGoogle\nBeer\n\nCopyright © 2017 ADS Development\nSCTFC II™ is a trademark of ADS Development, the SCTFC II™ name, logo, and all works of art contained within are belong to us.\n\nBuilt with the Godot engine, Open-Source technologies, nostalgia, and love. Hot, sweaty, sticky love."
+margin/left = -225.0
+margin/top = -100.0
+margin/right = 1271.0
+margin/bottom = 744.0
+custom_fonts/font = ExtResource( 1 )
+text = "Super Cul-de-Sac Turber Fighter Championship™ \nLimited Platinum Edition II: Remastered directors cut © 2017\n\nAndy Anderson\nStuart Campbell\nDaniel Wray\n\nCopyright © 2017 ADS Development\nSCSTFC II™ is a trademark of ADS Development, the SCSTFC II™ name, \nlogo, and all works of art contained within are belong to us.\n\nBuilt with the Godot engine, Open-Source technologies, \nnostalgia, and love. Hot, sweaty, sticky love.\n\nPlease send bugs, or suggestions >> /dev/null"
 align = 1
 valign = 1
 percent_visible = 1.0
@@ -55,6 +59,18 @@ playback/active = true
 playback/speed = 1.0
 blend_times = [  ]
 autoplay = ""
-script/script = ExtResource( 1 )
+script/script = ExtResource( 2 )
+
+[node name="scstfcII_logo" type="AnimatedSprite" parent="credit_animation_player"]
+
+visibility/opacity = 0.0
+visibility/blend_mode = 1
+transform/pos = Vector2( 500, 300 )
+transform/scale = Vector2( 2.5, 2.5 )
+z/z = -1
+frames = SubResource( 2 )
+animation = "default"
+frame = 1
+playing = true
 
 

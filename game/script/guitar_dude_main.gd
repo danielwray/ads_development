@@ -23,6 +23,7 @@ export var health    = 100
 export var damage    = 1
 export var special   = 5
 export var new_state = "SI"
+var score = 1
 # util variables
 var window_size
 
@@ -34,6 +35,7 @@ func _ready():
 	set_pos(Vector2(120, 300))
 
 func _fixed_process(delta):
+	score += delta
 	if not get_state() == "SD":
 		state.update(delta)
 		trigger_collision()
@@ -43,8 +45,10 @@ func _fixed_process(delta):
 			move_cool_down_timer = 0
 		move_cool_down_timer += 0.1
 	else:
+		# disable character fixed process (this stops control / actions being triggered)
 		set_fixed_process(false)
 		set_process_unhandled_input(false)
+		init.set_player_high_score(score)
 
 func trigger_collision():
 	# if collision is true trigger on hitbox function
@@ -79,7 +83,6 @@ func trigger_movement():
 		is_moving = true
 
 func _input(event):
-	print(event)
 	if Input.is_action_pressed("player_one_punch") and not is_moving and not get_state() == "SD":
 		previous_state = get_state()
 		set_state("SA")
