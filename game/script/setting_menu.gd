@@ -6,6 +6,8 @@ var difficulty
 func _ready():
 	# load difficulty drop down object and add values
 	difficulty = get_node("menu/difficulty_drop_down")
+	difficulty.set_text("Difficulty")
+	difficulty.add_separator()
 	difficulty.add_item("Too easy", 5)
 	difficulty.add_item("Easy", 7.5)
 	difficulty.add_item("Normal", 10)

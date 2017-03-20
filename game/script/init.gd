@@ -80,17 +80,59 @@ func get_scene_files(scene):
 func get_difficulty():
 	var difficulty_level_override
 	if difficulty_level == 0:
-		difficulty_level_override = 1
+		difficulty_level_override = {
+		"speed": 0.5, 
+		"health": 75, 
+		"damage": 0.5, 
+		"spawn_rate": 100, 
+		"attack_distance": 500,
+		"enemy_number": 30
+		}
 	elif difficulty_level == 1:
-		difficulty_level_override = 2
+		difficulty_level_override = {
+		"speed": 1, 
+		"health": 100, 
+		"damage": 1, 
+		"spawn_rate": 75, 
+		"attack_distance": 800,
+		"enemy_number": 50
+		}
 	elif difficulty_level == 2:
-		difficulty_level_override = 5
+		difficulty_level_override = {
+		"speed": 1.25, 
+		"health": 100, 
+		"damage": 1.25, 
+		"spawn_rate": 65, 
+		"attack_distance": 900,
+		"enemy_number": 60
+		}
 	elif difficulty_level == 3:
-		difficulty_level_override = 10
+		difficulty_level_override = {
+		"speed": 1.75, 
+		"health": 125, 
+		"damage": 2, 
+		"spawn_rate": 50, 
+		"attack_distance": 1200,
+		"enemy_number": 100
+		}
 	elif difficulty_level == 4:
-		difficulty_level_override = 20
+		difficulty_level_override = {
+		"speed": 2, 
+		"health": 150, 
+		"damage": 4, 
+		"spawn_rate": 25, 
+		"attack_distance": 1500,
+		"enemy_number": 200
+		}
 	else:
-		difficulty_level_override = 1
+		difficulty_level_override = {
+		"speed": 1.25, 
+		"health": 100, 
+		"damage": 1.25, 
+		"spawn_rate": 65, 
+		"attack_distance": 900,
+		"enemy_number": 60
+		}
 	return difficulty_level_override
 
 func get_player_high_score():

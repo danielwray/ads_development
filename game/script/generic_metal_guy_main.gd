@@ -46,40 +46,28 @@ var dead_counter_limit = 200
 var special_dead = false
 
 # character parameters
-var health = 50 + init.get_difficulty()
-var damage = 0.2 + init.get_difficulty()
-var speed = 0.2 * init.get_difficulty()
+onready var difficulty = init.get_difficulty()
+var health
+var damage
+var speed
 
 # refactor to be in an external json file
 # {"band name": ["health", "damage", "speed"]}
 var enemy_name_dict = {
-	"Metallica": [health, 0.5, 1.0],
-	"Kiss": [health, 0.2, 2.0],
-	"Manowar": [health, 1.65, 2.0],
-	"Slayer": [health, 1.4, 1.0],
-	"Rage Against the Machine": [health, 0.5, 1.0],
-	"Queen": [health, 2.75, 0.5],
-	"Abba": [health, 1.2, 1.0],
-	"Anthrax": [health, 1.8, 2.5],
-	"Frank Zappa": [health, 1.1, 1.0],
-	"Queens of the Stone Age": [health, 0.2, 1.0],
-	"Wintersun": [health, 1.1, 1.0],
-	"Some band 1": [health, 0.5, 1.0],
-	"Some band 2": [health, 1.5, 1.0],
-	"Hipster Bastard": [health, 2.1, 1.0]
+	"band_name": [health, damage, speed]
 }
 
 func _ready():
+
 	set_fixed_process(true)
 	#set_pos(Vector2(800, 350))
 	# get root node
 	var _root=get_tree().get_root()
 	root = _root.get_child(_root.get_child_count()-1)
 	# set enemy stats
-	var enemy_stats = enemy_name_dict.keys()[randi() % enemy_name_dict.size()]
-	health = enemy_name_dict[enemy_stats][0]
-	damage = enemy_name_dict[enemy_stats][1]
-	speed = enemy_name_dict[enemy_stats][2]
+	health = difficulty.health
+	damage = difficulty.damage
+	speed = difficulty.speed
 	# set enemy name
 	enemy_name_label = get_node(get_node_objects().name)
 	enemy_name_label.set_text(str(enemy_name_dict.keys()[randi() % enemy_name_dict.size()]) + " Fan")

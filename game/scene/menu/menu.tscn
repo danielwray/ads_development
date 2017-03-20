@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=1]
+[gd_scene load_steps=17 format=1]
 
 [ext_resource path="res://script/main_menu.gd" type="Script" id=1]
 [ext_resource path="res://scene/menu/menu_button_pick.tres" type="StyleBox" id=2]
@@ -11,12 +11,30 @@
 [ext_resource path="res://sprite/ui/logo/icon7.png" type="Texture" id=9]
 [ext_resource path="res://sprite/ui/logo/icon8.png" type="Texture" id=10]
 [ext_resource path="res://script/setting_menu.gd" type="Script" id=11]
-[ext_resource path="res://sprite/ui/status_symbol/pick_small.png" type="Texture" id=12]
-[ext_resource path="res://ui/font/8-bit-font-small.fnt" type="BitmapFont" id=13]
+[ext_resource path="res://sprite/ui/status_symbol/special.png" type="Texture" id=12]
+[ext_resource path="res://sprite/ui/progress_bar/progress_bar_over.png" type="Texture" id=13]
+[ext_resource path="res://ui/font/8-bit-font-small.fnt" type="BitmapFont" id=14]
 
 [sub_resource type="SpriteFrames" id=1]
 
 animations = [ { "frames":[ ExtResource( 4 ), ExtResource( 4 ), ExtResource( 4 ), ExtResource( 4 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource( 6 ), ExtResource( 7 ), ExtResource( 8 ), ExtResource( 9 ), ExtResource( 10 ) ], "loop":true, "name":"default", "speed":5.0 } ]
+
+[sub_resource type="StyleBoxTexture" id=2]
+
+content_margin/left = -1.0
+content_margin/right = -1.0
+content_margin/top = -1.0
+content_margin/bottom = -1.0
+texture = ExtResource( 13 )
+margin/left = 0.0
+margin/right = 0.0
+margin/top = 0.0
+margin/bottom = 0.0
+expand_margin/left = 0.0
+expand_margin/right = 0.0
+expand_margin/top = 0.0
+expand_margin/bottom = 0.0
+draw_center = true
 
 [node name="menu" type="Node"]
 
@@ -137,17 +155,15 @@ transform/scale = Vector2( 2.5, 2.5 )
 z/z = -13
 frames = SubResource( 1 )
 animation = "default"
-frame = 5
+frame = 8
 playing = true
 
 [node name="setting" type="Node" parent="."]
 
-editor/display_folded = true
 script/script = ExtResource( 11 )
 
 [node name="menu" type="Container" parent="setting"]
 
-editor/display_folded = true
 focus/ignore_mouse = false
 focus/stop_mouse = true
 size_flags/horizontal = 2
@@ -159,41 +175,26 @@ margin/bottom = 1070.0
 
 [node name="difficulty_drop_down" type="OptionButton" parent="setting/menu"]
 
+hint/tooltip = "Select a difficulty level"
 focus/ignore_mouse = false
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 2
-margin/left = 232.0
-margin/top = 4.0
-margin/right = 328.0
-margin/bottom = 24.0
+margin/left = 90.0
+margin/top = -550.0
+margin/right = 242.0
+margin/bottom = -530.0
 custom_icons/arrow = ExtResource( 12 )
-custom_fonts/font = ExtResource( 13 )
+custom_styles/hover = SubResource( 2 )
+custom_fonts/font = ExtResource( 14 )
 toggle_mode = false
 click_on_press = true
-enabled_focus_mode = 2
+enabled_focus_mode = 0
 shortcut = null
 flat = true
 align = 0
 selected = -1
 items = [  ]
-
-[node name="difficulty_label" type="Label" parent="setting/menu"]
-
-rect/scale = Vector2( 2, 2 )
-focus/ignore_mouse = true
-focus/stop_mouse = true
-size_flags/horizontal = 2
-size_flags/vertical = 0
-margin/left = 100.0
-margin/top = 5.0
-margin/right = 157.0
-margin/bottom = 19.0
-custom_fonts/font = ExtResource( 13 )
-text = "Difficulty"
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
 
 [connection signal="pressed" from="menu_container/start" to="menu_container" method="_on_start_pressed"]
 
