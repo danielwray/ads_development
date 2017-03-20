@@ -10,12 +10,12 @@
 [ext_resource path="res://sprite/character/player/guitar_dude/dead_2.png" type="Texture" id=8]
 [ext_resource path="res://sprite/character/player/guitar_dude/hit_0.png" type="Texture" id=9]
 [ext_resource path="res://sprite/character/player/guitar_dude/hit_1.png" type="Texture" id=10]
-[ext_resource path="res://sprite/character/player/guitar_dude/punch_0.png" type="Texture" id=11]
-[ext_resource path="res://sprite/character/player/guitar_dude/punch_1.png" type="Texture" id=12]
-[ext_resource path="res://sprite/character/player/guitar_dude/walk_0.png" type="Texture" id=13]
-[ext_resource path="res://sprite/character/player/guitar_dude/walk_1.png" type="Texture" id=14]
-[ext_resource path="res://sprite/character/player/guitar_dude/walk_2.png" type="Texture" id=15]
-[ext_resource path="res://sprite/character/player/guitar_dude/walk_3.png" type="Texture" id=16]
+[ext_resource path="res://sprite/character/player/guitar_dude/walk_0.png" type="Texture" id=11]
+[ext_resource path="res://sprite/character/player/guitar_dude/walk_1.png" type="Texture" id=12]
+[ext_resource path="res://sprite/character/player/guitar_dude/walk_2.png" type="Texture" id=13]
+[ext_resource path="res://sprite/character/player/guitar_dude/walk_3.png" type="Texture" id=14]
+[ext_resource path="res://sprite/character/player/guitar_dude/punch_0.png" type="Texture" id=15]
+[ext_resource path="res://sprite/character/player/guitar_dude/punch_1.png" type="Texture" id=16]
 [ext_resource path="res://sprite/fx/lighting/fx_lighting_000.png" type="Texture" id=17]
 [ext_resource path="res://sprite/fx/lighting/fx_lighting_001.png" type="Texture" id=18]
 [ext_resource path="res://sprite/fx/lighting/fx_lighting_002.png" type="Texture" id=19]
@@ -32,7 +32,7 @@ height = 2.36406
 
 [sub_resource type="SpriteFrames" id=2]
 
-animations = [ { "frames":[ ExtResource( 2 ), ExtResource( 3 ) ], "loop":true, "name":"idle", "speed":3.0 }, { "frames":[ ExtResource( 4 ), ExtResource( 5 ) ], "loop":true, "name":"special", "speed":2.0 }, { "frames":[ ExtResource( 6 ), ExtResource( 7 ), ExtResource( 8 ) ], "loop":false, "name":"dead", "speed":6.0 }, { "frames":[ ExtResource( 9 ), ExtResource( 10 ), ExtResource( 2 ) ], "loop":false, "name":"hit", "speed":2.0 }, { "frames":[ ExtResource( 11 ), ExtResource( 12 ) ], "loop":false, "name":"punch", "speed":2.0 }, { "frames":[ ExtResource( 13 ), ExtResource( 14 ), ExtResource( 15 ), ExtResource( 16 ) ], "loop":true, "name":"walk", "speed":3.0 } ]
+animations = [ { "frames":[ ExtResource( 2 ), ExtResource( 3 ) ], "loop":true, "name":"idle", "speed":3.0 }, { "frames":[ ExtResource( 4 ), ExtResource( 5 ) ], "loop":true, "name":"special", "speed":2.0 }, { "frames":[ ExtResource( 6 ), ExtResource( 7 ), ExtResource( 8 ) ], "loop":false, "name":"dead", "speed":6.0 }, { "frames":[ ExtResource( 9 ), ExtResource( 10 ), ExtResource( 2 ) ], "loop":false, "name":"hit", "speed":2.0 }, { "frames":[ ExtResource( 11 ), ExtResource( 12 ), ExtResource( 13 ), ExtResource( 14 ) ], "loop":true, "name":"walk", "speed":3.0 }, { "frames":[ ExtResource( 15 ), ExtResource( 16 ) ], "loop":false, "name":"punch", "speed":2.0 } ]
 
 [sub_resource type="CircleShape2D" id=3]
 
@@ -94,14 +94,13 @@ type_mask = 15
 
 [node name="guitar_dude_special_area" type="Area2D" parent="."]
 
-editor/display_folded = true
 transform/scale = Vector2( 5, 2 )
 input/pickable = true
 shapes/0/shape = SubResource( 3 )
-shapes/0/transform = Matrix32( 1, 0, 0, 0.5, 32, 0 )
+shapes/0/transform = Matrix32( 0.25, 0, 0, 0.75, 8, 0 )
 shapes/0/trigger = false
 shapes/1/shape = SubResource( 3 )
-shapes/1/transform = Matrix32( 1, 0, 0, 0.5, -32, 0 )
+shapes/1/transform = Matrix32( 0.25, 0, 0, 0.75, -8, 0 )
 shapes/1/trigger = false
 space_override = 1
 gravity_vec = Vector2( 0, 1 )
@@ -111,16 +110,16 @@ angular_damp = 1.0
 
 [node name="guitar_dude_special_area_right" type="CollisionShape2D" parent="guitar_dude_special_area"]
 
-transform/pos = Vector2( 32, 0 )
-transform/scale = Vector2( 1, 0.5 )
+transform/pos = Vector2( 8, 0 )
+transform/scale = Vector2( 0.25, 0.75 )
 shape = SubResource( 3 )
 trigger = false
 _update_shape_index = 0
 
 [node name="guitar_dude_special_area_left" type="CollisionShape2D" parent="guitar_dude_special_area"]
 
-transform/pos = Vector2( -32, 0 )
-transform/scale = Vector2( 1, 0.5 )
+transform/pos = Vector2( -8, 0 )
+transform/scale = Vector2( 0.25, 0.75 )
 shape = SubResource( 3 )
 trigger = false
 _update_shape_index = 1

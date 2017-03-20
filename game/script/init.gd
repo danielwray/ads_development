@@ -18,7 +18,7 @@ var screen_dimension = Vector2()
 # configuration
 var game_status = {}
 var game_config = {}
-var difficulty_level = 1
+var difficulty_level
 # game status
 var current_scene = null
 var state_machine
@@ -59,6 +59,9 @@ func set_scene(scene):
 func set_player_high_score(score):
 	high_score.append(int(score))
 
+func set_difficulty(level):
+	difficulty_level = level
+
 # get functions
 
 func get_game_window_dimension():
@@ -74,11 +77,21 @@ func get_scene_files(scene):
 	if scene in scene_files.keys():
 		return scene_files[scene]
 
-func set_difficulty(level):
-	difficulty_level = level
-
 func get_difficulty():
-	return difficulty_level
+	var difficulty_level_override
+	if difficulty_level == 0:
+		difficulty_level_override = 1
+	elif difficulty_level == 1:
+		difficulty_level_override = 2
+	elif difficulty_level == 2:
+		difficulty_level_override = 5
+	elif difficulty_level == 3:
+		difficulty_level_override = 10
+	elif difficulty_level == 4:
+		difficulty_level_override = 20
+	else:
+		difficulty_level_override = 1
+	return difficulty_level_override
 
 func get_player_high_score():
 	return high_score

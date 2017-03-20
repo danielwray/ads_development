@@ -1,11 +1,14 @@
-[gd_scene load_steps=9 format=1]
+[gd_scene load_steps=12 format=1]
 
 [ext_resource path="res://ui/font/8-bit-font.fnt" type="BitmapFont" id=1]
 [ext_resource path="res://script/credit.gd" type="Script" id=2]
-[ext_resource path="res://icon.png" type="Texture" id=3]
-[ext_resource path="res://icon2.png" type="Texture" id=4]
-[ext_resource path="res://icon5.png" type="Texture" id=5]
-[ext_resource path="res://icon6.png" type="Texture" id=6]
+[ext_resource path="res://sprite/ui/logo/icon2.png" type="Texture" id=3]
+[ext_resource path="res://sprite/ui/logo/icon3.png" type="Texture" id=4]
+[ext_resource path="res://sprite/ui/logo/icon4.png" type="Texture" id=5]
+[ext_resource path="res://sprite/ui/logo/icon5.png" type="Texture" id=6]
+[ext_resource path="res://sprite/ui/logo/icon6.png" type="Texture" id=7]
+[ext_resource path="res://sprite/ui/logo/icon7.png" type="Texture" id=8]
+[ext_resource path="res://sprite/ui/logo/icon8.png" type="Texture" id=9]
 
 [sub_resource type="Animation" id=1]
 
@@ -26,7 +29,7 @@ tracks/1/keys = { "times":FloatArray( 0, 3, 13, 14.1, 15 ), "transitions":FloatA
 
 [sub_resource type="SpriteFrames" id=2]
 
-animations = [ { "frames":[ ExtResource( 3 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource( 6 ) ], "loop":true, "name":"default", "speed":2.0 } ]
+animations = [ { "frames":[ ExtResource( 3 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource( 6 ), ExtResource( 7 ), ExtResource( 8 ), ExtResource( 9 ) ], "loop":true, "name":"default", "speed":5.0 } ]
 
 [node name="Node" type="Node"]
 
@@ -70,7 +73,7 @@ transform/scale = Vector2( 2.5, 2.5 )
 z/z = -1
 frames = SubResource( 2 )
 animation = "default"
-frame = 2
+frame = 1
 playing = true
 
 

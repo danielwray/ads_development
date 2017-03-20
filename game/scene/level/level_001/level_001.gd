@@ -22,8 +22,8 @@ func _ready():
 	# Initialization here
 	set_fixed_process(true)
 	difficulty = init.get_difficulty()
-	enemy_min_count = difficulty * 5
-	enemy_max_count = difficulty * 15
+	enemy_min_count = difficulty / 2
+	enemy_max_count = difficulty
 	enemies.append("res://scene/character/enemy/generic_metal_guy.tscn")
 	enemies.append("res://scene/character/enemy/enemy.tscn")
 	load_characters()

@@ -22,7 +22,6 @@ const STATE_DEAD		= "SD"
 # variables
 # root scene variables
 var root = null
-
 # movement
 var get_current_pos
 var death_count = 0
@@ -44,11 +43,12 @@ var state_timer    = 0
 var state_timer_limit = 1.0
 var dead_counter = 0
 var dead_counter_limit = 200
+var special_dead = false
 
 # character parameters
-var health = 100 + init.get_difficulty()
-var damage = 0.1 + init.get_difficulty()
-var speed = 0.5 * init.get_difficulty()
+var health = 50 + init.get_difficulty()
+var damage = 0.2 + init.get_difficulty()
+var speed = 0.2 * init.get_difficulty()
 
 # refactor to be in an external json file
 # {"band name": ["health", "damage", "speed"]}
@@ -127,7 +127,7 @@ func set_state(new_state):
 	state.exit()
 	if new_state == STATE_DEAD:
 		state = Dead.new(self)
-		state.dead()
+		state.dead(special_dead)
 	elif new_state == STATE_IDLE:
 		state = Idle.new(self)
 	elif new_state == STATE_MOVING:
@@ -195,7 +195,6 @@ class Moving:
 
 	func update(delta):
 		on_move(player)
-		enemy_sprite.play("walk")
 		#################################################################################################
 		# TODO - Bertie: Audio code goes here
 		# See 'samplePlayer2D' class for available methods
@@ -214,6 +213,9 @@ class Moving:
 		var length_to_player_y
 		var walk_speed = enemy.get_speed()
 		var player_node = player
+		var attack_zone_limit = 500
+		
+		# work out length to player, and angle for sprite flip control
 		player_pos = player_node.get_pos()
 		get_current_pos = enemy.get_pos()
 		delta_x = player_pos.x - get_current_pos.x
@@ -222,6 +224,8 @@ class Moving:
 		length = sqrt(delta_x * delta_x + delta_y * delta_y)
 		length_to_player_x = delta_x / length
 		length_to_player_y = delta_y / length
+
+		# control direction of enemy
 		if (enemy.get_angle_to(player_pos) > 0.5):
 			enemy_sprite.set_flip_h(false)
 			enemy_raycast.set_rot(6)
@@ -229,17 +233,24 @@ class Moving:
 			enemy_sprite.set_flip_h(true)
 			enemy_raycast.set_rot(-160)
 
-		# determine z value of character (0 if above half screen, 1 if below)
-		if enemy.get_pos().y < window_size.y / 2:
-			enemy.set_z(int(enemy.get_pos().y))
-		elif enemy.get_pos().y > window_size.y / 2:
-			enemy.set_z(int(enemy.get_pos().y))
-
-		if length_to_player_x or length_to_player_y > 0:
-			enemy.move(Vector2(length_to_player_x * walk_speed, length_to_player_y * walk_speed))
-			enemy_sprite.play("walk")
+		# determine if enemy should start moving
+		if length > attack_zone_limit:
+			enemy.set_state("SI")
 		else:
-			enemy_sprite.set_state("SI")
+			enemy_sprite.play("walk")
+			# will keep enemy moving unless within 5 pixels of player
+			if length_to_player_x or length_to_player_y > 0:
+				enemy.move(Vector2(length_to_player_x * walk_speed, length_to_player_y * walk_speed))
+				enemy_sprite.play("walk")
+			else:
+				enemy_sprite.set_state("SI")
+			# determine z value of character (0 if above half screen, 1 if below)
+			if enemy.get_pos().y < window_size.y / 2:
+				enemy.set_z(int(enemy.get_pos().y))
+			elif enemy.get_pos().y > window_size.y / 2:
+				enemy.set_z(int(enemy.get_pos().y))
+
+
 
 	func exit():
 		pass
@@ -335,11 +346,10 @@ class Hit:
 		# TODO - Bertie: Audio code goes here
 		# See 'samplePlayer2D' class for available methods
 		#################################################################################################
-		if enemy.get_health() < 0:
-			enemy.set_state("SD")
-		else:
-			enemy_sprite.play("hit_special")
 			enemy.health -= damage
+			enemy_sprite.play("hit_special")
+			enemy.special_dead = true
+			enemy.set_state("SD")
 
 	func exit():
 		pass
@@ -362,13 +372,19 @@ class Dead:
 		enemy_audio = enemy.get_node(enemy.get_node_objects().audio)
 
 	func update(delta):
-		enemy_sprite.set_state("SD")
+		pass
 
-	func dead():
-		enemy_sprite.play("dead")
-		if not enemy_audio.is_active() and enemy.is_dead == false:
-			enemy_audio.play("enemy_dead_1")
-			enemy.is_dead = true
+	func dead(special_dead):
+		if special_dead:
+			enemy_sprite.play("hit_special")
+			if not enemy_audio.is_active() and enemy.is_dead == false:
+				enemy_audio.play("enemy_dead_1")
+				enemy.is_dead = true
+		else:
+			enemy_sprite.play("dead")
+			if not enemy_audio.is_active() and enemy.is_dead == false:
+				enemy_audio.play("enemy_dead_1")
+				enemy.is_dead = true
 
 		#################################################################################################
 		# TODO - Bertie: Audio code goes here

@@ -308,7 +308,7 @@ class Special:
 		guitar_dude_special_area = guitar_dude.get_node("guitar_dude_special_area")
 		guitar_dude_fx_right = guitar_dude.get_node("guitar_dude_fx_right")
 		guitar_dude_fx_left = guitar_dude.get_node("guitar_dude_fx_left")
-		damage = guitar_dude.get_damage()
+		damage = guitar_dude.get_damage() * 100
 
 	func update(delta):
 		state_action_timer += 0.1
