@@ -86,7 +86,7 @@ func get_difficulty():
 		"damage": 0.5, 
 		"spawn_rate": 100, 
 		"attack_distance": 500,
-		"enemy_number": 30
+		"enemy_number": 5
 		}
 	elif difficulty_level == 1:
 		difficulty_level_override = {
@@ -95,7 +95,7 @@ func get_difficulty():
 		"damage": 1, 
 		"spawn_rate": 75, 
 		"attack_distance": 800,
-		"enemy_number": 50
+		"enemy_number": 15
 		}
 	elif difficulty_level == 2:
 		difficulty_level_override = {
@@ -104,7 +104,7 @@ func get_difficulty():
 		"damage": 1.25, 
 		"spawn_rate": 65, 
 		"attack_distance": 900,
-		"enemy_number": 60
+		"enemy_number": 20
 		}
 	elif difficulty_level == 3:
 		difficulty_level_override = {
@@ -113,7 +113,7 @@ func get_difficulty():
 		"damage": 2, 
 		"spawn_rate": 50, 
 		"attack_distance": 1200,
-		"enemy_number": 100
+		"enemy_number": 30
 		}
 	elif difficulty_level == 4:
 		difficulty_level_override = {
@@ -122,7 +122,7 @@ func get_difficulty():
 		"damage": 4, 
 		"spawn_rate": 25, 
 		"attack_distance": 1500,
-		"enemy_number": 200
+		"enemy_number": 50
 		}
 	else:
 		difficulty_level_override = {
@@ -131,7 +131,7 @@ func get_difficulty():
 		"damage": 1.25, 
 		"spawn_rate": 65, 
 		"attack_distance": 900,
-		"enemy_number": 60
+		"enemy_number": 20
 		}
 	return difficulty_level_override
 
