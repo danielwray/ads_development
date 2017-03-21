@@ -1,12 +1,21 @@
-[gd_resource type="TileSet" load_steps=4 format=1]
+[gd_resource type="TileSet" load_steps=12 format=1]
 
 [ext_resource path="res://sprite/world/background/b_001.png" type="Texture" id=1]
 [ext_resource path="res://sprite/world/background/b_002.png" type="Texture" id=2]
-[ext_resource path="res://sprite/world/background/b_side_001.png" type="Texture" id=3]
+[ext_resource path="res://sprite/world/background/b_side_002.png" type="Texture" id=3]
+[ext_resource path="res://sprite/world/background/b_003.png" type="Texture" id=4]
+[ext_resource path="res://sprite/world/background/b_004.png" type="Texture" id=5]
+[ext_resource path="res://sprite/world/background/b_005.png" type="Texture" id=6]
+[ext_resource path="res://sprite/world/background/b_006.png" type="Texture" id=7]
+[ext_resource path="res://sprite/world/background/b_007.png" type="Texture" id=8]
+[ext_resource path="res://sprite/world/background/b_008.png" type="Texture" id=9]
+[ext_resource path="res://sprite/world/background/b_009.png" type="Texture" id=10]
+[ext_resource path="res://sprite/world/background/b_side_001.png" type="Texture" id=11]
 
 [resource]
 
 0/name = "sb1"
+0/texture = ExtResource( 1 )
 0/tex_offset = Vector2( 0, 0 )
 0/region = Rect2( 0, 0, 256, 256 )
 0/occluder_offset = Vector2( 128, 128 )
@@ -14,7 +23,7 @@
 0/shape_offset = Vector2( 0, 0 )
 0/shapes = [  ]
 1/name = "s1"
-1/texture = ExtResource( 1 )
+1/texture = ExtResource( 2 )
 1/tex_offset = Vector2( 0, 0 )
 1/region = Rect2( 0, 0, 256, 256 )
 1/occluder_offset = Vector2( 128, 128 )
@@ -22,7 +31,7 @@
 1/shape_offset = Vector2( 0, 0 )
 1/shapes = [  ]
 2/name = "s2"
-2/texture = ExtResource( 2 )
+2/texture = ExtResource( 4 )
 2/tex_offset = Vector2( 0, 0 )
 2/region = Rect2( 0, 0, 256, 256 )
 2/occluder_offset = Vector2( 128, 128 )
@@ -30,7 +39,7 @@
 2/shape_offset = Vector2( 0, 0 )
 2/shapes = [  ]
 3/name = "s3"
-3/texture = ExtResource( 3 )
+3/texture = ExtResource( 5 )
 3/tex_offset = Vector2( 0, 0 )
 3/region = Rect2( 0, 0, 256, 256 )
 3/occluder_offset = Vector2( 128, 128 )
@@ -38,7 +47,7 @@
 3/shape_offset = Vector2( 0, 0 )
 3/shapes = [  ]
 4/name = "s4"
-4/texture = ExtResource( 3 )
+4/texture = ExtResource( 6 )
 4/tex_offset = Vector2( 0, 0 )
 4/region = Rect2( 0, 0, 256, 256 )
 4/occluder_offset = Vector2( 128, 128 )
@@ -46,6 +55,7 @@
 4/shape_offset = Vector2( 0, 0 )
 4/shapes = [  ]
 5/name = "s5"
+5/texture = ExtResource( 7 )
 5/tex_offset = Vector2( 0, 0 )
 5/region = Rect2( 0, 0, 256, 256 )
 5/occluder_offset = Vector2( 128, 128 )
@@ -53,6 +63,7 @@
 5/shape_offset = Vector2( 0, 0 )
 5/shapes = [  ]
 6/name = "s6"
+6/texture = ExtResource( 8 )
 6/tex_offset = Vector2( 0, 0 )
 6/region = Rect2( 0, 0, 256, 256 )
 6/occluder_offset = Vector2( 128, 128 )
@@ -60,6 +71,7 @@
 6/shape_offset = Vector2( 0, 0 )
 6/shapes = [  ]
 7/name = "s7"
+7/texture = ExtResource( 9 )
 7/tex_offset = Vector2( 0, 0 )
 7/region = Rect2( 0, 0, 256, 256 )
 7/occluder_offset = Vector2( 128, 128 )
@@ -67,6 +79,7 @@
 7/shape_offset = Vector2( 0, 0 )
 7/shapes = [  ]
 8/name = "s8"
+8/texture = ExtResource( 10 )
 8/tex_offset = Vector2( 0, 0 )
 8/region = Rect2( 0, 0, 256, 256 )
 8/occluder_offset = Vector2( 128, 128 )
@@ -74,6 +87,7 @@
 8/shape_offset = Vector2( 0, 0 )
 8/shapes = [  ]
 9/name = "s9"
+9/texture = ExtResource( 11 )
 9/tex_offset = Vector2( 0, 0 )
 9/region = Rect2( 0, 0, 256, 256 )
 9/occluder_offset = Vector2( 128, 128 )
@@ -81,6 +95,7 @@
 9/shape_offset = Vector2( 0, 0 )
 9/shapes = [  ]
 10/name = "s10"
+10/texture = ExtResource( 3 )
 10/tex_offset = Vector2( 0, 0 )
 10/region = Rect2( 0, 0, 128, 128 )
 10/occluder_offset = Vector2( 64, 64 )
