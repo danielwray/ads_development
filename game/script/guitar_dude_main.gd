@@ -19,9 +19,11 @@ var state_timer_limit = 1.0
 var is_moving = false
 var move_cool_down_timer = 0
 # character parameters
-export var health    = 100
-export var damage    = 1
-export var special   = 5
+onready var difficulty = init.get_difficulty()
+var health
+var damage
+var speed
+var special
 export var new_state = "SI"
 var score = 1
 # util variables
@@ -33,6 +35,11 @@ func _ready():
 	set_process_unhandled_key_input(true)
 	set_process_input(true)
 	set_pos(Vector2(120, 300))
+	# set player stats
+	health = difficulty.player_health
+	damage = difficulty.player_damage
+	speed = difficulty.player_speed
+	special = difficulty.player_special
 
 func _fixed_process(delta):
 	score += delta

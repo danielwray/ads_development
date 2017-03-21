@@ -78,61 +78,80 @@ func get_scene_files(scene):
 		return scene_files[scene]
 
 func get_difficulty():
+	var difficulty_level_normal = {
+		"speed": 1.25, 
+		"health": 100, 
+		"damage": 1.25, 
+		"spawn_rate": 65, 
+		"attack_distance": 900,
+		"enemy_number": 20,
+		"player_health": 100,
+		"player_damage": 40,
+		"player_speed": 1,
+		"player_special": 100
+	}
 	var difficulty_level_override
-	if difficulty_level == 0:
+	if difficulty_level == 1:
+		# (too easy) difficulty
 		difficulty_level_override = {
 		"speed": 0.5, 
 		"health": 75, 
 		"damage": 0.5, 
 		"spawn_rate": 100, 
 		"attack_distance": 500,
-		"enemy_number": 5
+		"enemy_number": 5,
+		"player_health": 150,
+		"player_damage": 60,
+		"player_speed": 2,
+		"player_special": 125
 		}
-	elif difficulty_level == 1:
+	elif difficulty_level == 2:
+		# (easy) difficulty
 		difficulty_level_override = {
 		"speed": 1, 
 		"health": 100, 
 		"damage": 1, 
 		"spawn_rate": 75, 
 		"attack_distance": 800,
-		"enemy_number": 15
-		}
-	elif difficulty_level == 2:
-		difficulty_level_override = {
-		"speed": 1.25, 
-		"health": 100, 
-		"damage": 1.25, 
-		"spawn_rate": 65, 
-		"attack_distance": 900,
-		"enemy_number": 20
+		"enemy_number": 15,
+		"player_health": 125,
+		"player_damage": 50,
+		"player_speed": 2,
+		"player_special": 100
 		}
 	elif difficulty_level == 3:
+		# (normal) difficulty
+		difficulty_level_override = difficulty_level_normal
+	elif difficulty_level == 4:
+		# (hard) difficulty
 		difficulty_level_override = {
 		"speed": 1.75, 
 		"health": 125, 
 		"damage": 2, 
 		"spawn_rate": 50, 
 		"attack_distance": 1200,
-		"enemy_number": 30
+		"enemy_number": 30,
+		"player_health": 100,
+		"player_damage": 30,
+		"player_speed": 1.5,
+		"player_special": 50
 		}
-	elif difficulty_level == 4:
+	elif difficulty_level == 5:
+		# (insane) difficulty
 		difficulty_level_override = {
 		"speed": 2, 
 		"health": 150, 
 		"damage": 4, 
 		"spawn_rate": 25, 
 		"attack_distance": 1500,
-		"enemy_number": 50
+		"enemy_number": 50,
+		"player_health": 100,
+		"player_damage": 20,
+		"player_speed": 1,
+		"player_special": 25
 		}
 	else:
-		difficulty_level_override = {
-		"speed": 1.25, 
-		"health": 100, 
-		"damage": 1.25, 
-		"spawn_rate": 65, 
-		"attack_distance": 900,
-		"enemy_number": 20
-		}
+		difficulty_level_override = difficulty_level_normal
 	return difficulty_level_override
 
 func get_player_high_score():

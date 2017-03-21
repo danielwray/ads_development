@@ -37,7 +37,7 @@ func _ready():
 	enemies.append("res://scene/character/enemy/enemy.tscn")
 	# set spawn limits
 	spawn_timer_limit = difficulty.spawn_rate
-	spawn_limit = difficulty.enemy_number / 2
+	spawn_limit = difficulty.enemy_number
 	# load functions
 	load_characters()
 	load_world()
@@ -46,7 +46,6 @@ func _fixed_process(delta):
 	if level_status.end:
 		print("level completed")
 	elif level_status.stage_1:
-		print("STAGE: 1" + " SPAWN LIMIT: " + str(spawn_limit) + " TIMER LIMIT: " + str(spawn_timer_limit) + " SPAWNED: " + str(spawned) + " TIME: " + str(spawn_timer))
 		spawn_timer_limit = difficulty.spawn_rate
 		if spawn_timer > spawn_timer_limit and spawned < spawn_limit:
 			spawned += 1
@@ -54,13 +53,28 @@ func _fixed_process(delta):
 			spawn_timer = 0
 		spawn_timer += 0.25
 	elif level_status.stage_2:
-		print("STAGE: 2" + " SPAWN LIMIT: " + str(spawn_limit) + " TIMER LIMIT: " + str(spawn_timer_limit) + " SPAWNED: " + str(spawned) + " TIME: " + str(spawn_timer))
+
+		spawn_timer_limit = difficulty.spawn_rate
+		if spawn_timer > spawn_timer_limit and spawned < spawn_limit:
+			spawned += 1
+			spawn_enemy()
+			spawn_timer = 0
+		spawn_timer += 0.25
 	elif level_status.stage_3:
-		print("STAGE: 3" + " SPAWN LIMIT: " + str(spawn_limit) + " TIMER LIMIT: " + str(spawn_timer_limit) + " SPAWNED: " + str(spawned) + " TIME: " + str(spawn_timer))
+		spawn_timer_limit = difficulty.spawn_rate
+		if spawn_timer > spawn_timer_limit and spawned < spawn_limit:
+			spawned += 1
+			spawn_enemy()
+			spawn_timer = 0
+		spawn_timer += 0.25
 	elif level_status.boss:
-		print("STAGE: BOSS" + " SPAWN LIMIT: " + str(spawn_limit) + " TIMER LIMIT: " + str(spawn_timer_limit) + " SPAWNED: " + str(spawned) + " TIME: " + str(spawn_timer))
+		spawn_timer_limit = difficulty.spawn_rate
+		if spawn_timer > spawn_timer_limit and spawned < spawn_limit:
+			spawned += 1
+			spawn_enemy()
+			spawn_timer = 0
+		spawn_timer += 0.25
 	elif level_status.start:
-		print("STAGE: START" + "SPAWN LIMIT: " + str(spawn_limit) + " TIMER LIMIT: " + str(spawn_timer_limit) + " SPAWNED: " + str(spawned) + " TIME: " + str(spawn_timer))
 		spawn_timer_limit = difficulty.spawn_rate
 		if spawn_timer > spawn_timer_limit and spawned < spawn_limit:
 			spawned += 1
@@ -73,6 +87,7 @@ func load_characters():
 	add_child(player.instance(), true)
 
 func spawn_enemy():
+	# refactor this to spawn enemies before / after player and more randomly
 	var player_object = get_tree().get_nodes_in_group("player")[0]
 	var player_position = player_object.get_pos().x
 	player_position = player_position + rand_range(800, 1200)
@@ -88,6 +103,18 @@ func _on_start_body_enter( body ):
 	if body.is_in_group("player"):
 		level_status.start = true
 
+func _on_stage_1_body_enter( body ):
+	if body.is_in_group("player"):
+		level_status.stage_1 = true
+
+func _on_stage_2_body_enter( body ):
+	if body.is_in_group("player"):
+		level_status.stage_2 = true
+
+func _on_stage_3_body_enter( body ):
+	if body.is_in_group("player"):
+		level_status.stage_3 = true
+
 func _on_end_body_enter( body ):
 	if body.is_in_group("player"):
 		level_status.end = true
@@ -95,7 +122,3 @@ func _on_end_body_enter( body ):
 func _on_boss_body_enter( body ):
 	if body.is_in_group("player"):
 		level_status.boss = true
-
-func _on_stage_1_body_enter( body ):
-	if body.is_in_group("player"):
-		level_status.stage_1 = true

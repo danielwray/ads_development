@@ -22,12 +22,16 @@ const STATE_DEAD		= "SD"
 # variables
 # root scene variables
 var root = null
-# movement
-var get_current_pos
+# dead variables
 var death_count = 0
 var dead_timer = 0
 var is_dead = false
-# resources
+# movement variables
+var get_current_pos
+var direction_x = 0
+var new_position_target = true
+var walk_limit = 0
+# resources variables
 var sprite
 var audio
 var collision
@@ -44,7 +48,6 @@ var state_timer_limit = 1.0
 var dead_counter = 0
 var dead_counter_limit = 200
 var special_dead = false
-
 # character parameters
 onready var difficulty = init.get_difficulty()
 var health
@@ -172,6 +175,9 @@ class Moving:
 	var enemy_audio
 	var enemy_raycast
 	var player
+	var window_size = OS.get_window_size()
+	var walk_speed
+	var get_current_pos
 
 	func _init(enemy_root, player):
 		self.enemy = enemy_root
@@ -182,48 +188,40 @@ class Moving:
 		enemy_raycast = enemy.get_node(enemy.get_node_objects().raycast)
 
 	func update(delta):
-		on_move(player)
+		control_enemy_movement(player)
 		#################################################################################################
 		# TODO - Bertie: Audio code goes here
 		# See 'samplePlayer2D' class for available methods
 		#################################################################################################
 
-	func on_move(player):
-		var window_size = OS.get_window_size()
+	func control_enemy_movement(player):
 		var player_node
 		var player_pos
-		var get_current_pos
 		var delta_x
 		var delta_y
 		var angle_in_radians
 		var length
 		var length_to_player_x
 		var length_to_player_y
-		var walk_speed = enemy.get_speed()
 		var player_node = player
 		var attack_zone_limit = 500
 		
 		# work out length to player, and angle for sprite flip control
+		walk_speed = enemy.get_speed()
 		player_pos = player_node.get_pos()
 		get_current_pos = enemy.get_pos()
+		# determine enemy to player angle
 		delta_x = player_pos.x - get_current_pos.x
 		delta_y = player_pos.y - get_current_pos.y
 		angle_in_radians = atan2(delta_x, delta_y)
 		length = sqrt(delta_x * delta_x + delta_y * delta_y)
+		# determine length from enemy to player
 		length_to_player_x = delta_x / length
 		length_to_player_y = delta_y / length
 
-		# control direction of enemy
-		if (enemy.get_angle_to(player_pos) > 0.5):
-			enemy_sprite.set_flip_h(false)
-			enemy_raycast.set_rot(6)
-		else:
-			enemy_sprite.set_flip_h(true)
-			enemy_raycast.set_rot(-160)
-
 		# determine if enemy should start moving
 		if length > attack_zone_limit:
-			enemy.set_state("SI")
+			random_move()
 		else:
 			enemy_sprite.play("walk")
 			# will keep enemy moving unless within 5 pixels of player
@@ -232,13 +230,44 @@ class Moving:
 				enemy_sprite.play("walk")
 			else:
 				enemy_sprite.set_state("SI")
+			# flip sprite horizontally
+			set_flip_bool(player_pos)
 			# determine z value of character (0 if above half screen, 1 if below)
-			if enemy.get_pos().y < window_size.y / 2:
-				enemy.set_z(int(enemy.get_pos().y))
-			elif enemy.get_pos().y > window_size.y / 2:
-				enemy.set_z(int(enemy.get_pos().y))
+			set_z_value()
 
+	func set_flip_bool(player_pos):
+		# control direction of enemy
+		if (enemy.get_angle_to(player_pos) > 0.5):
+			enemy_sprite.set_flip_h(false)
+			enemy_raycast.set_rot(6)
+		else:
+			enemy_sprite.set_flip_h(true)
+			enemy_raycast.set_rot(-160)
 
+	func set_z_value():
+		if enemy.get_pos().y < window_size.y / 2:
+			enemy.set_z(int(enemy.get_pos().y))
+		elif enemy.get_pos().y > window_size.y / 2:
+			enemy.set_z(int(enemy.get_pos().y))
+	
+	func random_move():
+		pass
+#		if enemy.new_position_target:
+#			enemy.direction_x =  enemy.get_pos().x - 200
+#			enemy.new_position_target = false
+#		else:
+#			if enemy.walk_limit < 20:
+#				print(enemy.get_pos().x, enemy.direction_x)
+#				enemy.move(Vector2(enemy.direction_x * walk_speed, 0))
+#				enemy_sprite.play("walk")
+#				# flip sprite horizontally
+#				set_flip_bool(Vector2(1,1))
+#				# determine z value of character (0 if above half screen, 1 if below)
+#				set_z_value()
+#				enemy.walk_limit += 0.25
+#			else:
+#				enemy.new_position_target = true
+#				enemy.direction_x =  enemy.get_pos().x - 200
 
 	func exit():
 		pass
