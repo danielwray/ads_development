@@ -1,4 +1,4 @@
-[gd_resource type="TileSet" load_steps=9 format=1]
+[gd_resource type="TileSet" load_steps=12 format=1]
 
 [ext_resource path="res://sprite/world/foreground/street_default.png" type="Texture" id=1]
 [ext_resource path="res://sprite/world/foreground/street_dark.png" type="Texture" id=2]
@@ -8,6 +8,9 @@
 [ext_resource path="res://sprite/world/foreground/street_line_003.png" type="Texture" id=6]
 [ext_resource path="res://sprite/world/foreground/street_curb_001.png" type="Texture" id=7]
 [ext_resource path="res://sprite/world/foreground/street_curb_002.png" type="Texture" id=8]
+[ext_resource path="res://sprite/world/background/b_001_small.png" type="Texture" id=9]
+[ext_resource path="res://sprite/world/foreground/street_line_005.png" type="Texture" id=10]
+[ext_resource path="res://sprite/world/foreground/street_line_006.png" type="Texture" id=11]
 
 [resource]
 
@@ -68,13 +71,15 @@
 6/shape_offset = Vector2( 0, 0 )
 6/shapes = [  ]
 7/name = "street_curb_wet_rgb"
+7/texture = ExtResource( 9 )
 7/tex_offset = Vector2( 0, 0 )
 7/region = Rect2( 0, 0, 64, 64 )
-7/occluder_offset = Vector2( 32, 32 )
+7/occluder_offset = Vector2( 64, 64 )
 7/navigation_offset = Vector2( 32, 32 )
 7/shape_offset = Vector2( 0, 0 )
 7/shapes = [  ]
 8/name = "street_default_yellow_lines"
+8/texture = ExtResource( 10 )
 8/tex_offset = Vector2( 0, 0 )
 8/region = Rect2( 0, 0, 64, 64 )
 8/occluder_offset = Vector2( 32, 32 )
@@ -82,6 +87,7 @@
 8/shape_offset = Vector2( 0, 0 )
 8/shapes = [  ]
 9/name = "street_default_yellow_lines_end"
+9/texture = ExtResource( 11 )
 9/tex_offset = Vector2( 0, 0 )
 9/region = Rect2( 0, 0, 64, 64 )
 9/occluder_offset = Vector2( 32, 32 )

@@ -1,4 +1,4 @@
-tool
+#tool
 extends TileMap
 
 # variables
@@ -11,22 +11,23 @@ func _ready():
 	update_foreground_tileset()
 
 func update_foreground_tileset():
-	for x in range(tile_range_x_min, tile_range_x):
-		for y in range(0, 3):
-			set_cell(x, y, 1)
-	for x in range(tile_range_x_min, tile_range_x):
-		for y in range(4, 5):
-			set_cell(x, y, 5)
-	for x in range(tile_range_x_min, tile_range_x):
-		for y in range(6, 9):
-			set_cell(x, y, 0)
-	for x in range(tile_range_x_min, tile_range_x):
-		for y in range(10, 10):
-			set_cell(x, y, 6)
-	for x in range(tile_range_x_min, tile_range_x):
-		for y in range(11, 15):
-			set_cell(x, y, 1)
-	update()
+#	for x in range(tile_range_x_min, tile_range_x):
+#		for y in range(0, 3):
+#			set_cell(x, y, 1)
+#	for x in range(tile_range_x_min, tile_range_x):
+#		for y in range(4, 5):
+#			set_cell(x, y, 5)
+#	for x in range(tile_range_x_min, tile_range_x):
+#		for y in range(6, 9):
+#			set_cell(x, y, 0)
+#	for x in range(tile_range_x_min, tile_range_x):
+#		for y in range(10, 10):
+#			set_cell(x, y, 6)
+#	for x in range(tile_range_x_min, tile_range_x):
+#		for y in range(11, 15):
+#			set_cell(x, y, 1)
+#	update()
+	pass
 
 func set_tile_id(id):
 	tile_id = id

@@ -304,7 +304,7 @@ class Special:
 	var guitar_dude_fx_left
 	var state_action_timer = 0
 	var state_action_limit = 5.0
-	var stamina = 5
+	var stamina = 25
 	var damage
 	
 	func _init(guitar_dude):

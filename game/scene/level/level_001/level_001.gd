@@ -68,12 +68,8 @@ func _fixed_process(delta):
 			spawn_timer = 0
 		spawn_timer += 0.25
 	elif level_status.boss:
-		spawn_timer_limit = difficulty.spawn_rate
-		if spawn_timer > spawn_timer_limit and spawned < spawn_limit:
-			spawned += 1
+		for enemy in rand_range(0, 15):
 			spawn_enemy()
-			spawn_timer = 0
-		spawn_timer += 0.25
 	elif level_status.start:
 		spawn_timer_limit = difficulty.spawn_rate
 		if spawn_timer > spawn_timer_limit and spawned < spawn_limit:

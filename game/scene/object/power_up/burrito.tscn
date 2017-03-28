@@ -1,0 +1,36 @@
+[gd_scene load_steps=4 format=1]
+
+[ext_resource path="res://sprite/world/object/power_up/burrito.png" type="Texture" id=1]
+[ext_resource path="res://script/power_up.gd" type="Script" id=2]
+
+[sub_resource type="RectangleShape2D" id=1]
+
+custom_solver_bias = 0.0
+extents = Vector2( 15.3531, 13.1134 )
+
+[node name="burrito" type="Sprite"]
+
+texture = ExtResource( 1 )
+script/script = ExtResource( 2 )
+
+[node name="power_up_collision" type="Area2D" parent="."]
+
+input/pickable = true
+shapes/0/shape = SubResource( 1 )
+shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 1 )
+shapes/0/trigger = true
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+
+[node name="power_up_collision_shape" type="CollisionShape2D" parent="power_up_collision"]
+
+transform/pos = Vector2( 0, 1 )
+shape = SubResource( 1 )
+trigger = true
+_update_shape_index = 0
+
+[connection signal="body_enter" from="power_up_collision" to="." method="_on_power_up_collision_body_enter"]
+
+
