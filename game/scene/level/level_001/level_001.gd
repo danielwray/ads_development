@@ -27,6 +27,12 @@ var level_status = {
 	"boss": false, 
 	"end": false
 }
+# audio variables
+var intro_sound
+var loop_1_sound
+var loop_2_sound
+var guitar_special_sound
+var loop_is_playing
 
 func _ready():
 	# Called every time the node is added to the scene.
@@ -41,8 +47,21 @@ func _ready():
 	# load functions
 	load_characters()
 	load_world()
+	intro_sound = get_node("track_1_intro")
+	loop_1_sound = get_node("track_1_loop_1")
+	loop_2_sound = get_node("track_1_loop_2")
+	guitar_special_sound = get_node("track_1_guitar_special")
+	intro_sound.play(0)
 
 func _fixed_process(delta):
+	if not intro_sound.is_playing() and not loop_is_playing:
+		loop_is_playing = true
+		loop_1_sound.play(0)
+	if not loop_1_sound.is_playing():
+		loop_is_playing = false
+	if not loop_1_sound.is_playing() and not loop_is_playing:
+		loop_is_playing = true
+		loop_2_sound.play(0)
 	if level_status.end:
 		print("level completed")
 	elif level_status.stage_1:
