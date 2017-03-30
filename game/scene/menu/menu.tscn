@@ -155,11 +155,12 @@ transform/scale = Vector2( 2.5, 2.5 )
 z/z = -13
 frames = SubResource( 1 )
 animation = "default"
-frame = 2
+frame = 6
 playing = true
 
 [node name="setting" type="Node" parent="."]
 
+editor/display_folded = true
 script/script = ExtResource( 11 )
 
 [node name="menu" type="Container" parent="setting"]

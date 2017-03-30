@@ -47,13 +47,14 @@ func _fixed_process(delta):
 		print("level completed")
 	elif level_status.stage_1:
 		spawn_timer_limit = difficulty.spawn_rate
+		spawned = 0
 		if spawn_timer > spawn_timer_limit and spawned < spawn_limit:
 			spawned += 1
 			spawn_enemy()
 			spawn_timer = 0
 		spawn_timer += 0.25
 	elif level_status.stage_2:
-
+		spawned = 0
 		spawn_timer_limit = difficulty.spawn_rate
 		if spawn_timer > spawn_timer_limit and spawned < spawn_limit:
 			spawned += 1
@@ -61,6 +62,7 @@ func _fixed_process(delta):
 			spawn_timer = 0
 		spawn_timer += 0.25
 	elif level_status.stage_3:
+		spawned = 0
 		spawn_timer_limit = difficulty.spawn_rate
 		if spawn_timer > spawn_timer_limit and spawned < spawn_limit:
 			spawned += 1
@@ -68,8 +70,7 @@ func _fixed_process(delta):
 			spawn_timer = 0
 		spawn_timer += 0.25
 	elif level_status.boss:
-		for enemy in rand_range(0, 15):
-			spawn_enemy()
+		spawn_enemy()
 	elif level_status.start:
 		spawn_timer_limit = difficulty.spawn_rate
 		if spawn_timer > spawn_timer_limit and spawned < spawn_limit:
