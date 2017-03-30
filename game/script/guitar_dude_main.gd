@@ -24,6 +24,7 @@ var health
 var damage
 var speed
 var special
+var special_active
 export var new_state = "SI"
 var score = 1
 # util variables
@@ -318,6 +319,7 @@ class Special:
 		damage = guitar_dude.get_damage() * 100
 
 	func update(delta):
+		guitar_dude.special_active = false
 		state_action_timer += 0.1
 		if state_action_timer > state_action_limit:
 			guitar_dude_sprite.stop()
@@ -337,10 +339,10 @@ class Special:
 				if enemy_object.is_in_group("enemy") and not enemy_object.get_state() == "SD":
 					enemy_object.set_state("SH")
 					enemy_object.state.hit_special(damage)
-					guitar_dude_fx_right.play("lighting")
-					guitar_dude_fx_left.play("lighting")
 					guitar_dude_sprite.play("special")
 					guitar_dude.set_special(stamina, "sub")
+					guitar_dude.special_active = true
+					
 		#################################################################################################
 		# TODO - Bertie: Audio code goes here
 		# See 'samplePlayer2D' class for available methods
@@ -435,6 +437,9 @@ func get_health():
 
 func get_special():
 	return special
+
+func get_special_active():
+	return special_active
 
 # set utility functions
 # these functions allow internal (or external) objects to update player instance variables
