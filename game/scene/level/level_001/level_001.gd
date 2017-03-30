@@ -33,6 +33,8 @@ var loop_1_sound
 var loop_2_sound
 var guitar_special_sound
 var loop_is_playing
+var loop_1_sound_finished
+var loop_2_sound_finished
 
 func _ready():
 	# Called every time the node is added to the scene.
@@ -54,14 +56,22 @@ func _ready():
 	intro_sound.play(0)
 
 func _fixed_process(delta):
-	if not intro_sound.is_playing() and not loop_is_playing:
-		loop_is_playing = true
-		loop_1_sound.play(0)
-	if not loop_1_sound.is_playing():
-		loop_is_playing = false
-	if not loop_1_sound.is_playing() and not loop_is_playing:
-		loop_is_playing = true
-		loop_2_sound.play(0)
+	if not intro_sound.is_playing():
+		if not loop_1_sound.is_playing() and not loop_1_sound_finished:
+			loop_is_playing = true
+			loop_1_sound_finished = true
+			loop_1_sound.play(0)
+			print("Playing loop 1")
+		elif loop_1_sound_finished and not loop_1_sound.is_playing() and not loop_2_sound.is_playing():
+			loop_is_playing = true
+			loop_2_sound.play(0)
+			loop_2_sound_finished = true
+			print("Playing loop 2")
+		elif loop_1_sound_finished and loop_2_sound_finished and not loop_1_sound.is_playing() and not loop_2_sound.is_playing():
+			loop_1_sound_finished = false
+			loop_2_sound_finished = false
+			loop_is_playing = false
+			print("Reseting loops")
 	if level_status.end:
 		print("level completed")
 	elif level_status.stage_1:
