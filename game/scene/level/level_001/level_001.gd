@@ -7,6 +7,7 @@ extends Node
 # get difficulty values
 
 onready var difficulty = init.get_difficulty()
+var player_instance
 var enemy_min_count
 var enemy_max_count
 # timers
@@ -32,9 +33,8 @@ var intro_sound
 var loop_1_sound
 var loop_2_sound
 var guitar_special_sound
-var loop_is_playing
-var loop_1_sound_finished
-var loop_2_sound_finished
+var loop_1_sound_triggered
+var loop_2_sound_triggered
 
 func _ready():
 	# Called every time the node is added to the scene.
@@ -49,29 +49,29 @@ func _ready():
 	# load functions
 	load_characters()
 	load_world()
-	intro_sound = get_node("track_1_intro")
-	loop_1_sound = get_node("track_1_loop_1")
-	loop_2_sound = get_node("track_1_loop_2")
-	guitar_special_sound = get_node("track_1_guitar_special")
+	intro_sound = get_node("track_01_intro")
+	loop_1_sound = get_node("track_01_loop_1")
+	loop_2_sound = get_node("track_01_loop_2")
+	guitar_special_sound = get_node("track_01_guitar_special")
 	intro_sound.play(0)
 
 func _fixed_process(delta):
-	if not intro_sound.is_playing():
-		if not loop_1_sound.is_playing() and not loop_1_sound_finished:
-			loop_is_playing = true
-			loop_1_sound_finished = true
-			loop_1_sound.play(0)
-			print("Playing loop 1")
-		elif loop_1_sound_finished and not loop_1_sound.is_playing() and not loop_2_sound.is_playing():
-			loop_is_playing = true
-			loop_2_sound.play(0)
-			loop_2_sound_finished = true
-			print("Playing loop 2")
-		elif loop_1_sound_finished and loop_2_sound_finished and not loop_1_sound.is_playing() and not loop_2_sound.is_playing():
-			loop_1_sound_finished = false
-			loop_2_sound_finished = false
-			loop_is_playing = false
-			print("Reseting loops")
+	if not player_instance.get_state() == "SS":
+		if not intro_sound.is_playing():
+			if not loop_1_sound.is_playing() and not loop_1_sound_triggered:
+				loop_1_sound_triggered = true
+				loop_1_sound.play(0)
+				print("Playing loop 1")
+			elif loop_1_sound_triggered and not loop_1_sound.is_playing() and not loop_2_sound.is_playing():
+				loop_2_sound.play(0)
+				loop_2_sound_triggered = true
+				print("Playing loop 2")
+			elif loop_1_sound_triggered and loop_2_sound_triggered and not loop_1_sound.is_playing() and not loop_2_sound.is_playing():
+				loop_1_sound_triggered = false
+				loop_2_sound_triggered = false
+				print("Reseting loops")
+	elif not guitar_special_sound.is_playing(): 
+		_special()
 	if level_status.end:
 		print("level completed")
 	elif level_status.stage_1:
@@ -108,9 +108,16 @@ func _fixed_process(delta):
 			spawn_timer = 0
 		spawn_timer += 0.25
 
+func _special():
+	intro_sound.stop()
+	loop_1_sound.stop()
+	loop_2_sound.stop()
+	guitar_special_sound.play(0)
+
 func load_characters():
-	var player = ResourceLoader.load("res://scene/character/player/guitar_dude.tscn")
-	add_child(player.instance(), true)
+	player = ResourceLoader.load("res://scene/character/player/guitar_dude.tscn")
+	player_instance = player.instance()
+	add_child(player_instance, true)
 
 func spawn_enemy():
 	# refactor this to spawn enemies before / after player and more randomly

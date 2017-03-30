@@ -155,7 +155,7 @@ transform/scale = Vector2( 2.5, 2.5 )
 z/z = -13
 frames = SubResource( 1 )
 animation = "default"
-frame = 5
+frame = 3
 playing = true
 
 [node name="setting" type="Node" parent="."]

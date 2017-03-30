@@ -14,10 +14,10 @@
 [ext_resource path="res://tileset/background_alley_way_items_tileset.tres" type="TileSet" id=12]
 [ext_resource path="res://tileset/background_alley_way_foreground_tileset.tres" type="TileSet" id=13]
 [ext_resource path="res://scene/camera/camera.tscn" type="PackedScene" id=14]
-[ext_resource path="res://audio/OGG/track_01/track_1_intro.ogg" type="AudioStream" id=15]
-[ext_resource path="res://audio/OGG/track_01/track_1_loop_1.ogg" type="AudioStream" id=16]
-[ext_resource path="res://audio/OGG/track_01/track_1_loop_2.ogg" type="AudioStream" id=17]
-[ext_resource path="res://audio/OGG/track_01/track_1_guitar_special.ogg" type="AudioStream" id=18]
+[ext_resource path="res://audio/OGG/track_01/track_01_intro.ogg" type="AudioStream" id=15]
+[ext_resource path="res://audio/OGG/track_01/track_01_loop_1.ogg" type="AudioStream" id=16]
+[ext_resource path="res://audio/OGG/track_01/track_01_loop_2.ogg" type="AudioStream" id=17]
+[ext_resource path="res://audio/OGG/track_01/track_01_guitar_special.ogg" type="AudioStream" id=18]
 
 [sub_resource type="RectangleShape2D" id=1]
 
@@ -552,7 +552,7 @@ shape = SubResource( 9 )
 trigger = true
 _update_shape_index = 0
 
-[node name="track_1_intro" type="StreamPlayer" parent="."]
+[node name="track_01_intro" type="StreamPlayer" parent="."]
 
 stream/stream = ExtResource( 15 )
 stream/play = false
@@ -563,7 +563,7 @@ stream/paused = false
 stream/loop_restart_time = 0.0
 stream/buffering_ms = 500
 
-[node name="track_1_loop_1" type="StreamPlayer" parent="."]
+[node name="track_01_loop_1" type="StreamPlayer" parent="."]
 
 stream/stream = ExtResource( 16 )
 stream/play = false
@@ -574,7 +574,7 @@ stream/paused = false
 stream/loop_restart_time = 0.0
 stream/buffering_ms = 500
 
-[node name="track_1_loop_2" type="StreamPlayer" parent="."]
+[node name="track_01_loop_2" type="StreamPlayer" parent="."]
 
 stream/stream = ExtResource( 17 )
 stream/play = false
@@ -585,7 +585,7 @@ stream/paused = false
 stream/loop_restart_time = 0.0
 stream/buffering_ms = 500
 
-[node name="track_1_guitar_special" type="StreamPlayer" parent="."]
+[node name="track_01_guitar_special" type="StreamPlayer" parent="."]
 
 stream/stream = ExtResource( 18 )
 stream/play = false
