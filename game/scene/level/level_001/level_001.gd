@@ -30,11 +30,9 @@ var level_status = {
 }
 # audio variables
 var intro_sound
-var loop_1_sound
-var loop_2_sound
+var loop_sound
 var guitar_special_sound
-var loop_1_sound_triggered
-var loop_2_sound_triggered
+var loop_sound_triggered
 var special_sound_triggered
 var active_loop
 
@@ -52,8 +50,7 @@ func _ready():
 	load_characters()
 	load_world()
 	intro_sound = get_node("track_01_intro")
-	loop_1_sound = get_node("track_01_loop_1")
-	loop_2_sound = get_node("track_01_loop_2")
+	loop_sound = get_node("track_01_loop")
 	guitar_special_sound = get_node("track_01_guitar_special")
 	active_loop = intro_sound
 	active_loop.play(0)
@@ -63,17 +60,12 @@ func _fixed_process(delta):
 	if not player_instance.get_special_active():
 		if not guitar_special_sound.is_playing():
 			active_loop.set_volume(1)
-			if not active_loop.is_playing() and not loop_1_sound_triggered:
-				loop_1_sound_triggered = true
-				active_loop = loop_1_sound
+			if not active_loop.is_playing() and not loop_sound_triggered:
+				loop_sound_triggered = true
+				active_loop = loop_sound
 				active_loop.play(0)
-			elif loop_1_sound_triggered and not active_loop.is_playing():
-				loop_2_sound_triggered = true
-				active_loop = loop_2_sound
-				active_loop.play(0)
-			elif loop_1_sound_triggered and loop_2_sound_triggered and not loop_1_sound.is_playing() and not loop_2_sound.is_playing():
-				loop_1_sound_triggered = false
-				loop_2_sound_triggered = false
+			elif loop_sound_triggered and not loop_sound.is_playing():
+				loop_sound_triggered = false
 	else:
 		active_loop.set_volume(0)
 		if not special_sound_triggered:
