@@ -17,7 +17,12 @@
 
 [sub_resource type="SpriteFrames" id=1]
 
-animations = [ { "frames":[ ExtResource( 4 ), ExtResource( 4 ), ExtResource( 4 ), ExtResource( 4 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource( 6 ), ExtResource( 7 ), ExtResource( 8 ), ExtResource( 9 ), ExtResource( 10 ) ], "loop":true, "name":"default", "speed":5.0 } ]
+animations = [ {
+"frames": [ ExtResource( 4 ), ExtResource( 4 ), ExtResource( 4 ), ExtResource( 4 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource( 6 ), ExtResource( 7 ), ExtResource( 8 ), ExtResource( 9 ), ExtResource( 10 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
 
 [sub_resource type="StyleBoxTexture" id=2]
 
@@ -155,7 +160,11 @@ transform/scale = Vector2( 2.5, 2.5 )
 z/z = -13
 frames = SubResource( 1 )
 animation = "default"
+<<<<<<< HEAD
 frame = 8
+=======
+frame = 7
+>>>>>>> bf7d04362f2d532ffeb75c10a9ee0caaaeacf58c
 playing = true
 
 [node name="setting" type="Node" parent="."]
