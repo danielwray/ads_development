@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=1]
+[gd_scene load_steps=18 format=1]
 
 [ext_resource path="res://script/main_menu.gd" type="Script" id=1]
 [ext_resource path="res://scene/menu/menu_button_pick.tres" type="StyleBox" id=2]
@@ -10,10 +10,11 @@
 [ext_resource path="res://sprite/ui/logo/icon6.png" type="Texture" id=8]
 [ext_resource path="res://sprite/ui/logo/icon7.png" type="Texture" id=9]
 [ext_resource path="res://sprite/ui/logo/icon8.png" type="Texture" id=10]
-[ext_resource path="res://script/setting_menu.gd" type="Script" id=11]
-[ext_resource path="res://sprite/ui/status_symbol/special.png" type="Texture" id=12]
-[ext_resource path="res://sprite/ui/progress_bar/progress_bar_over.png" type="Texture" id=13]
-[ext_resource path="res://ui/font/8-bit-font-small.fnt" type="BitmapFont" id=14]
+[ext_resource path="res://audio/OGG/track_01/track_01_loop.ogg" type="AudioStream" id=11]
+[ext_resource path="res://script/setting_menu.gd" type="Script" id=12]
+[ext_resource path="res://sprite/ui/status_symbol/special.png" type="Texture" id=13]
+[ext_resource path="res://sprite/ui/progress_bar/progress_bar_over.png" type="Texture" id=14]
+[ext_resource path="res://ui/font/8-bit-font-small.fnt" type="BitmapFont" id=15]
 
 [sub_resource type="SpriteFrames" id=1]
 
@@ -25,7 +26,7 @@ content_margin/left = -1.0
 content_margin/right = -1.0
 content_margin/top = -1.0
 content_margin/bottom = -1.0
-texture = ExtResource( 13 )
+texture = ExtResource( 14 )
 margin/left = 0.0
 margin/right = 0.0
 margin/top = 0.0
@@ -155,13 +156,23 @@ transform/scale = Vector2( 2.5, 2.5 )
 z/z = -13
 frames = SubResource( 1 )
 animation = "default"
-frame = 4
+frame = 9
 playing = true
+
+[node name="background_music_loop" type="StreamPlayer" parent="menu_container"]
+
+stream/stream = ExtResource( 11 )
+stream/play = false
+stream/loop = true
+stream/volume_db = 0.0
+stream/autoplay = false
+stream/paused = false
+stream/loop_restart_time = 0.0
+stream/buffering_ms = 500
 
 [node name="setting" type="Node" parent="."]
 
-editor/display_folded = true
-script/script = ExtResource( 11 )
+script/script = ExtResource( 12 )
 
 [node name="menu" type="Container" parent="setting"]
 
@@ -185,9 +196,9 @@ margin/left = 90.0
 margin/top = -550.0
 margin/right = 242.0
 margin/bottom = -530.0
-custom_icons/arrow = ExtResource( 12 )
+custom_icons/arrow = ExtResource( 13 )
 custom_styles/hover = SubResource( 2 )
-custom_fonts/font = ExtResource( 14 )
+custom_fonts/font = ExtResource( 15 )
 toggle_mode = false
 click_on_press = true
 enabled_focus_mode = 0

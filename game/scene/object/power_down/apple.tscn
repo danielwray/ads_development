@@ -8,7 +8,7 @@
 custom_solver_bias = 0.0
 extents = Vector2( 23.7065, 21.7237 )
 
-[node name="apple" type="Sprite"]
+[node name="apple" type="Sprite" groups=[ "apple" ]]
 
 texture = ExtResource( 1 )
 script/script = ExtResource( 2 )

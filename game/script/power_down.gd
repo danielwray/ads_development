@@ -5,5 +5,12 @@ func _ready():
 
 func _on_power_down_collision_body_enter( body ):
 	if body.has_method("set_health"):
-		body.set_health(50, "sub")
-		queue_free()
+		if self.is_in_group('apple'):
+			power_down(body, 50, "health_fart_1")
+		else:
+			power_down(body, 0, "health_fart_1")
+
+func power_down(body, value, audio):
+	body.set_health(value, "sub")
+	body.play_audio(audio)
+	queue_free()

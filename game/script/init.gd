@@ -165,7 +165,6 @@ func read_json(file_path):
 	var content = {}
 	content.parse_json(file_object.get_line())
 	file_object.close()
-	print(content)
 	return content
 
 func get_screen_size():

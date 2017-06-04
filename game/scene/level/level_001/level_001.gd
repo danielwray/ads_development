@@ -56,7 +56,6 @@ func _ready():
 	active_loop.play(0)
 
 func _fixed_process(delta):
-	print(active_loop.get_name())
 	if not player_instance.get_special_active():
 		if not guitar_special_sound.is_playing():
 			active_loop.set_volume(1)
@@ -76,7 +75,7 @@ func _fixed_process(delta):
 
 	
 	if level_status.end:
-		print("level completed")
+		print("level completed - nothing happens here, need a boss!")
 	elif level_status.stage_1:
 		spawn_timer_limit = difficulty.spawn_rate
 		spawned = 0

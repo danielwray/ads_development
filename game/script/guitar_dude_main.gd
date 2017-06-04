@@ -461,3 +461,5 @@ func set_special(value, operator):
 	elif operator == "add":
 		special += value
 
+func play_audio(sound):
+	get_node("guitar_dude_audio").play(sound)
