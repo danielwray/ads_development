@@ -58,11 +58,12 @@ func _ready():
 func _fixed_process(delta):
 	if not player_instance.get_special_active():
 		if not guitar_special_sound.is_playing():
-			active_loop.set_volume(1)
+			active_loop.set_volume_db(-8.00) #lowered sound level of music
 			if not active_loop.is_playing() and not loop_sound_triggered:
 				loop_sound_triggered = true
 				active_loop = loop_sound
 				active_loop.play(0)
+				loop_sound.set_volume_db(-8.00)
 			elif loop_sound_triggered and not loop_sound.is_playing():
 				loop_sound_triggered = false
 	else:
@@ -112,6 +113,7 @@ func _fixed_process(delta):
 
 func play_special():
 	guitar_special_sound.play(0)
+	guitar_special_sound.set_volume_db(-3.00)
 
 func load_characters():
 	player = ResourceLoader.load("res://scene/character/player/guitar_dude.tscn")

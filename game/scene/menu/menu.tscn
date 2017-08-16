@@ -10,7 +10,7 @@
 [ext_resource path="res://sprite/ui/logo/icon6.png" type="Texture" id=8]
 [ext_resource path="res://sprite/ui/logo/icon7.png" type="Texture" id=9]
 [ext_resource path="res://sprite/ui/logo/icon8.png" type="Texture" id=10]
-[ext_resource path="res://audio/OGG/track_01/track_01_loop.ogg" type="AudioStream" id=11]
+[ext_resource path="res://audio/OGG/track_01/track_01_redux.ogg" type="AudioStream" id=11]
 [ext_resource path="res://script/setting_menu.gd" type="Script" id=12]
 [ext_resource path="res://sprite/ui/status_symbol/special.png" type="Texture" id=13]
 [ext_resource path="res://sprite/ui/progress_bar/progress_bar_over.png" type="Texture" id=14]
@@ -18,7 +18,12 @@
 
 [sub_resource type="SpriteFrames" id=1]
 
-animations = [ { "frames":[ ExtResource( 4 ), ExtResource( 4 ), ExtResource( 4 ), ExtResource( 4 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource( 6 ), ExtResource( 7 ), ExtResource( 8 ), ExtResource( 9 ), ExtResource( 10 ) ], "loop":true, "name":"default", "speed":5.0 } ]
+animations = [ {
+"frames": [ ExtResource( 4 ), ExtResource( 4 ), ExtResource( 4 ), ExtResource( 4 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource( 6 ), ExtResource( 7 ), ExtResource( 8 ), ExtResource( 9 ), ExtResource( 10 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
 
 [sub_resource type="StyleBoxTexture" id=2]
 
@@ -156,7 +161,6 @@ transform/scale = Vector2( 2.5, 2.5 )
 z/z = -13
 frames = SubResource( 1 )
 animation = "default"
-frame = 9
 playing = true
 
 [node name="background_music_loop" type="StreamPlayer" parent="menu_container"]

@@ -7,7 +7,7 @@ func _ready():
 	set_process_unhandled_input(true)
 	music_loop = get_node("background_music_loop")
 	music_loop.play()
-	music_loop.set_volume(0.5)
+	music_loop.set_volume(1)
 
 func _on_start_pressed():
 	# load init scene
