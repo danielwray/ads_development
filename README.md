@@ -2,6 +2,10 @@
 
 Development repository for working title ADS
 
+## Game Footage
+
+[![ADS Game Footage](game_footage.png)](https://www.youtube.com/watch?v=d6NH3I8u3EQ)
+
 ## Github Web Page
 
 https://danielwray.github.io/ads_development/
